@@ -25,7 +25,7 @@ export const Collapsible: React.FC<CollapsibleProps> = ({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-6 text-left focus:outline-none transition-colors "
+        className="w-full flex items-center justify-between p-6 text-left focus:outline-none transition-colors cursor-pointer"
       >
         <Heading className="!text-lg">{title}</Heading>
         <motion.div

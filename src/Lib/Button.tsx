@@ -20,10 +20,10 @@ export const Button: React.FC<ButtonProps> = ({
     "inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold transition-colors cursor-pointer";
 
   const variants = {
-    primary:
-      "bg-zinc-800 text-zinc-100 hover:bg-zinc-700 active:bg-zinc-900 dark:bg-zinc-700 dark:hover:bg-zinc-600 dark:active:bg-zinc-700",
     secondary:
-      "bg-zinc-100 text-zinc-900 hover:bg-zinc-200 active:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700",
+      "bg-zinc-800 text-zinc-100 hover:bg-zinc-700 active:bg-zinc-900 dark:bg-zinc-700 dark:hover:bg-zinc-600 dark:active:bg-zinc-700",
+    primary:
+      "bg-teal-50 text-teal-700 hover:bg-teal-100 active:bg-teal-200 dark:bg-teal-400/10 dark:text-teal-300 dark:hover:bg-teal-400/20",
     outline:
       "ring-1 ring-zinc-900/10 text-zinc-900 hover:ring-teal-500 hover:text-teal-600 dark:ring-white/10 dark:text-zinc-400 dark:hover:ring-teal-400 dark:hover:text-teal-400",
     ghost:

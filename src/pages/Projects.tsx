@@ -135,7 +135,7 @@ const Projects: React.FC = () => {
                         href={project.liveLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        variant="primary"
+                        variant="secondary"
                         className="flex-1"
                       >
                         <RiExternalLinkLine className="mr-2 h-4 w-4" />
