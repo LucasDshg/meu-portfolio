@@ -1,6 +1,7 @@
 import { AnimatePresence } from "framer-motion";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiSaveLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 import { usePortfolio } from "../context/PortfolioContext";
 import { IProfile } from "../interface/portfolio.interface";
 import { Button } from "../Lib/Button";
@@ -19,27 +20,41 @@ import { ProjectPageSection } from "./admin/components/ProjectPageSection";
 import { SocialSection } from "./admin/components/SocialSection";
 
 const Admin: React.FC = () => {
-  const { profile, updateProfile, experiences, projects, certifications } =
-    usePortfolio();
+  const {
+    user,
+    profile,
+    updateProfile,
+    experiences,
+    projects,
+    certifications,
+    loading,
+  } = usePortfolio();
+  const navigate = useNavigate();
   const [toast, setToast] = useState<{
     message: string;
     type: "success" | "error";
   } | null>(null);
 
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/login");
+    }
+  }, [user, loading, navigate]);
+
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!profile) return;
+    if (!user || !profile) return; // Adicionada verificação para 'profile'
 
     try {
       const formData = new FormData(e.currentTarget);
 
       const updatedProfile: Partial<IProfile> = {
-        name: (formData.get("name") as string) || profile.name,
-        slug: (formData.get("slug") as string) || profile.slug,
-        email: (formData.get("email") as string) || profile.email,
-        imageUrl: (formData.get("imageUrl") as string) || profile.imageUrl,
-        cvLink: (formData.get("cvLink") as string) || profile.cvLink,
-        socials: profile.socials.map((s) => ({
+        name: (formData.get("name") as string) || profile?.name,
+        slug: (formData.get("slug") as string) || profile?.slug,
+        email: (formData.get("email") as string) || profile?.email,
+        imageUrl: (formData.get("imageUrl") as string) || profile?.imageUrl,
+        cvLink: (formData.get("cvLink") as string) || profile?.cvLink,
+        socials: profile?.socials.map((s) => ({
           ...s,
           link: (formData.get(`social-${s.id}`) as string) || null,
         })),

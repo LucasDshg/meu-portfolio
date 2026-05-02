@@ -42,7 +42,7 @@ export const ExperienceListSection = ({
               .filter(Boolean),
       };
 
-      await saveSubItem("experiences", itemToSave);
+      await saveSubItem<Partial<IExperience>>("experiences", itemToSave);
       setEditingItem(null);
       setToast({ message: "Experiência salva com sucesso!", type: "success" });
     } catch (error) {

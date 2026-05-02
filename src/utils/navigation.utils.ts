@@ -1,4 +1,13 @@
-import { RiGithubLine, RiLinkedinLine, RiMailLine } from "react-icons/ri";
+import {
+  RiFacebookCircleLine,
+  RiGithubLine,
+  RiInstagramLine,
+  RiLinkedinLine,
+  RiMailLine,
+  RiThreadsLine,
+  RiTwitterXFill,
+  RiWhatsappLine,
+} from "react-icons/ri";
 import { useLocation } from "react-router-dom";
 import { IProfile } from "../interface/portfolio.interface";
 export const pathName = () => {
@@ -41,6 +50,11 @@ export const getSocialIcon = (name: string) => {
   const lowerName = name.toLowerCase();
   if (lowerName.includes("github")) return RiGithubLine;
   if (lowerName.includes("linkedin")) return RiLinkedinLine;
+  if (lowerName.includes("whatsapp")) return RiWhatsappLine;
+  if (lowerName.includes("instagram")) return RiInstagramLine;
+  if (lowerName.includes("threads")) return RiThreadsLine;
+  if (lowerName.includes("facebook")) return RiFacebookCircleLine;
+  if (lowerName.includes("twitter")) return RiTwitterXFill;
   if (lowerName.includes("mail") || lowerName.includes("email"))
     return RiMailLine;
   return null;

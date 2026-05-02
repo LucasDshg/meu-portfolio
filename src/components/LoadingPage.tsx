@@ -1,6 +1,7 @@
-import { motion } from "framer-motion";
-import React from "react";
-import logoIcon from "../assets/logo-icon.svg";
+import { motion } from 'framer-motion';
+import React from 'react';
+import logoIcon from '../assets/logo-icon.svg';
+import { Image } from '../Lib/Image';
 
 export const LoadingPage: React.FC = () => {
   return (
@@ -10,9 +11,9 @@ export const LoadingPage: React.FC = () => {
           scale: [1, 1.1, 1],
           opacity: [0.5, 1, 0.5],
         }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
       >
-        <img src={logoIcon} alt="Carregando..." className="h-20 w-20" />
+        <Image src={logoIcon} alt="Carregando..." className="h-20 w-20" />
       </motion.div>
     </div>
   );

@@ -35,7 +35,10 @@ export const CertificationListSection = ({
     }
 
     try {
-      await saveSubItem("certifications", editingItem);
+      await saveSubItem<Partial<ICertifications>>(
+        "certifications",
+        editingItem,
+      );
       setEditingItem(null);
       setToast({ message: "Certificação salva com sucesso!", type: "success" });
     } catch (error) {

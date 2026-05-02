@@ -50,7 +50,7 @@ export const ProjectListSection = ({ projects }: { projects: IProject[] }) => {
         images: (editingItem.images || []).filter(Boolean),
       };
 
-      await saveSubItem("projects", itemToSave);
+      await saveSubItem<Partial<IProject>>("projects", itemToSave);
       setEditingItem(null);
       setToast({ message: "Projeto salvo com sucesso!", type: "success" });
     } catch (error) {
