@@ -5,9 +5,11 @@ import { usePortfolio } from "../context/PortfolioContext";
 import { IProfile } from "../interface/portfolio.interface";
 import { Button } from "../Lib/Button";
 import { Heading } from "../Lib/Heading";
+import { Tabs } from "../Lib/Tabs";
 import { Text } from "../Lib/Text";
 import { Toast } from "../Lib/Toast";
 import { AboutPageSection } from "./admin/components/AboutPageSection";
+import { ExperienceListSection } from "./admin/components/ExperienceListSection";
 import { ExperiencePageSection } from "./admin/components/ExperiencePageSection";
 import { HomePageSection } from "./admin/components/HomePageSection";
 import { PersonalInfoSection } from "./admin/components/PersonalInfoSection";
@@ -15,7 +17,8 @@ import { ProjectPageSection } from "./admin/components/ProjectPageSection";
 import { SocialSection } from "./admin/components/SocialSection";
 
 const Admin: React.FC = () => {
-  const { profile, updateProfile } = usePortfolio();
+  const { profile, updateProfile, experiences, projects, certifications } =
+    usePortfolio();
   const [toast, setToast] = useState<{
     message: string;
     type: "success" | "error";
@@ -83,6 +86,54 @@ const Admin: React.FC = () => {
     }
   };
 
+  const adminTabs = [
+    {
+      id: "general",
+      label: "Geral",
+      content: (
+        <div className="space-y-6">
+          <PersonalInfoSection profile={profile} />
+          <SocialSection socials={profile?.socials} />
+        </div>
+      ),
+    },
+    {
+      id: "home",
+      label: "Home",
+      content: <HomePageSection data={profile?.pages.home} />,
+    },
+    {
+      id: "about",
+      label: "Sobre",
+      content: (
+        <div className="space-y-6">
+          <AboutPageSection data={profile?.pages.about} />
+          {/* CertificationListSection aqui no futuro */}
+        </div>
+      ),
+    },
+    {
+      id: "experience",
+      label: "Experiência",
+      content: (
+        <div className="space-y-6">
+          <ExperiencePageSection data={profile?.pages.experience} />
+          <ExperienceListSection experiences={experiences} />
+        </div>
+      ),
+    },
+    {
+      id: "projects",
+      label: "Projetos",
+      content: (
+        <div className="space-y-6">
+          <ProjectPageSection data={profile?.pages.project} />
+          {/* ProjectListSection aqui no futuro */}
+        </div>
+      ),
+    },
+  ];
+
   return (
     <form onSubmit={handleSave} className="mt-32 max-w-4xl mx-auto pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-12">
@@ -98,16 +149,7 @@ const Admin: React.FC = () => {
         </Button>
       </div>
 
-      <div className="space-y-6">
-        <PersonalInfoSection profile={profile} />
-        <SocialSection socials={profile?.socials} />
-        <Heading className="mt-16">Páginas</Heading>
-
-        <HomePageSection data={profile?.pages.home} />
-        <AboutPageSection data={profile?.pages.about} />
-        <ExperiencePageSection data={profile?.pages.experience} />
-        <ProjectPageSection data={profile?.pages.project} />
-      </div>
+      <Tabs tabs={adminTabs} />
 
       <AnimatePresence>
         {toast && (

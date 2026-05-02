@@ -1,5 +1,4 @@
 import { IProfile } from "../../../interface/portfolio.interface";
-import { Collapsible } from "../../../Lib/Collapsible";
 import { Input } from "../../../Lib/Input";
 import { Textarea } from "../../../Lib/Textarea";
 
@@ -8,7 +7,7 @@ export const HomePageSection = ({
 }: {
   data?: IProfile["pages"]["home"];
 }) => (
-  <Collapsible title="Home" defaultOpen>
+  <div className="p-6 space-y-6">
     <Input
       label="Título (Hero)"
       name="home-title"
@@ -21,5 +20,5 @@ export const HomePageSection = ({
       defaultValue={data?.description}
       placeholder="O que você faz?"
     />
-  </Collapsible>
+  </div>
 );

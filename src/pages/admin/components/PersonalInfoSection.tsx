@@ -2,7 +2,6 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { usePortfolio } from "../../../context/PortfolioContext";
 import { storage } from "../../../data/firebase";
 import { IProfile } from "../../../interface/portfolio.interface";
-import { Collapsible } from "../../../Lib/Collapsible";
 import { FileUpload } from "../../../Lib/FileUpload";
 import { Input } from "../../../Lib/Input";
 
@@ -13,16 +12,18 @@ export const PersonalInfoSection = ({
 }) => {
   const { user } = usePortfolio();
 
-  const handleUpload = async (file: File) => {
+  const handleUpload = async (file: File, fieldName: string) => {
     if (!user) throw new Error("Usuário não autenticado");
-    const path = `${user.uid}/${file.name}`;
+
+    const extension = file.name.split(".").pop();
+    const path = `${user.uid}/${fieldName}.${extension}`;
     const storageRef = ref(storage, path);
     await uploadBytes(storageRef, file);
     return await getDownloadURL(storageRef);
   };
 
   return (
-    <Collapsible title="Informações Pessoais" defaultOpen>
+    <div className="p-6 space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Input
           label="Nome Exibido"
@@ -50,16 +51,16 @@ export const PersonalInfoSection = ({
           name="imageUrl"
           accept="image/*"
           initialUrl={profile?.imageUrl}
-          onFileSelect={(file) => handleUpload(file)}
+          onFileSelect={(file) => handleUpload(file, "profile-image")}
         />
         <FileUpload
           label="Currículo (PDF)"
           name="cvLink"
           accept=".pdf"
           initialUrl={profile?.cvLink}
-          onFileSelect={(file) => handleUpload(file)}
+          onFileSelect={(file) => handleUpload(file, "cv")}
         />
       </div>
-    </Collapsible>
+    </div>
   );
 };

@@ -1,5 +1,4 @@
 import { IProfile } from "../../../interface/portfolio.interface";
-import { Collapsible } from "../../../Lib/Collapsible";
 import { Input } from "../../../Lib/Input";
 import { Switch } from "../../../Lib/Switch";
 import { Textarea } from "../../../Lib/Textarea";
@@ -9,7 +8,15 @@ export const ProjectPageSection = ({
 }: {
   data?: IProfile["pages"]["project"];
 }) => (
-  <Collapsible title="Projeto">
+  <div className="p-6 space-y-6">
+    <div className="pb-4 border-b border-zinc-100 dark:border-zinc-700/40">
+      <Switch
+        label="Mostrar página no menu de navegação"
+        name="show-project"
+        defaultChecked={data?.show}
+      />
+    </div>
+
     <Input
       name="project-title"
       label="Título"
@@ -22,12 +29,5 @@ export const ProjectPageSection = ({
       defaultValue={data?.description}
       placeholder="Resumo dos projetos"
     />
-    <div className="pt-4 border-t border-zinc-100 dark:border-zinc-700/40">
-      <Switch
-        label="Mostrar página no menu de navegação"
-        name="show-project"
-        defaultChecked={data?.show}
-      />
-    </div>
-  </Collapsible>
+  </div>
 );

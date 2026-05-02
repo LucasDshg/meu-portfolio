@@ -1,9 +1,10 @@
 import { ISocials } from "../../../interface/portfolio.interface";
-import { Collapsible } from "../../../Lib/Collapsible";
+import { Heading } from "../../../Lib/Heading";
 import { Input } from "../../../Lib/Input";
 
 export const SocialSection = ({ socials }: { socials?: ISocials[] }) => (
-  <Collapsible title="Social">
+  <div className="p-6 space-y-6">
+    <Heading className="mb-8">Social</Heading>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {socials
         ?.sort((a, b) => a.order - b.order)
@@ -17,5 +18,5 @@ export const SocialSection = ({ socials }: { socials?: ISocials[] }) => (
           />
         ))}
     </div>
-  </Collapsible>
+  </div>
 );

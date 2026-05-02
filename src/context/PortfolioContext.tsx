@@ -1,11 +1,13 @@
 import { onAuthStateChanged, User } from "firebase/auth";
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
   orderBy,
   query,
+  setDoc,
   updateDoc,
   where,
 } from "firebase/firestore";
@@ -25,6 +27,14 @@ interface PortfolioContextType {
   certifications: ICertifications[];
   loading: boolean;
   updateProfile: (updatedData: Partial<IProfile>) => Promise<void>;
+  saveSubItem: (
+    collectionName: "experiences" | "projects" | "certifications",
+    data: any,
+  ) => Promise<void>;
+  deleteSubItem: (
+    collectionName: "experiences" | "projects" | "certifications",
+    id: string | number,
+  ) => Promise<void>;
 }
 
 const PortfolioContext = createContext<PortfolioContextType | undefined>(
@@ -116,6 +126,41 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const saveSubItem = async (
+    collectionName: "experiences" | "projects" | "certifications",
+    data: any,
+  ) => {
+    if (!user) throw new Error("Usuário não autenticado");
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+      const subColRef = collection(userDocRef, collectionName);
+
+      const docId = String(data.id || Date.now());
+      const docRef = doc(subColRef, docId);
+
+      await setDoc(docRef, { ...data, id: data.id || Number(docId) });
+      await fetchDataByUid(user.uid);
+    } catch (error) {
+      console.error(`Erro ao salvar em ${collectionName}:`, error);
+      throw error;
+    }
+  };
+
+  const deleteSubItem = async (
+    collectionName: "experiences" | "projects" | "certifications",
+    id: string | number,
+  ) => {
+    if (!user) throw new Error("Usuário não autenticado");
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+      await deleteDoc(doc(userDocRef, collectionName, String(id)));
+      await fetchDataByUid(user.uid);
+    } catch (error) {
+      console.error(`Erro ao deletar de ${collectionName}:`, error);
+      throw error;
+    }
+  };
+
   const updateProfile = async (updatedData: Partial<IProfile>) => {
     if (!user) throw new Error("Usuário não autenticado");
 
@@ -142,6 +187,8 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
         certifications,
         loading,
         updateProfile,
+        saveSubItem,
+        deleteSubItem,
       }}
     >
       {children}

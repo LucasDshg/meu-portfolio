@@ -14,9 +14,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "paths": {}
   },
   "include": ["src/vite-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
