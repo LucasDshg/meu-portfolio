@@ -17,9 +17,8 @@ const Footer: React.FC = () => {
             <img src={logoIcon} alt="Logo" className="h-14 w-14" />
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm font-medium text-zinc-800 dark:text-zinc-200">
               {menus.map((menu) => {
-                const href = `/u/${slug}/${menu.id}`;
                 return (
-                  <TextLink key={menu.id} href={href}>
+                  <TextLink key={menu.id} href={menu.href}>
                     {menu.name}
                   </TextLink>
                 );
