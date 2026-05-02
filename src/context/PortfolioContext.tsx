@@ -6,6 +6,7 @@ import {
   getDocs,
   orderBy,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import React, { createContext, useContext, useEffect, useState } from "react";
@@ -23,6 +24,7 @@ interface PortfolioContextType {
   projects: IProject[];
   certifications: ICertifications[];
   loading: boolean;
+  updateProfile: (updatedData: Partial<IProfile>) => Promise<void>;
 }
 
 const PortfolioContext = createContext<PortfolioContextType | undefined>(
@@ -114,9 +116,33 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const updateProfile = async (updatedData: Partial<IProfile>) => {
+    if (!user) throw new Error("Usuário não autenticado");
+
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+      await updateDoc(userDocRef, updatedData as any);
+
+      setProfile((prev) =>
+        prev ? ({ ...prev, ...updatedData } as IProfile) : null,
+      );
+    } catch (error) {
+      console.error("Erro ao salvar perfil:", error);
+      throw error;
+    }
+  };
+
   return (
     <PortfolioContext.Provider
-      value={{ user, profile, experiences, projects, certifications, loading }}
+      value={{
+        user,
+        profile,
+        experiences,
+        projects,
+        certifications,
+        loading,
+        updateProfile,
+      }}
     >
       {children}
     </PortfolioContext.Provider>

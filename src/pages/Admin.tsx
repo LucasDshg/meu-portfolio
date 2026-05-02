@@ -1,201 +1,90 @@
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import React from "react";
+import { AnimatePresence } from "framer-motion";
+import React, { useState } from "react";
 import { RiSaveLine } from "react-icons/ri";
 import { usePortfolio } from "../context/PortfolioContext";
-import { storage } from "../data/firebase";
-import { IProfile, ISocials } from "../interface/portfolio.interface";
+import { IProfile } from "../interface/portfolio.interface";
 import { Button } from "../Lib/Button";
-import { Collapsible } from "../Lib/Collapsible";
-import { FileUpload } from "../Lib/FileUpload";
 import { Heading } from "../Lib/Heading";
-import { Input } from "../Lib/Input";
-import { Switch } from "../Lib/Switch";
 import { Text } from "../Lib/Text";
-import { Textarea } from "../Lib/Textarea";
-
-const PersonalInfoSection = ({ profile }: { profile: IProfile | null }) => {
-  const { user } = usePortfolio();
-
-  const handleUpload = async (file: File) => {
-    if (!user) throw new Error("Usuário não autenticado");
-
-    const path = `${user.uid}/${file.name}`;
-    const storageRef = ref(storage, path);
-
-    await uploadBytes(storageRef, file);
-    return await getDownloadURL(storageRef);
-  };
-
-  return (
-    <Collapsible title="Informações Pessoais" defaultOpen>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Input
-          label="Nome Exibido"
-          name="name"
-          defaultValue={profile?.name}
-          placeholder="Seu nome"
-          required
-        />
-        <Input
-          label="Slug da URL"
-          name="slug"
-          defaultValue={profile?.slug}
-          placeholder="ex: lucas-gomes"
-          required
-        />
-        <Input
-          label="E-mail"
-          name="email"
-          defaultValue={profile?.email}
-          placeholder="seu@email.com"
-          required
-        />
-        <FileUpload
-          label="Foto de Perfil"
-          name="imageUrl"
-          accept="image/*"
-          initialUrl={profile?.imageUrl}
-          onFileSelect={(file) => handleUpload(file)}
-        />
-        <FileUpload
-          label="Currículo (PDF)"
-          name="cvLink"
-          accept=".pdf"
-          initialUrl={profile?.cvLink}
-          onFileSelect={(file) => handleUpload(file)}
-        />
-      </div>
-    </Collapsible>
-  );
-};
-
-const SocialSection = ({ socials }: { socials?: ISocials[] }) => (
-  <Collapsible title="Social">
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {socials
-        ?.sort((a, b) => a.order - b.order)
-        .map((social) => (
-          <Input
-            key={social.id}
-            label={social.name}
-            defaultValue={social.link || ""}
-            placeholder={`Link do ${social.name}`}
-          />
-        ))}
-    </div>
-  </Collapsible>
-);
-
-const HomePageSection = ({ data }: { data?: IProfile["pages"]["home"] }) => (
-  <Collapsible title="Home" defaultOpen>
-    <Input
-      label="Título (Hero)"
-      defaultValue={data?.title}
-      placeholder="Título principal da Home"
-    />
-    <Textarea
-      label="Descrição (Hero)"
-      defaultValue={data?.description}
-      placeholder="O que você faz?"
-    />
-  </Collapsible>
-);
-
-const AboutPageSection = ({ data }: { data?: IProfile["pages"]["about"] }) => (
-  <Collapsible title="Sobre">
-    <Input
-      label="Título"
-      defaultValue={data?.title}
-      placeholder="Título da página Sobre"
-    />
-    {data?.description.map((text, index) => (
-      <Textarea
-        label={`Descrição (Parágrafo ${index + 1})`}
-        key={`about-description-${index} `}
-        rows={6}
-        defaultValue={text}
-        placeholder="Escreva sobre sua jornada..."
-      />
-    ))}
-
-    <div className="pt-4 border-t border-zinc-100 dark:border-zinc-700/40">
-      <Switch
-        label="Mostrar página no menu de navegação"
-        name="show-about"
-        defaultChecked={data?.show}
-      />
-    </div>
-  </Collapsible>
-);
-
-const ExperiencePageSection = ({
-  data,
-}: {
-  data?: IProfile["pages"]["experience"];
-}) => (
-  <Collapsible title="Experiência">
-    <Input
-      label="Título"
-      defaultValue={data?.title}
-      placeholder="Título da página de Experiência"
-    />
-    <Textarea
-      label="Descrição"
-      defaultValue={data?.description}
-      placeholder="Resumo da carreira"
-    />
-    <Textarea
-      label="Texto de Disponibilidade"
-      defaultValue={data?.disponibleText}
-      placeholder="Ex: Disponível para novos desafios"
-    />
-
-    <div className="pt-4 border-t border-zinc-100 dark:border-zinc-700/40">
-      <Switch
-        label="Mostrar página no menu de navegação"
-        name="show-experience"
-        defaultChecked={data?.show}
-      />
-    </div>
-  </Collapsible>
-);
-
-const ProjectPageSection = ({
-  data,
-}: {
-  data?: IProfile["pages"]["project"];
-}) => (
-  <Collapsible title="Projeto">
-    <Input
-      label="Título"
-      defaultValue={data?.title}
-      placeholder="Título da página de Projetos"
-    />
-    <Textarea
-      label="Descrição"
-      defaultValue={data?.description}
-      placeholder="Resumo dos projetos"
-    />
-    <div className="pt-4 border-t border-zinc-100 dark:border-zinc-700/40">
-      <Switch
-        label="Mostrar página no menu de navegação"
-        name="show-project"
-        defaultChecked={data?.show}
-      />
-    </div>
-  </Collapsible>
-);
+import { Toast } from "../Lib/Toast";
+import { AboutPageSection } from "./admin/components/AboutPageSection";
+import { ExperiencePageSection } from "./admin/components/ExperiencePageSection";
+import { HomePageSection } from "./admin/components/HomePageSection";
+import { PersonalInfoSection } from "./admin/components/PersonalInfoSection";
+import { ProjectPageSection } from "./admin/components/ProjectPageSection";
+import { SocialSection } from "./admin/components/SocialSection";
 
 const Admin: React.FC = () => {
-  const { profile } = usePortfolio();
+  const { profile, updateProfile } = usePortfolio();
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert("Dados salvos com sucesso!");
+    if (!profile) return;
+
+    try {
+      const formData = new FormData(e.currentTarget);
+
+      const updatedProfile: Partial<IProfile> = {
+        name: formData.get("name") as string,
+        slug: formData.get("slug") as string,
+        email: formData.get("email") as string,
+        imageUrl: formData.get("imageUrl") as string,
+        cvLink: formData.get("cvLink") as string,
+        socials: profile.socials.map((s) => ({
+          ...s,
+          link: (formData.get(`social-${s.id}`) as string) || null,
+        })),
+        pages: {
+          ...profile.pages,
+          home: {
+            ...profile.pages.home,
+            title: formData.get("home-title") as string,
+            description: formData.get("home-description") as string,
+          },
+          about: {
+            ...profile.pages.about,
+            title: formData.get("about-title") as string,
+            description: (formData.get("about-description") as string)
+              .split("\n")
+              .filter((p) => p.trim() !== ""),
+            show: formData.get("show-about") === "on",
+          },
+          experience: {
+            ...profile.pages.experience,
+            title: formData.get("experience-title") as string,
+            description: formData.get("experience-description") as string,
+            disponibleText: formData.get("experience-disponibleText") as string,
+            show: formData.get("show-experience") === "on",
+          },
+          project: {
+            ...profile.pages.project,
+            title: formData.get("project-title") as string,
+            description: formData.get("project-description") as string,
+            show: formData.get("show-project") === "on",
+          },
+        },
+      };
+
+      await updateProfile(updatedProfile);
+
+      setToast({
+        message: "Configurações salvas com sucesso!",
+        type: "success",
+      });
+    } catch (error) {
+      setToast({
+        message: "Erro ao salvar as configurações.",
+        type: "error",
+      });
+    }
   };
 
   return (
-    <form className="mt-32 max-w-4xl mx-auto pb-20">
+    <form onSubmit={handleSave} className="mt-32 max-w-4xl mx-auto pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-12">
         <div>
           <Heading className="text-4xl">Meu Portfólio</Heading>
@@ -203,7 +92,7 @@ const Admin: React.FC = () => {
             Configure sua identidade visual e informações técnicas.
           </Text>
         </div>
-        <Button type="button" className="gap-2" onClick={handleSave}>
+        <Button type="submit" className="gap-2">
           <RiSaveLine size={20} />
           Salvar Alterações
         </Button>
@@ -219,6 +108,16 @@ const Admin: React.FC = () => {
         <ExperiencePageSection data={profile?.pages.experience} />
         <ProjectPageSection data={profile?.pages.project} />
       </div>
+
+      <AnimatePresence>
+        {toast && (
+          <Toast
+            message={toast.message}
+            type={toast.type}
+            onClose={() => setToast(null)}
+          />
+        )}
+      </AnimatePresence>
     </form>
   );
 };
