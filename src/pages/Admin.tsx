@@ -1,23 +1,23 @@
-import { AnimatePresence } from "framer-motion";
-import React, { useEffect, useState } from "react";
-import { RiSaveLine } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
-import { usePortfolio } from "../context/PortfolioContext";
-import { IProfile } from "../interface/portfolio.interface";
-import { Button } from "../Lib/Button";
-import { Heading } from "../Lib/Heading";
-import { Tabs } from "../Lib/Tabs";
-import { Text } from "../Lib/Text";
-import { Toast } from "../Lib/Toast";
-import { AboutPageSection } from "./admin/components/AboutPageSection";
-import { CertificationListSection } from "./admin/components/CertificationListSection";
-import { ExperienceListSection } from "./admin/components/ExperienceListSection";
-import { ExperiencePageSection } from "./admin/components/ExperiencePageSection";
-import { HomePageSection } from "./admin/components/HomePageSection";
-import { PersonalInfoSection } from "./admin/components/PersonalInfoSection";
-import { ProjectListSection } from "./admin/components/ProjectListSection";
-import { ProjectPageSection } from "./admin/components/ProjectPageSection";
-import { SocialSection } from "./admin/components/SocialSection";
+import { AnimatePresence } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { RiSaveLine } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
+import { usePortfolio } from '../context/PortfolioContext';
+import { IProfile } from '../interface/portfolio.interface';
+import { Button } from '../Lib/Button';
+import { Heading } from '../Lib/Heading';
+import { Tabs } from '../Lib/Tabs';
+import { Text } from '../Lib/Text';
+import { Toast } from '../Lib/Toast';
+import { AboutPageSection } from './admin/components/AboutPageSection';
+import { CertificationListSection } from './admin/components/CertificationListSection';
+import { ExperienceListSection } from './admin/components/ExperienceListSection';
+import { ExperiencePageSection } from './admin/components/ExperiencePageSection';
+import { HomePageSection } from './admin/components/HomePageSection';
+import { PersonalInfoSection } from './admin/components/PersonalInfoSection';
+import { ProjectListSection } from './admin/components/ProjectListSection';
+import { ProjectPageSection } from './admin/components/ProjectPageSection';
+import { SocialSection } from './admin/components/SocialSection';
 
 const Admin: React.FC = () => {
   const {
@@ -32,12 +32,12 @@ const Admin: React.FC = () => {
   const navigate = useNavigate();
   const [toast, setToast] = useState<{
     message: string;
-    type: "success" | "error";
+    type: 'success' | 'error';
   } | null>(null);
 
   useEffect(() => {
     if (!loading && !user) {
-      navigate("/login");
+      navigate('/login');
     }
   }, [user, loading, navigate]);
 
@@ -49,11 +49,11 @@ const Admin: React.FC = () => {
       const formData = new FormData(e.currentTarget);
 
       const updatedProfile: Partial<IProfile> = {
-        name: (formData.get("name") as string) || profile?.name,
-        slug: (formData.get("slug") as string) || profile?.slug,
-        email: (formData.get("email") as string) || profile?.email,
-        imageUrl: (formData.get("imageUrl") as string) || profile?.imageUrl,
-        cvLink: (formData.get("cvLink") as string) || profile?.cvLink,
+        name: (formData.get('name') as string) || profile?.name,
+        slug: (formData.get('slug') as string) || profile?.slug,
+        email: (formData.get('email') as string) || profile?.email,
+        imageUrl: (formData.get('imageUrl') as string) || profile?.imageUrl,
+        cvLink: (formData.get('cvLink') as string) || profile?.cvLink,
         socials: profile?.socials.map((s) => ({
           ...s,
           link: (formData.get(`social-${s.id}`) as string) || null,
@@ -63,36 +63,36 @@ const Admin: React.FC = () => {
           home: {
             ...profile.pages.home,
             title:
-              (formData.get("home-title") as string) ||
+              (formData.get('home-title') as string) ||
               profile.pages.home.title,
             description:
-              (formData.get("home-description") as string) ||
+              (formData.get('home-description') as string) ||
               profile.pages.home.description,
           },
           about: {
             ...profile.pages.about,
             title:
-              (formData.get("about-title") as string) ||
+              (formData.get('about-title') as string) ||
               profile.pages.about.title,
             description: profile.pages.about.description.map(
               (_, index) =>
                 (formData.get(`about-description-${index + 1}`) as string) ||
-                "",
+                '',
             ),
-            show: formData.get("show-about") === "on",
+            show: formData.get('show-about') === 'on',
           },
           experience: {
             ...profile.pages.experience,
-            title: formData.get("experience-title") as string,
-            description: formData.get("experience-description") as string,
-            disponibleText: formData.get("experience-disponibleText") as string,
-            show: formData.get("show-experience") === "on",
+            title: formData.get('experience-title') as string,
+            description: formData.get('experience-description') as string,
+            disponibleText: formData.get('experience-disponibleText') as string,
+            show: formData.get('show-experience') === 'on',
           },
           project: {
             ...profile.pages.project,
-            title: formData.get("project-title") as string,
-            description: formData.get("project-description") as string,
-            show: formData.get("show-project") === "on",
+            title: formData.get('project-title') as string,
+            description: formData.get('project-description') as string,
+            show: formData.get('show-project') === 'on',
           },
         },
       };
@@ -100,22 +100,22 @@ const Admin: React.FC = () => {
       await updateProfile(updatedProfile);
 
       setToast({
-        message: "Configurações salvas com sucesso!",
-        type: "success",
+        message: 'Configurações salvas com sucesso!',
+        type: 'success',
       });
     } catch (error) {
       console.error(error);
       setToast({
-        message: "Erro ao salvar as configurações.",
-        type: "error",
+        message: 'Erro ao salvar as configurações.',
+        type: 'error',
       });
     }
   };
 
   const adminTabs = [
     {
-      id: "general",
-      label: "Geral",
+      id: 'general',
+      label: 'Geral',
       content: (
         <div className="space-y-6">
           <PersonalInfoSection profile={profile} />
@@ -124,13 +124,13 @@ const Admin: React.FC = () => {
       ),
     },
     {
-      id: "home",
-      label: "Home",
+      id: 'home',
+      label: 'Home',
       content: <HomePageSection data={profile?.pages.home} />,
     },
     {
-      id: "about",
-      label: "Sobre",
+      id: 'about',
+      label: 'Sobre',
       content: (
         <div className="space-y-6">
           <AboutPageSection data={profile?.pages.about} />
@@ -139,8 +139,8 @@ const Admin: React.FC = () => {
       ),
     },
     {
-      id: "experience",
-      label: "Experiência",
+      id: 'experience',
+      label: 'Experiência',
       content: (
         <div className="space-y-6">
           <ExperiencePageSection data={profile?.pages.experience} />
@@ -149,8 +149,8 @@ const Admin: React.FC = () => {
       ),
     },
     {
-      id: "projects",
-      label: "Projetos",
+      id: 'projects',
+      label: 'Projetos',
       content: (
         <div className="space-y-6">
           <ProjectPageSection data={profile?.pages.project} />

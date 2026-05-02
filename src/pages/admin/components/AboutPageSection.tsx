@@ -1,12 +1,12 @@
-import { IProfile } from "../../../interface/portfolio.interface";
-import { Input } from "../../../Lib/Input";
-import { Switch } from "../../../Lib/Switch";
-import { Textarea } from "../../../Lib/Textarea";
+import { IProfile } from '../../../interface/portfolio.interface';
+import { Input } from '../../../Lib/Input';
+import { Switch } from '../../../Lib/Switch';
+import { Textarea } from '../../../Lib/Textarea';
 
 export const AboutPageSection = ({
   data,
 }: {
-  data?: IProfile["pages"]["about"];
+  data?: IProfile['pages']['about'];
 }) => (
   <div className="p-6 space-y-6">
     <div className="pb-4 border-b border-zinc-100 dark:border-zinc-700/40">
@@ -27,6 +27,7 @@ export const AboutPageSection = ({
 
     {data?.description.map((desc, index) => (
       <Textarea
+        key={`about-desc-${index}`}
         name={`about-description-${index + 1}`}
         label={`Descrição (parágrafo ${index + 1})`}
         rows={6}
