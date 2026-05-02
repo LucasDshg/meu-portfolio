@@ -24,13 +24,16 @@ export const AboutPageSection = ({
       defaultValue={data?.title}
       placeholder="Título da página Sobre"
     />
-    <Textarea
-      name="about-description"
-      label="Descrição (Um parágrafo por linha)"
-      rows={10}
-      required
-      defaultValue={data?.description.join("\n")}
-      placeholder="Escreva sobre sua jornada..."
-    />
+
+    {data?.description.map((desc, index) => (
+      <Textarea
+        name={`about-description-${index + 1}`}
+        label={`Descrição (parágrafo ${index + 1})`}
+        rows={6}
+        required
+        defaultValue={desc}
+        placeholder="Escreva sobre sua jornada..."
+      />
+    ))}
   </div>
 );

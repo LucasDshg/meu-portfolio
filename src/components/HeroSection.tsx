@@ -49,7 +49,7 @@ const HeroSection: React.FC<IHeroSectionProps> = ({
             transition={{ delay: 0.3 }}
             className="mt-6"
           >
-            <Text>{description}</Text>
+            <Text className="text-justify">{description}</Text>
           </motion.div>
 
           <motion.div

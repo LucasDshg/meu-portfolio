@@ -43,7 +43,14 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, className = "" }) => {
         })}
       </div>
       <div className="space-y-6">
-        {tabs.find((tab) => tab.id === activeTab)?.content}
+        {tabs.map((tab) => (
+          <div
+            key={tab.id}
+            className={activeTab === tab.id ? "block" : "hidden"}
+          >
+            {tab.content}
+          </div>
+        ))}
       </div>
     </div>
   );

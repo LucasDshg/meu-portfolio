@@ -43,7 +43,7 @@ const About: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 + index * 0.1 }}
             >
-              <Text>{paragraph}</Text>
+              <Text className="text-justify">{paragraph}</Text>
             </motion.div>
           ))}
         </div>

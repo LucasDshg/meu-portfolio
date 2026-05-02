@@ -32,7 +32,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({
               {exp.duration}
             </Text>
             <Subheading className="mt-2 text-lg">{exp.role}</Subheading>
-            <Text className="mt-4 leading-relaxed">{exp.description}</Text>
+            <Text className="mt-4 text-justify">{exp.description}</Text>
             <div className="mt-4 flex flex-wrap gap-2">
               {exp.technologies.map((tech) => (
                 <Badge key={tech} color="zinc">

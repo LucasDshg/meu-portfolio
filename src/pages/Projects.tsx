@@ -80,7 +80,9 @@ const Projects: React.FC = () => {
         <Heading className="text-4xl sm:text-5xl">
           {profile?.pages.project.title}
         </Heading>
-        <Text className="mt-6">{profile?.pages.project.description}</Text>
+        <Text className="mt-6 text-justify">
+          {profile?.pages.project.description}
+        </Text>
       </div>
 
       <div className="mt-16 sm:mt-20">
@@ -105,7 +107,7 @@ const Projects: React.FC = () => {
 
                 <div className="flex flex-col p-6 flex-1">
                   <Subheading>{project.name}</Subheading>
-                  <Text className="mt-2 text-sm flex-grow">
+                  <Text className="mt-2 text-sm flex-grow text-justify">
                     {project.description}
                   </Text>
 

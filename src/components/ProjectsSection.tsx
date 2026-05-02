@@ -28,7 +28,7 @@ const ProjectsSection: React.FC<IProjectsSectionProps> = ({ projects }) => {
             <Card variant="outline" height="h-full">
               <Avatar className="size-10" src={project.image} />
               <Subheading className="mt-6">{project.name}</Subheading>
-              <Text className="relative z-10 mt-2 text-sm flex-grow">
+              <Text className="relative z-10 mt-2 text-sm flex-grow text-justify">
                 {project.description}
               </Text>
               {project.technologies && project.technologies.length > 0 && (

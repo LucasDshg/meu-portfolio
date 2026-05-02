@@ -34,11 +34,11 @@ const Admin: React.FC = () => {
       const formData = new FormData(e.currentTarget);
 
       const updatedProfile: Partial<IProfile> = {
-        name: formData.get("name") as string,
-        slug: formData.get("slug") as string,
-        email: formData.get("email") as string,
-        imageUrl: formData.get("imageUrl") as string,
-        cvLink: formData.get("cvLink") as string,
+        name: (formData.get("name") as string) || profile.name,
+        slug: (formData.get("slug") as string) || profile.slug,
+        email: (formData.get("email") as string) || profile.email,
+        imageUrl: (formData.get("imageUrl") as string) || profile.imageUrl,
+        cvLink: (formData.get("cvLink") as string) || profile.cvLink,
         socials: profile.socials.map((s) => ({
           ...s,
           link: (formData.get(`social-${s.id}`) as string) || null,
@@ -47,15 +47,23 @@ const Admin: React.FC = () => {
           ...profile.pages,
           home: {
             ...profile.pages.home,
-            title: formData.get("home-title") as string,
-            description: formData.get("home-description") as string,
+            title:
+              (formData.get("home-title") as string) ||
+              profile.pages.home.title,
+            description:
+              (formData.get("home-description") as string) ||
+              profile.pages.home.description,
           },
           about: {
             ...profile.pages.about,
-            title: formData.get("about-title") as string,
-            description: (formData.get("about-description") as string)
-              .split("\n")
-              .filter((p) => p.trim() !== ""),
+            title:
+              (formData.get("about-title") as string) ||
+              profile.pages.about.title,
+            description: profile.pages.about.description.map(
+              (_, index) =>
+                (formData.get(`about-description-${index + 1}`) as string) ||
+                "",
+            ),
             show: formData.get("show-about") === "on",
           },
           experience: {
@@ -81,6 +89,7 @@ const Admin: React.FC = () => {
         type: "success",
       });
     } catch (error) {
+      console.error(error);
       setToast({
         message: "Erro ao salvar as configurações.",
         type: "error",

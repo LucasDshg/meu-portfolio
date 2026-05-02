@@ -19,7 +19,9 @@ const Experience: React.FC = () => {
             {profile!.pages.experience.title}
           </Heading>
           <div className="mt-6">
-            <Text>{profile!.pages.experience.description}</Text>
+            <Text className="text-justify">
+              {profile!.pages.experience.description}
+            </Text>
           </div>
 
           <div className="mt-12 space-y-16 border-l border-zinc-100 dark:border-zinc-700/40 ml-2">
@@ -39,7 +41,9 @@ const Experience: React.FC = () => {
                   {exp.role} —{" "}
                   <span className="text-teal-500">{exp.company}</span>
                 </Subheading>
-                <Text className="mt-4 leading-relaxed">{exp.description}</Text>
+                <Text className="mt-4 leading-relaxed text-justify">
+                  {exp.description}
+                </Text>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {exp.technologies.map((tech) => (
                     <Badge key={tech} color="zinc">
