@@ -20,6 +20,7 @@ export interface IProfile {
   project: string;
   profileImageUrl: string;
   cvLink: string;
+  slug: string;
   aboutBio: string[];
   menu: Record<string, IMenuItem>;
   socials: ISocials;

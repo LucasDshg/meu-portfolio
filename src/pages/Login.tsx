@@ -26,7 +26,7 @@ const Login: React.FC = () => {
       <div className="w-full max-w-md">
         <Card variant="primary" className="text-center">
           <div className="flex justify-center mb-6">
-            <img src={logoIcon} alt="Logo" className="h-30 w-30" />
+            <img src={logoIcon} alt="Logo" className="h-30 w-33" />
           </div>
           <Heading className="text-3xl mb-2">Crie seu Portfólio</Heading>
           <Text className="mb-8">
@@ -34,7 +34,6 @@ const Login: React.FC = () => {
             pronto para ser compartilhado em suas redes sociais e destacar sua
             trajetória para o mundo.
           </Text>
-
           <Button
             onClick={handleGoogleLogin}
             variant="outline"
@@ -43,7 +42,6 @@ const Login: React.FC = () => {
             <FcGoogle size={24} />
             Entrar com Google
           </Button>
-
           <Button
             onClick={() => navigate(-1)}
             variant="ghost"
