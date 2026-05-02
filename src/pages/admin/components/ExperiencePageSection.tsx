@@ -20,18 +20,21 @@ export const ExperiencePageSection = ({
     <Input
       name="experience-title"
       label="Título"
+      required
       defaultValue={data?.title}
       placeholder="Título da página de Experiência"
     />
     <Textarea
       name="experience-description"
       label="Descrição"
+      required
       defaultValue={data?.description}
       placeholder="Resumo da carreira"
     />
     <Textarea
       name="experience-disponibleText"
       label="Texto de Disponibilidade"
+      required
       defaultValue={data?.disponibleText}
       placeholder="Ex: Disponível para novos desafios"
     />

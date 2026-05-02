@@ -20,6 +20,7 @@ export const AboutPageSection = ({
     <Input
       name="about-title"
       label="Título"
+      required
       defaultValue={data?.title}
       placeholder="Título da página Sobre"
     />
@@ -27,6 +28,7 @@ export const AboutPageSection = ({
       name="about-description"
       label="Descrição (Um parágrafo por linha)"
       rows={10}
+      required
       defaultValue={data?.description.join("\n")}
       placeholder="Escreva sobre sua jornada..."
     />

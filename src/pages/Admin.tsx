@@ -9,10 +9,12 @@ import { Tabs } from "../Lib/Tabs";
 import { Text } from "../Lib/Text";
 import { Toast } from "../Lib/Toast";
 import { AboutPageSection } from "./admin/components/AboutPageSection";
+import { CertificationListSection } from "./admin/components/CertificationListSection";
 import { ExperienceListSection } from "./admin/components/ExperienceListSection";
 import { ExperiencePageSection } from "./admin/components/ExperiencePageSection";
 import { HomePageSection } from "./admin/components/HomePageSection";
 import { PersonalInfoSection } from "./admin/components/PersonalInfoSection";
+import { ProjectListSection } from "./admin/components/ProjectListSection";
 import { ProjectPageSection } from "./admin/components/ProjectPageSection";
 import { SocialSection } from "./admin/components/SocialSection";
 
@@ -108,7 +110,7 @@ const Admin: React.FC = () => {
       content: (
         <div className="space-y-6">
           <AboutPageSection data={profile?.pages.about} />
-          {/* CertificationListSection aqui no futuro */}
+          <CertificationListSection certifications={certifications} />
         </div>
       ),
     },
@@ -128,7 +130,7 @@ const Admin: React.FC = () => {
       content: (
         <div className="space-y-6">
           <ProjectPageSection data={profile?.pages.project} />
-          {/* ProjectListSection aqui no futuro */}
+          <ProjectListSection projects={projects} />
         </div>
       ),
     },

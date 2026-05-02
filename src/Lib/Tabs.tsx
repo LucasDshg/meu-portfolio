@@ -26,7 +26,7 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, className = "" }) => {
               type="button"
               onClick={() => setActiveTab(tab.id)}
               className={`
-                relative flex-1 px-6 py-2.5 text-base font-medium transition-colors duration-300 cursor-pointer whitespace-nowrap rounded-xl
+                relative flex-1 px-3 sm:px-6 py-2.5 text-base font-medium transition-colors duration-300 cursor-pointer whitespace-nowrap rounded-xl
                 ${isActive ? "text-teal-700 dark:text-teal-300" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100"}
               `}
             >

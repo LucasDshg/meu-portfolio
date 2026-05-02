@@ -12,11 +12,13 @@ export const HomePageSection = ({
       label="Título (Hero)"
       name="home-title"
       defaultValue={data?.title}
+      required
       placeholder="Título principal da Home"
     />
     <Textarea
       name="home-description"
       label="Descrição (Hero)"
+      required
       defaultValue={data?.description}
       placeholder="O que você faz?"
     />

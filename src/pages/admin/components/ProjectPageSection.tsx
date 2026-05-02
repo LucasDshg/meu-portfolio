@@ -20,12 +20,14 @@ export const ProjectPageSection = ({
     <Input
       name="project-title"
       label="Título"
+      required
       defaultValue={data?.title}
       placeholder="Título da página de Projetos"
     />
     <Textarea
       name="project-description"
       label="Descrição"
+      required
       defaultValue={data?.description}
       placeholder="Resumo dos projetos"
     />
