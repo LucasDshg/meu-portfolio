@@ -1,28 +1,20 @@
 // components/ExperienceSection.tsx
 import { motion } from "framer-motion";
 import React from "react";
+import { IExperienceSectionProps } from "../interface/experience.interface";
 import { Badge } from "../Lib/Badge";
 import { Button } from "../Lib/Button";
 import { Heading } from "../Lib/Heading";
 import { Subheading } from "../Lib/Subheading";
 import { Text } from "../Lib/Text";
-
-interface IExperience {
-  id: number;
-  company: string;
-  role: string;
-  duration: string;
-  description: string;
-  technologies: string[];
-}
-
-interface IExperienceSectionProps {
-  experiences: IExperience[];
-}
+import { pathName } from "../utils/navigation.utils";
 
 const ExperienceSection: React.FC<IExperienceSectionProps> = ({
   experiences,
 }) => {
+  const path = pathName();
+  const href = `/u/${path.slug}/experience`;
+
   return (
     <section id="experience" className="mt-24 md:mt-28">
       <Heading className="mb-8">Experiência</Heading>
@@ -52,7 +44,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({
         ))}
       </div>
       <div className="mt-12 flex justify-center">
-        <Button href="/experience" variant="outline">
+        <Button href={href} variant="outline">
           Ver todas as experiências
         </Button>
       </div>

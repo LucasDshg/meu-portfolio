@@ -8,7 +8,7 @@ import { Card } from "../Lib/Card";
 import { Heading } from "../Lib/Heading";
 import { Subheading } from "../Lib/Subheading";
 import { Text } from "../Lib/Text";
-import { projectsData } from "../data/data";
+import { usePortfolio } from "../context/PortfolioContext";
 
 const ProjectCarousel = ({
   images,
@@ -72,23 +72,20 @@ const ProjectCarousel = ({
 };
 
 const Projects: React.FC = () => {
+  const { projects, profile } = usePortfolio();
+
   return (
     <div className="mt-32">
       <div className="max-w-2xl">
         <Heading className="text-4xl sm:text-5xl">
-          Projetos que construí tentando deixar minha marca no mundo.
+          Alguns dos projetos que participei ou desenvolvi.
         </Heading>
-        <Text className="mt-6">
-          Eu trabalhei em uma grande variedade de projetos ao longo dos anos,
-          mas estes são alguns dos meus projetos pessoais mais importantes.
-          Alguns deles são de código aberto, então se você vir algo que desperte
-          seu interesse, sinta-se à vontade para explorar o código.
-        </Text>
+        <Text className="mt-6">{profile!.project}</Text>
       </div>
 
       <div className="mt-16 sm:mt-20">
         <ul role="list" className="flex flex-col gap-y-12">
-          {projectsData.map((project) => (
+          {projects?.map((project) => (
             <motion.li
               key={project.id}
               initial={{ opacity: 0, y: 20 }}
@@ -101,7 +98,7 @@ const Projects: React.FC = () => {
               >
                 <div className="relative w-48 sm:w-64 md:w-96 overflow-hidden flex-none border-r border-zinc-100 dark:border-zinc-700/40">
                   <ProjectCarousel
-                    images={project.images}
+                    images={project.images!}
                     name={project.name}
                   />
                 </div>
@@ -124,6 +121,8 @@ const Projects: React.FC = () => {
                     {project.githubLink && (
                       <Button
                         href={project.githubLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         variant="outline"
                         className="flex-1"
                       >
@@ -134,6 +133,8 @@ const Projects: React.FC = () => {
                     {project.liveLink && (
                       <Button
                         href={project.liveLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         variant="primary"
                         className="flex-1"
                       >

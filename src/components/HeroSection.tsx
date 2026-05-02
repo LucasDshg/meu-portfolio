@@ -5,20 +5,7 @@ import { RiGithubLine, RiLinkedinLine, RiMailLine } from "react-icons/ri";
 import { Button } from "../Lib/Button";
 import { Text } from "../Lib/Text";
 import { TextLink } from "../Lib/TextLink";
-
-interface IHeroSectionProps {
-  name: string;
-  title: string;
-  description: string;
-  profileImageUrl: string;
-  cvLink?: string;
-  socials: {
-    github?: string;
-    linkedin?: string;
-    twitter?: string;
-    email?: string;
-  };
-}
+import { IHeroSectionProps } from "../interface/hero.interface";
 
 const HeroSection: React.FC<IHeroSectionProps> = ({
   title,

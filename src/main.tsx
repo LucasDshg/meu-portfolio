@@ -1,14 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-
+import { PortfolioProvider } from "./context/PortfolioContext";
 import App from "./pages/App";
 import "./styles/globals.less";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <PortfolioProvider>
+        <App />
+      </PortfolioProvider>
     </BrowserRouter>
   </React.StrictMode>,
 );

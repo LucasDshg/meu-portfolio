@@ -6,9 +6,10 @@ import { Button } from "../Lib/Button";
 import { Heading } from "../Lib/Heading";
 import { Subheading } from "../Lib/Subheading";
 import { Text } from "../Lib/Text";
-import { experiencesData, profileData } from "../data/data";
+import { usePortfolio } from "../context/PortfolioContext";
 
 const Experience: React.FC = () => {
+  const { experiences, profile } = usePortfolio();
   return (
     <div className="mt-32">
       <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:gap-x-12">
@@ -17,16 +18,11 @@ const Experience: React.FC = () => {
             Minha trajetória profissional e impacto técnico.
           </Heading>
           <div className="mt-6">
-            <Text>
-              Ao longo da minha carreira, tenho focado em construir sistemas
-              escaláveis e resolver desafios complexos de engenharia. Abaixo,
-              você encontrará um detalhamento das empresas onde colaborei e as
-              tecnologias que utilizei.
-            </Text>
+            <Text>{profile!.experience}</Text>
           </div>
 
           <div className="mt-12 space-y-16 border-l border-zinc-100 dark:border-zinc-700/40 ml-2">
-            {experiencesData.map((exp, index) => (
+            {experiences.map((exp, index) => (
               <motion.article
                 key={`${exp.id}-${index}`}
                 initial={{ opacity: 0, x: -10 }}
@@ -76,7 +72,7 @@ const Experience: React.FC = () => {
               Currículo
             </Subheading>
             <Button
-              href={profileData.cvLink}
+              href={profile?.cvLink}
               download
               variant="outline"
               className="mt-6 w-full"

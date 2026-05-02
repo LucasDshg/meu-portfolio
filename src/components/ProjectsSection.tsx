@@ -10,27 +10,13 @@ import { Card } from "../Lib/Card";
 import { Heading } from "../Lib/Heading";
 import { Subheading } from "../Lib/Subheading";
 import { Text } from "../Lib/Text";
-
-interface IProject {
-  id: number;
-  name: string;
-  description: string;
-  technologies: string[];
-  githubLink: string | null;
-  liveLink: string | null;
-  images?: string[];
-  image: string | null;
-}
-
-interface IProjectsSectionProps {
-  projects: IProject[];
-}
+import { IProjectsSectionProps } from "../interface/project.interface";
 
 const ProjectsSection: React.FC<IProjectsSectionProps> = ({ projects }) => {
   return (
     <section id="projects" className="mt-24 md:mt-28">
       <Heading className="mb-8">Projetos</Heading>
-      <ul className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-2">
         {projects.map((project) => (
           <motion.li
             key={project.id}
@@ -56,13 +42,23 @@ const ProjectsSection: React.FC<IProjectsSectionProps> = ({ projects }) => {
               )}
               <div className="relative z-10 mt-6 flex gap-4 text-sm font-medium">
                 {project.githubLink && (
-                  <Button href={project.githubLink} variant="outline">
+                  <Button
+                    href={project.githubLink}
+                    variant="outline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <FaGithub className="h-4 w-4 flex-none mr-1" />
                     GitHub
                   </Button>
                 )}
                 {project.liveLink && (
-                  <Button href={project.liveLink} variant="outline">
+                  <Button
+                    href={project.liveLink}
+                    variant="outline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <RiExternalLinkLine className="h-5 w-5 flex-none mr-1 stroke-[0.5]" />
                     Ver Projeto
                   </Button>
