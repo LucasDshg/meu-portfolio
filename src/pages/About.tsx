@@ -32,7 +32,9 @@ const About: React.FC = () => {
       </div>
 
       <div className="lg:order-first lg:row-span-2">
-        <Heading className="text-4xl sm:text-5xl">Sou {profile!.name}</Heading>
+        <Heading className="text-4xl sm:text-5xl">
+          {profile!.pages.about.title}
+        </Heading>
         <div className="mt-6 space-y-7">
           {profile!.pages.about.description.map((paragraph, index) => (
             <motion.div

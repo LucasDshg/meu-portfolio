@@ -59,8 +59,7 @@ const Experience: React.FC = () => {
               Disponibilidade
             </Subheading>
             <Text className="mt-4 text-sm">
-              Estou sempre aberto a novos desafios e parcerias técnicas. Se você
-              tem um projeto interessante, vamos conversar.
+              {profile?.pages.experience.disponibleText}
             </Text>
             <Button href="/about" variant="secondary" className="mt-6 w-full">
               Sobre mim

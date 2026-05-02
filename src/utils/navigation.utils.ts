@@ -15,8 +15,11 @@ export const pathName = () => {
 export const useNavigationMenu = (profile: IProfile) => {
   const path = pathName();
 
-  const menus = profile?.menu
-    ? profile.menu.filter((item) => item.show).sort((a, b) => a.order - b.order)
+  const menus = profile?.pages
+    ? Object.entries(profile.pages)
+        .map(([id, page]) => ({ id, ...page }))
+        .filter((page) => page.show)
+        .sort((a, b) => a.order - b.order)
     : [];
 
   return {
