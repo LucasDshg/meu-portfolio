@@ -1,12 +1,12 @@
 export interface ISocials {
-  linkedin: string | null;
-  github: string | null;
-  twitter: string | null;
-  instagram: string | null;
-  email: string | null;
+  id: string;
+  name: string;
+  link: string | null;
+  order: number;
 }
 
 export interface IMenuItem {
+  id: string;
   name: string;
   show: boolean;
   order: number;
@@ -14,40 +14,28 @@ export interface IMenuItem {
 
 export interface IProfile {
   name: string;
-  title: string;
-  description: string;
-  experience: string;
-  project: string;
-  profileImageUrl: string;
+  imageUrl: string;
   cvLink: string;
   slug: string;
-  aboutBio: string[];
-  menu: Record<string, IMenuItem>;
-  socials: ISocials;
-}
-
-export interface IExperience {
-  id: number;
-  company: string;
-  role: string;
-  duration: string;
-  description: string;
-  technologies: string[];
-}
-
-export interface IProject {
-  id: number;
-  name: string;
-  description: string;
-  technologies: string[];
-  githubLink: string | null;
-  liveLink: string | null;
-  images: string[];
-  image: string | null;
-}
-
-export interface IPortfolioData {
-  profile: IProfile | null;
-  experiences: IExperience[];
-  projects: IProject[];
+  menu: IMenuItem[];
+  socials: ISocials[];
+  pages: {
+    home: {
+      title: string;
+      description: string;
+    };
+    about: {
+      title: string;
+      description: string[];
+    };
+    experience: {
+      title: string;
+      description: string;
+      disponibleText: string;
+    };
+    project: {
+      title: string;
+      description: string;
+    };
+  };
 }

@@ -1,3 +1,4 @@
+import { RiGithubLine, RiLinkedinLine, RiMailLine } from "react-icons/ri";
 import { useLocation } from "react-router-dom";
 import { IProfile } from "../interface/portfolio.interface";
 export const pathName = () => {
@@ -15,14 +16,28 @@ export const useNavigationMenu = (profile: IProfile) => {
   const path = pathName();
 
   const menus = profile?.menu
-    ? Object.entries(profile.menu)
-        .filter(([_, value]) => value.show)
-        .map(([id, value]) => ({ id, ...value }))
-        .sort((a, b) => a.order - b.order)
+    ? profile.menu.filter((item) => item.show).sort((a, b) => a.order - b.order)
     : [];
 
   return {
     ...path,
     menus,
   };
+};
+
+export const getSocialIcon = (name: string) => {
+  const lowerName = name.toLowerCase();
+  if (lowerName.includes("github")) return RiGithubLine;
+  if (lowerName.includes("linkedin")) return RiLinkedinLine;
+  if (lowerName.includes("mail") || lowerName.includes("email"))
+    return RiMailLine;
+  return null;
+};
+
+export const getSocialHref = (name: string, link: string) => {
+  const lowerName = name.toLowerCase();
+  if (lowerName.includes("mail") || lowerName.includes("email")) {
+    return `mailto:${link}`;
+  }
+  return link;
 };

@@ -78,9 +78,9 @@ const Projects: React.FC = () => {
     <div className="mt-32">
       <div className="max-w-2xl">
         <Heading className="text-4xl sm:text-5xl">
-          Alguns dos projetos que participei ou desenvolvi.
+          {profile?.pages.project.title}
         </Heading>
-        <Text className="mt-6">{profile!.project}</Text>
+        <Text className="mt-6">{profile?.pages.project.description}</Text>
       </div>
 
       <div className="mt-16 sm:mt-20">

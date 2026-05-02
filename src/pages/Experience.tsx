@@ -16,10 +16,10 @@ const Experience: React.FC = () => {
       <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:gap-x-12">
         <div className="lg:order-first">
           <Heading className="text-4xl sm:text-5xl">
-            Minha trajetória profissional e impacto técnico.
+            {profile!.pages.experience.title}
           </Heading>
           <div className="mt-6">
-            <Text>{profile!.experience}</Text>
+            <Text>{profile!.pages.experience.description}</Text>
           </div>
 
           <div className="mt-12 space-y-16 border-l border-zinc-100 dark:border-zinc-700/40 ml-2">

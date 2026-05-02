@@ -16,6 +16,11 @@ const Admin: React.FC = () => {
     alert("Dados salvos com sucesso!");
   };
 
+  const getSocialLink = (name: string) =>
+    profile?.socials?.find((s) =>
+      s.name.toLowerCase().includes(name.toLowerCase()),
+    )?.link || "";
+
   return (
     <form className="mt-32 max-w-4xl mx-auto pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-12">
@@ -25,7 +30,7 @@ const Admin: React.FC = () => {
             Configure sua identidade visual e informações técnicas.
           </Text>
         </div>
-        <Button type="button" className="gap-2" onClick={handleSave}>
+        <Button type="button" className="gap-2">
           <RiSaveLine size={20} />
           Salvar Alterações
         </Button>
@@ -49,13 +54,13 @@ const Admin: React.FC = () => {
           </div>
           <Input
             label="Link da Foto (URL)"
-            defaultValue={profile?.profileImageUrl}
+            defaultValue={profile?.imageUrl}
             placeholder="https://..."
           />
           <Textarea
             label="Biografia (Sobre)"
             rows={12}
-            defaultValue={profile?.aboutBio?.join("\n")}
+            defaultValue={profile?.pages.about.description.join("\n")}
             placeholder="Escreva sobre sua jornada..."
             required
           />
@@ -65,17 +70,17 @@ const Admin: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Input
               label="LinkedIn"
-              defaultValue={profile?.socials?.linkedin}
+              defaultValue={getSocialLink("linkedin")}
               placeholder="Link do perfil"
             />
             <Input
               label="GitHub"
-              defaultValue={profile?.socials?.github}
+              defaultValue={getSocialLink("github")}
               placeholder="Link do perfil"
             />
             <Input
               label="E-mail de Contato"
-              defaultValue={profile?.socials?.email}
+              defaultValue={getSocialLink("email")}
               placeholder="seu@email.com"
             />
             <Input
@@ -89,17 +94,17 @@ const Admin: React.FC = () => {
         <Collapsible title="Chamadas de Texto">
           <Textarea
             label="Título Hero (Home)"
-            defaultValue={profile?.description}
+            defaultValue={profile?.pages.home.description}
             placeholder="O que você faz?"
           />
           <Textarea
             label="Bio Seção Experiência"
-            defaultValue={profile?.experience}
+            defaultValue={profile?.pages.experience.description}
             placeholder="Resumo da carreira"
           />
           <Textarea
             label="Bio Seção Projetos"
-            defaultValue={profile?.project}
+            defaultValue={profile?.pages.project.description}
             placeholder="Resumo dos projetos"
           />
         </Collapsible>

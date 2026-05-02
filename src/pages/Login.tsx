@@ -15,7 +15,7 @@ const Login: React.FC = () => {
   const handleGoogleLogin = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      navigate("/");
+      navigate("/admin");
     } catch (error) {
       console.error("Erro ao fazer login:", error);
     }

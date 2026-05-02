@@ -6,7 +6,7 @@ import { TextLink } from "../Lib/TextLink";
 import { useNavigationMenu } from "../utils/navigation.utils";
 
 const Footer: React.FC = () => {
-  const { profile } = usePortfolio();
+  const { profile, user } = usePortfolio();
   const { menus, slug } = useNavigationMenu(profile!);
 
   return (
@@ -25,10 +25,10 @@ const Footer: React.FC = () => {
                 );
               })}
               <TextLink
-                href="/login"
+                href={user ? "/admin" : "/login"}
                 className="text-teal-500 hover:text-teal-600 dark:text-teal-400"
               >
-                Criar meu portfólio
+                {user ? "Editar meu portfólio" : "Criar meu portfólio"}
               </TextLink>
             </div>
           </div>

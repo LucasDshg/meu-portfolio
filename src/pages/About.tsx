@@ -1,15 +1,20 @@
 import { motion } from "framer-motion";
 import React from "react";
-import { RiGithubLine, RiLinkedinLine, RiMailLine } from "react-icons/ri";
 import { Card } from "../Lib/Card";
 import { Heading } from "../Lib/Heading";
 import { Subheading } from "../Lib/Subheading";
 import { Text } from "../Lib/Text";
 import { TextLink } from "../Lib/TextLink";
 import { usePortfolio } from "../context/PortfolioContext";
+import { getSocialHref, getSocialIcon } from "../utils/navigation.utils";
 
 const About: React.FC = () => {
   const { profile, certifications } = usePortfolio();
+
+  const activeSocials =
+    profile?.socials
+      ?.filter((s) => s.link !== null)
+      .sort((a, b) => a.order - b.order) || [];
 
   return (
     <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-y-12 mt-32">
@@ -19,7 +24,7 @@ const About: React.FC = () => {
             initial={{ opacity: 0, scale: 0.9, rotate: 0 }}
             animate={{ opacity: 1, scale: 1, rotate: 3 }}
             transition={{ duration: 0.5 }}
-            src={profile?.profileImageUrl}
+            src={profile?.imageUrl}
             alt="Foto de perfil"
             className="aspect-square rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800 shadow-lg"
           />
@@ -29,7 +34,7 @@ const About: React.FC = () => {
       <div className="lg:order-first lg:row-span-2">
         <Heading className="text-4xl sm:text-5xl">Sou {profile!.name}</Heading>
         <div className="mt-6 space-y-7">
-          {profile!.aboutBio.map((paragraph, index) => (
+          {profile!.pages.about.description.map((paragraph, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 10 }}
@@ -48,42 +53,22 @@ const About: React.FC = () => {
             Redes Sociais
           </Subheading>
           <ul role="list" className="space-y-4">
-            {profile!.socials?.linkedin && (
-              <li className="flex">
-                <TextLink
-                  href={profile!.socials?.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex gap-2 items-center text-sm font-medium text-zinc-950 dark:text-white z-10"
-                >
-                  <RiLinkedinLine className="size-6" />
-                  Siga no LinkedIn
-                </TextLink>
-              </li>
-            )}
-            {profile!.socials?.github && (
-              <li className="flex">
-                <TextLink
-                  href={profile!.socials?.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex gap-2 items-center text-sm font-medium text-zinc-950 dark:text-white z-10"
-                >
-                  <RiGithubLine className="size-6" />
-                  Siga no GitHub
-                </TextLink>
-              </li>
-            )}
-
-            <li className="flex gap-4 items-center">
-              <TextLink
-                href={`mailto:${profile!.socials!.email}`}
-                className="flex gap-2 items-center text-sm font-medium text-zinc-950 dark:text-white z-10"
-              >
-                <RiMailLine className="size-6" />
-                {profile!.socials!.email}
-              </TextLink>
-            </li>
+            {activeSocials.map((social) => {
+              const Icon = getSocialIcon(social.name);
+              return (
+                <li key={social.id} className="flex">
+                  <TextLink
+                    href={getSocialHref(social.name, social.link!)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex gap-2 items-center text-sm font-medium text-zinc-950 dark:text-white z-10"
+                  >
+                    {Icon && <Icon className="size-6" />}
+                    {social.name}
+                  </TextLink>
+                </li>
+              );
+            })}
           </ul>
         </Card>
 

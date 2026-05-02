@@ -11,7 +11,14 @@ const Home: React.FC = () => {
 
   return (
     <main>
-      <HeroSection {...profile} socials={profile.socials} />
+      <HeroSection
+        name={profile.name}
+        title={profile.pages.home.title}
+        description={profile.pages.home.description}
+        imageUrl={profile.imageUrl}
+        cvLink={profile.cvLink}
+        socials={profile.socials}
+      />
       <ExperienceSection experiences={experiences} />
       <ProjectsSection projects={projects} />
     </main>
