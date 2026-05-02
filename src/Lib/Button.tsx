@@ -2,7 +2,7 @@ import React from "react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string;
-  variant?: "primary" | "secondary" | "outline";
+  variant?: "primary" | "secondary" | "outline" | "ghost";
   className?: string;
   download?: boolean | string;
   target?: string;
@@ -26,6 +26,8 @@ export const Button: React.FC<ButtonProps> = ({
       "bg-zinc-100 text-zinc-900 hover:bg-zinc-200 active:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700",
     outline:
       "ring-1 ring-zinc-900/10 text-zinc-900 hover:ring-teal-500 hover:text-teal-600 dark:ring-white/10 dark:text-zinc-400 dark:hover:ring-teal-400 dark:hover:text-teal-400",
+    ghost:
+      "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100",
   };
 
   const combinedClassName = `${baseStyles} ${variants[variant]} ${className}`;

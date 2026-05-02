@@ -11,6 +11,7 @@ import {
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { auth, db } from "../data/firebase";
+import { ICertifications } from "../interface/certifications.interface";
 import { IExperience } from "../interface/experience.interface";
 import { IProfile } from "../interface/portfolio.interface";
 import { IProject } from "../interface/project.interface";
@@ -20,6 +21,7 @@ interface PortfolioContextType {
   profile: IProfile | null;
   experiences: IExperience[];
   projects: IProject[];
+  certifications: ICertifications[];
   loading: boolean;
 }
 
@@ -37,6 +39,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
   const [profile, setProfile] = useState<IProfile | null>(null);
   const [experiences, setExperiences] = useState<IExperience[]>([]);
   const [projects, setProjects] = useState<IProject[]>([]);
+  const [certifications, setCertifications] = useState<ICertifications[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -96,6 +99,14 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
         query(collection(userDocRef, "projects"), orderBy("id", "asc")),
       );
       setProjects(projSnap.docs.map((doc) => doc.data() as IProject));
+
+      const certSnap = await getDocs(
+        query(collection(userDocRef, "certifications"), orderBy("id", "asc")),
+      );
+
+      setCertifications(
+        certSnap.docs.map((doc) => doc.data() as ICertifications),
+      );
     } catch (error) {
       console.error("Erro ao carregar dados do Firebase:", error);
     } finally {
@@ -105,7 +116,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <PortfolioContext.Provider
-      value={{ user, profile, experiences, projects, loading }}
+      value={{ user, profile, experiences, projects, certifications, loading }}
     >
       {children}
     </PortfolioContext.Provider>

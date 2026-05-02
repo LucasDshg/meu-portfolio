@@ -10,6 +10,7 @@ import { usePortfolio } from "../context/PortfolioContext";
 
 const Experience: React.FC = () => {
   const { experiences, profile } = usePortfolio();
+
   return (
     <div className="mt-32">
       <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:gap-x-12">

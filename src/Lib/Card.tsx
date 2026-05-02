@@ -4,12 +4,14 @@ interface CardProps {
   children: React.ReactNode;
   variant?: "outline" | "primary";
   className?: string;
+  height?: string;
 }
 
 export const Card: React.FC<CardProps> = ({
   children,
   variant = "outline",
   className = "",
+  height = "auto",
 }) => {
   const variants = {
     outline:
@@ -19,7 +21,7 @@ export const Card: React.FC<CardProps> = ({
   };
 
   return (
-    <div className="group relative flex h-full">
+    <div className={`group relative flex ${height}`}>
       <div className="absolute -inset-y-1 -inset-x-1 z-0 bg-zinc-50 opacity-0 transition group-hover:opacity-100 dark:bg-zinc-800/50 sm:rounded-2xl" />
 
       <div

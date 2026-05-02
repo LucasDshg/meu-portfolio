@@ -25,7 +25,7 @@ const ProjectsSection: React.FC<IProjectsSectionProps> = ({ projects }) => {
             viewport={{ once: true, amount: 0.2 }}
             className="group relative flex flex-col items-start"
           >
-            <Card variant="outline">
+            <Card variant="outline" height="h-full">
               <Avatar className="size-10" src={project.image} />
               <Subheading className="mt-6">{project.name}</Subheading>
               <Text className="relative z-10 mt-2 text-sm flex-grow">

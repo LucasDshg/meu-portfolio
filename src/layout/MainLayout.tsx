@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { LoadingPage } from "../components/LoadingPage";
+import { usePortfolio } from "../context/PortfolioContext";
 
 interface IMainLayoutProps {
   children: React.ReactNode;
@@ -9,6 +11,7 @@ interface IMainLayoutProps {
 
 const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
   const { pathname } = useLocation();
+  const { loading, profile } = usePortfolio();
   const [darkMode, setDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem("theme");
     return (
@@ -27,9 +30,11 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
     }
   }, [darkMode]);
 
+  if (loading) return <LoadingPage />;
+
   return (
     <div className="min-h-screen bg-white dark:bg-black text-zinc-600 dark:text-zinc-400 font-sans transition-colors duration-500">
-      {pathname !== "/login" && (
+      {pathname !== "/login" && profile && (
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
       )}
 
@@ -38,7 +43,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
           <div className="mx-auto max-w-2xl lg:max-w-5xl flex-1 w-full">
             {children}
           </div>
-          {pathname !== "/login" && <Footer />}
+          {pathname !== "/login" && profile && <Footer />}
         </div>
       </div>
     </div>
