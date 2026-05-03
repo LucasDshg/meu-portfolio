@@ -18,6 +18,7 @@ const Home: React.FC = () => {
         imageUrl={profile.imageUrl}
         cvLink={profile.cvLink}
         socials={profile.socials}
+        phone={profile.phone}
       />
       <ExperienceSection experiences={experiences} />
       <ProjectsSection projects={projects} />

@@ -22,10 +22,10 @@ export const Card: React.FC<ICardProps> = ({
 
   return (
     <div className={`group relative flex ${height}`}>
-      <div className="absolute -inset-y-1 -inset-x-1 z-0 bg-zinc-50 opacity-0 transition group-hover:opacity-100 dark:bg-zinc-800/50 sm:rounded-2xl" />
+      <div className="absolute -inset-y-1 -inset-x-1 z-0 bg-zinc-50 opacity-0 transition dark:bg-zinc-800/50 sm:rounded-2xl" />
 
       <div
-        className={`relative z-10 flex flex-col w-full rounded-2xl p-6 transition-all duration-300 group-hover:scale-[1.02] ${variants[variant]} ${className}`}
+        className={`relative z-10 flex flex-col w-full rounded-2xl p-6  ${variants[variant]} ${className}`}
       >
         {children}
       </div>

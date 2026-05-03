@@ -1,6 +1,7 @@
 // components/HeroSection.tsx
 import { motion } from 'framer-motion';
 import React from 'react';
+import { RiWhatsappLine } from 'react-icons/ri';
 import { IHeroSectionProps } from '../interface/hero.interface';
 import { Button } from '../Lib/Button';
 import { Text } from '../Lib/Text';
@@ -13,6 +14,7 @@ const HeroSection: React.FC<IHeroSectionProps> = ({
   imageUrl,
   cvLink,
   socials,
+  phone,
 }) => {
   const activeSocials =
     socials?.filter((s) => s.link !== null).sort((a, b) => a.order - b.order) ||
@@ -75,16 +77,30 @@ const HeroSection: React.FC<IHeroSectionProps> = ({
             })}
           </motion.div>
 
-          {cvLink && (
+          {(phone || cvLink) && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
               className="mt-8"
             >
-              <Button href={cvLink} download variant="primary">
-                Download CV
-              </Button>
+              {phone ? (
+                <Button
+                  href={`https://wa.me/${phone.replace(/\D/g, '')}`}
+                  target="_blank"
+                  variant="primary"
+                  className="gap-2"
+                >
+                  <RiWhatsappLine size={20} />
+                  Entre em contato
+                </Button>
+              ) : (
+                cvLink && (
+                  <Button href={cvLink} download variant="primary">
+                    Download CV
+                  </Button>
+                )
+              )}
             </motion.div>
           )}
         </div>

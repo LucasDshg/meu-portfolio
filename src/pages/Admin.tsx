@@ -54,6 +54,7 @@ const Admin: React.FC = () => {
       const updatedProfile: Partial<IProfile> = {
         name: (formData.get('name') as string) || profile?.name,
         slug: (formData.get('slug') as string) || profile?.slug,
+        phone: (formData.get('phone') as string) || profile?.phone,
         email: (formData.get('email') as string) || profile?.email,
         imageUrl: (formData.get('imageUrl') as string) || profile?.imageUrl,
         cvLink: (formData.get('cvLink') as string) || profile?.cvLink,

@@ -9,6 +9,7 @@ export interface IProfile {
   name: string;
   imageUrl: string;
   cvLink: string;
+  phone?: string;
   email: string;
   slug: string;
 

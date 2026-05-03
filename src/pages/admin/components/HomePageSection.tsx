@@ -21,6 +21,7 @@ export const HomePageSection: React.FC<IHomePageSectionProps> = ({ data }) => {
         name="home-description"
         label="Descrição (Hero)"
         required
+        rows={8}
         defaultValue={data?.description}
         placeholder="O que você faz?"
       />

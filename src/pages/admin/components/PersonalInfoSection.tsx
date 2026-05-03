@@ -46,6 +46,12 @@ export const PersonalInfoSection = ({
           placeholder="seu@email.com"
           required
         />
+        <Input
+          label="Telefone / WhatsApp"
+          name="phone"
+          defaultValue={profile?.phone}
+          placeholder="ex: 5511999999999"
+        />
         <FileUpload
           label="Foto de Perfil"
           name="imageUrl"
