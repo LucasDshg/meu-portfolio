@@ -1,3 +1,5 @@
+import { IArticle } from './article.interface';
+
 export interface ISocials {
   id: string;
   name: string;
@@ -12,7 +14,7 @@ export interface IProfile {
   phone?: string;
   email: string;
   slug: string;
-
+  articles: IArticle[];
   socials: ISocials[];
   pages: {
     home: {

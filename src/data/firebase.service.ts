@@ -17,11 +17,16 @@ import { INITIAL_PROFILE_DATA } from './init-data';
 
 const getUserDocRef = (uid: string): any => doc(db, 'users', uid);
 
-export type TCollection = 'experiences' | 'projects' | 'certifications';
+export type TCollection =
+  | 'experiences'
+  | 'projects'
+  | 'certifications'
+  | 'articles';
 export enum ECollection {
   EXPERIENCES = 'experiences',
   PROJECTS = 'projects',
   CERTIFICATIONS = 'certifications',
+  ARTICLES = 'articles',
 }
 
 /**

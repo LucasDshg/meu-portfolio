@@ -12,6 +12,7 @@ import { auth } from '../data/firebase';
 import {
   createInitialProfileDocument,
   deleteSubCollectionItem,
+  ECollection,
   getProfileAndUidBySlug,
   getProfileByUid,
   getSubCollectionItems,
@@ -19,6 +20,7 @@ import {
   TCollection,
   updateProfileDocument,
 } from '../data/firebase.service';
+import { IArticle } from '../interface/article.interface';
 import { ICertifications } from '../interface/certifications.interface';
 import { IExperience } from '../interface/experience.interface';
 import { IProfile } from '../interface/portfolio.interface';
@@ -30,6 +32,7 @@ interface IPortfolioContextType {
   experiences: IExperience[];
   projects: IProject[];
   certifications: ICertifications[];
+  articles: IArticle[];
   loading: boolean;
   updateProfile: (updatedData: Partial<IProfile>) => Promise<void>;
   saveSubItem: <T>(collectionName: TCollection, data: T) => Promise<void>;
@@ -54,6 +57,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
   const [experiences, setExperiences] = useState<IExperience[]>([]);
   const [projects, setProjects] = useState<IProject[]>([]);
   const [certifications, setCertifications] = useState<ICertifications[]>([]);
+  const [articles, setArticles] = useState<IArticle[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -79,15 +83,22 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
         setProfile(currentProfile);
 
         if (currentProfile) {
-          const [expData, projData, certData] = await Promise.all([
-            getSubCollectionItems<IExperience>(uid, 'experiences'),
-            getSubCollectionItems<IProject>(uid, 'projects'),
-            getSubCollectionItems<ICertifications>(uid, 'certifications'),
-          ]);
+          const [expData, projData, certData, articlesData] = await Promise.all(
+            [
+              getSubCollectionItems<IExperience>(uid, ECollection.EXPERIENCES),
+              getSubCollectionItems<IProject>(uid, ECollection.PROJECTS),
+              getSubCollectionItems<ICertifications>(
+                uid,
+                ECollection.CERTIFICATIONS,
+              ),
+              getSubCollectionItems<IArticle>(uid, ECollection.ARTICLES),
+            ],
+          );
 
           setExperiences(expData);
           setProjects(projData);
           setCertifications(certData);
+          setArticles(articlesData);
         }
       } catch (error) {
         logAppError('fetchDataByUid', error);
@@ -124,6 +135,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
       setExperiences([]);
       setProjects([]);
       setCertifications([]);
+      setArticles([]);
 
       if (slug) {
         await fetchDataBySlug(slug);
@@ -193,6 +205,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
         experiences,
         projects,
         certifications,
+        articles,
         loading,
         updateProfile,
         saveSubItem,
