@@ -25,7 +25,8 @@ export const FileUpload: React.FC<IFileUploadProps> = ({
   className = '',
   name,
 }) => {
-  const [url, setUrl] = useState(initialUrl);
+  const [url, setUrl] = useState<string | undefined>(initialUrl);
+  const [prevInitialUrl, setPrevInitialUrl] = useState(initialUrl);
   const [loading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [toast, setToast] = useState<{
@@ -33,6 +34,11 @@ export const FileUpload: React.FC<IFileUploadProps> = ({
     type: 'success' | 'error';
   } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  if (initialUrl !== prevInitialUrl) {
+    setPrevInitialUrl(initialUrl);
+    setUrl(initialUrl);
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

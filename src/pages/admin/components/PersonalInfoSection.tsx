@@ -1,18 +1,24 @@
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import React from 'react';
 import { usePortfolio } from '../../../context/PortfolioContext';
 import { storage } from '../../../data/firebase';
 import { IProfile } from '../../../interface/portfolio.interface';
 import { FileUpload } from '../../../Lib/FileUpload';
 import { Input } from '../../../Lib/Input';
 
-export const PersonalInfoSection = ({
-  profile,
-}: {
+interface IPersonalInfoSectionProps {
   profile: IProfile | null;
+}
+
+export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
+  profile,
 }) => {
   const { user } = usePortfolio();
 
-  const handleUpload = async (file: File, fieldName: string) => {
+  const handleUpload = async (
+    file: File,
+    fieldName: string,
+  ): Promise<string> => {
     if (!user) throw new Error('Usuário não autenticado');
 
     const extension = file.name.split('.').pop();

@@ -165,7 +165,11 @@ export const ProjectListSection: React.FC<IProjectListSectionProps> = ({
             />
             <Input
               label="Tecnologias (Vírgula)"
-              value={editingItem.technologies?.join(', ')}
+              value={
+                Array.isArray(editingItem.technologies)
+                  ? editingItem.technologies.join(', ')
+                  : (editingItem.technologies ?? '')
+              }
               onChange={(e) =>
                 setEditingItem({
                   ...editingItem,

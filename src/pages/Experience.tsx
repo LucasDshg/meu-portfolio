@@ -37,10 +37,13 @@ const Experience: React.FC = () => {
                 <Text className="text-sm font-medium text-zinc-400 dark:text-zinc-500">
                   {exp.duration}
                 </Text>
-                <Subheading className="mt-2 text-lg">
-                  {exp.role} —{' '}
-                  <span className="text-teal-500">{exp.company}</span>
-                </Subheading>
+                <Subheading className="mt-2 text-lg">{exp.role}</Subheading>
+                <Text
+                  className="mt-2 leading-relaxed text-sm text-justify"
+                  color="text-teal-500"
+                >
+                  {exp.company}
+                </Text>
                 <Text className="mt-4 leading-relaxed text-justify">
                   {exp.description}
                 </Text>
@@ -79,6 +82,8 @@ const Experience: React.FC = () => {
               href={profile?.cvLink}
               download
               variant="outline"
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-6 w-full"
             >
               Download PDF

@@ -3,14 +3,14 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import { FaGithub } from 'react-icons/fa6';
 import { RiExternalLinkLine } from 'react-icons/ri';
-import { Avatar } from '../Lib/Avatar';
-import { Badge } from '../Lib/Badge';
-import { Button } from '../Lib/Button';
-import { Card } from '../Lib/Card';
-import { Heading } from '../Lib/Heading';
-import { Subheading } from '../Lib/Subheading';
-import { Text } from '../Lib/Text';
-import { IProjectsSectionProps } from '../interface/project.interface';
+import { Avatar } from '../../../Lib/Avatar';
+import { Badge } from '../../../Lib/Badge';
+import { Button } from '../../../Lib/Button';
+import { Card } from '../../../Lib/Card';
+import { Heading } from '../../../Lib/Heading';
+import { Subheading } from '../../../Lib/Subheading';
+import { Text } from '../../../Lib/Text';
+import { IProjectsSectionProps } from '../../../interface/project.interface';
 
 const ProjectsSection: React.FC<IProjectsSectionProps> = ({ projects }) => {
   return (
@@ -26,8 +26,10 @@ const ProjectsSection: React.FC<IProjectsSectionProps> = ({ projects }) => {
             className="group relative flex flex-col items-start"
           >
             <Card variant="outline" height="h-full">
-              <Avatar className="size-10" src={project.image} />
-              <Subheading className="mt-6">{project.name}</Subheading>
+              <div className="flex gap-4">
+                <Avatar className="size-16" src={project.image} />
+                <Subheading className="mt-6">{project.name}</Subheading>
+              </div>
               <Text className="relative z-10 mt-2 text-sm flex-grow text-justify">
                 {project.description}
               </Text>

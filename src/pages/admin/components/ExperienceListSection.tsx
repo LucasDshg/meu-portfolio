@@ -157,7 +157,11 @@ export const ExperienceListSection: React.FC<IExperienceListSectionProps> = ({
             />
             <Input
               label="Tecnologias (Vírgula)"
-              value={editingItem.technologies?.join(', ')}
+              value={
+                Array.isArray(editingItem.technologies)
+                  ? editingItem.technologies.join(', ')
+                  : (editingItem.technologies ?? '')
+              }
               onChange={(e) =>
                 setEditingItem({
                   ...editingItem,
