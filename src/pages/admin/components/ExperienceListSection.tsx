@@ -7,6 +7,7 @@ import {
   RiSaveLine,
 } from 'react-icons/ri';
 import { usePortfolio } from '../../../context/PortfolioContext';
+import { logAppError } from '../../../data/analytics.service';
 import { ECollection } from '../../../data/firebase.service';
 import { IExperience } from '../../../interface/experience.interface';
 import { Button } from '../../../Lib/Button';
@@ -15,10 +16,13 @@ import { Input } from '../../../Lib/Input';
 import { Textarea } from '../../../Lib/Textarea';
 import { Toast } from '../../../Lib/Toast';
 
-export const ExperienceListSection = ({
-  experiences,
-}: {
+interface IExperienceListSectionProps {
   experiences: IExperience[];
+}
+
+// eslint-disable-next-line no-undef
+export const ExperienceListSection: React.FC<IExperienceListSectionProps> = ({
+  experiences,
 }) => {
   const { saveSubItem, deleteSubItem } = usePortfolio();
   const [editingItem, setEditingItem] = useState<Partial<IExperience> | null>(
@@ -29,7 +33,7 @@ export const ExperienceListSection = ({
     type: 'success' | 'error';
   } | null>(null);
 
-  const handleSave = async () => {
+  const handleSave = async (): Promise<void> => {
     if (!editingItem) return;
 
     try {
@@ -50,11 +54,12 @@ export const ExperienceListSection = ({
       setEditingItem(null);
       setToast({ message: 'Experiência salva com sucesso!', type: 'success' });
     } catch (error) {
+      logAppError('ExperienceList_Save', error);
       setToast({ message: 'Erro ao salvar experiência.', type: 'error' });
     }
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: number): Promise<void> => {
     try {
       await deleteSubItem(ECollection.EXPERIENCES, id);
       setToast({
@@ -62,6 +67,7 @@ export const ExperienceListSection = ({
         type: 'success',
       });
     } catch (error) {
+      logAppError('ExperienceList_Delete', error);
       setToast({ message: 'Erro ao remover experiência.', type: 'error' });
     }
   };

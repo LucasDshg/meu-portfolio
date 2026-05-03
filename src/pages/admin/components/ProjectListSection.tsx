@@ -8,6 +8,7 @@ import {
   RiSaveLine,
 } from 'react-icons/ri';
 import { usePortfolio } from '../../../context/PortfolioContext';
+import { logAppError } from '../../../data/analytics.service';
 import { storage } from '../../../data/firebase';
 import { ECollection } from '../../../data/firebase.service';
 import { IProject } from '../../../interface/project.interface';
@@ -18,7 +19,14 @@ import { Input } from '../../../Lib/Input';
 import { Textarea } from '../../../Lib/Textarea';
 import { Toast } from '../../../Lib/Toast';
 
-export const ProjectListSection = ({ projects }: { projects: IProject[] }) => {
+interface IProjectListSectionProps {
+  projects: IProject[];
+}
+
+// eslint-disable-next-line no-undef
+export const ProjectListSection: React.FC<IProjectListSectionProps> = ({
+  projects,
+}) => {
   const { saveSubItem, deleteSubItem, user } = usePortfolio();
   const [editingItem, setEditingItem] = useState<Partial<IProject> | null>(
     null,
@@ -28,7 +36,7 @@ export const ProjectListSection = ({ projects }: { projects: IProject[] }) => {
     type: 'success' | 'error';
   } | null>(null);
 
-  const handleSave = async () => {
+  const handleSave = async (): Promise<void> => {
     if (!editingItem) return;
 
     if (!editingItem.name || !editingItem.description || !editingItem.image) {
@@ -55,20 +63,25 @@ export const ProjectListSection = ({ projects }: { projects: IProject[] }) => {
       setEditingItem(null);
       setToast({ message: 'Projeto salvo com sucesso!', type: 'success' });
     } catch (error) {
+      logAppError('ProjectList_Save', error);
       setToast({ message: 'Erro ao salvar projeto.', type: 'error' });
     }
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: number): Promise<void> => {
     try {
       await deleteSubItem(ECollection.PROJECTS, id);
       setToast({ message: 'Projeto removido com sucesso!', type: 'success' });
     } catch (error) {
+      logAppError('ProjectList_Delete', error);
       setToast({ message: 'Erro ao remover projeto.', type: 'error' });
     }
   };
 
-  const handleUpload = async (file: File, fileName: string) => {
+  const handleUpload = async (
+    file: File,
+    fileName: string,
+  ): Promise<string> => {
     if (!user) throw new Error('Usuário não autenticado');
 
     const projectId = editingItem?.id || Date.now();

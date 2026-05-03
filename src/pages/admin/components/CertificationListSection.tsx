@@ -7,6 +7,7 @@ import {
   RiSaveLine,
 } from 'react-icons/ri';
 import { usePortfolio } from '../../../context/PortfolioContext';
+import { logAppError } from '../../../data/analytics.service';
 import { ECollection } from '../../../data/firebase.service';
 import { ICertifications } from '../../../interface/certifications.interface';
 import { Button } from '../../../Lib/Button';
@@ -43,6 +44,7 @@ export const CertificationListSection = ({
       setEditingItem(null);
       setToast({ message: 'Certificação salva com sucesso!', type: 'success' });
     } catch (error) {
+      logAppError('ExperienceCertificação_Save', error);
       setToast({ message: 'Erro ao salvar certificação.', type: 'error' });
     }
   };
@@ -55,6 +57,7 @@ export const CertificationListSection = ({
         type: 'success',
       });
     } catch (error) {
+      logAppError('ExperienceCertificação_Remove', error);
       setToast({ message: 'Erro ao remover certificação.', type: 'error' });
     }
   };

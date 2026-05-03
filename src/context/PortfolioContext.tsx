@@ -7,6 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { useLocation } from 'react-router-dom';
+import { logAppError } from '../data/analytics.service';
 import { auth } from '../data/firebase';
 import {
   createInitialProfileDocument,
@@ -89,6 +90,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
           setCertifications(certData);
         }
       } catch (error) {
+        logAppError('fetchDataByUid', error);
         console.error('Erro ao carregar dados');
       } finally {
         setLoading(false);
@@ -107,6 +109,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
           setLoading(false);
         }
       } catch (error) {
+        logAppError('fetchDataBySlug', error);
         console.error('Erro ao buscar slug:');
         setLoading(false);
       }
@@ -145,6 +148,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
           prev ? ({ ...prev, ...updatedData } as IProfile) : prev,
         );
       } catch (error: any) {
+        logAppError('updateProfile', error);
         throw new Error('Erro ao salvar perfil');
       }
     },
@@ -159,6 +163,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
         await saveSubCollectionItem<T>(user.uid, collectionName, data);
         await fetchDataByUid(user.uid);
       } catch (error: any) {
+        logAppError('saveSubItem', error);
         throw new Error(`Erro ao salvar em ${collectionName}:`);
       }
     },
@@ -173,6 +178,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
         await deleteSubCollectionItem(user.uid, collectionName, id);
         await fetchDataByUid(user.uid);
       } catch (error: any) {
+        logAppError('deleteSubItem', error);
         throw new Error('Erro ao remover item');
       }
     },

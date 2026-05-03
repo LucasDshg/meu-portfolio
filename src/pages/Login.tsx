@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
 import logoIcon from '../assets/logo.svg';
+import { logAppError } from '../data/analytics.service';
 import { auth, googleProvider } from '../data/firebase';
 import { Button } from '../Lib/Button';
 import { Card } from '../Lib/Card';
@@ -32,6 +33,7 @@ const Login: React.FC = () => {
       await signInWithPopup(auth, googleProvider);
       navigate('/admin');
     } catch (error) {
+      logAppError('Login_Google', error);
       setToast({ message: 'Erro ao fazer login com Google.', type: 'error' });
     }
   };
@@ -47,6 +49,7 @@ const Login: React.FC = () => {
       }
       navigate('/admin');
     } catch (error) {
+      logAppError(isRegistering ? 'Register_Email' : 'Login_Email', error);
       const message = isRegistering
         ? 'Erro ao criar conta. Verifique os dados.'
         : 'E-mail ou senha inválidos.';

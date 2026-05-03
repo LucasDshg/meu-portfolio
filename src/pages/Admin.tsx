@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { RiSaveLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import { usePortfolio } from '../context/PortfolioContext';
+import { logAppError } from '../data/analytics.service';
 import { IProfile } from '../interface/portfolio.interface';
 import { Button } from '../Lib/Button';
 import { Heading } from '../Lib/Heading';
@@ -106,7 +107,7 @@ const Admin: React.FC = () => {
         type: 'success',
       });
     } catch (error) {
-      console.error(error);
+      logAppError('Admin_Global_Save', error);
       setToast({
         message: 'Erro ao salvar as configurações.',
         type: 'error',
