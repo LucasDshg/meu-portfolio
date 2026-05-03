@@ -11,13 +11,17 @@ import { Heading } from '../../../Lib/Heading';
 import { Subheading } from '../../../Lib/Subheading';
 import { Text } from '../../../Lib/Text';
 import { IProjectsSectionProps } from '../../../interface/project.interface';
+import { usePathName } from '../../../utils/navigation.utils';
 
 const ProjectsSection: React.FC<IProjectsSectionProps> = ({ projects }) => {
+  const path = usePathName();
+  const href = `/u/${path.slug}/project`;
+
   return (
     <section id="projects" className="mt-24 md:mt-28">
       <Heading className="mb-8">Projetos</Heading>
       <ul className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-2">
-        {projects.map((project) => (
+        {projects.slice(0, 4).map((project) => (
           <motion.li
             key={project.id}
             initial={{ opacity: 0, y: 20 }}
@@ -70,6 +74,11 @@ const ProjectsSection: React.FC<IProjectsSectionProps> = ({ projects }) => {
           </motion.li>
         ))}
       </ul>
+      <div className="mt-12 flex justify-center">
+        <Button href={href} variant="outline">
+          Ver todaos os projetos
+        </Button>
+      </div>
     </section>
   );
 };
