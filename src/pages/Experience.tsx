@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import React from 'react';
-import { RiBriefcaseLine, RiDownloadLine } from 'react-icons/ri';
+import { RiBriefcaseLine, RiDownloadLine, RiMailLine } from 'react-icons/ri';
 import { Badge } from '../Lib/Badge';
 import { Button } from '../Lib/Button';
 import { Heading } from '../Lib/Heading';
@@ -72,23 +72,41 @@ const Experience: React.FC = () => {
               Sobre mim
             </Button>
           </div>
-
           <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
             <Subheading className="flex items-center gap-3">
-              <RiDownloadLine className="h-5 w-5 text-zinc-400" />
-              Currículo
+              <RiMailLine className="h-5 w-5 text-zinc-400" />
+              Contato
             </Subheading>
             <Button
-              href={profile?.cvLink}
+              href={`mailto:${profile?.email}`}
               download
               variant="outline"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-6 w-full"
             >
-              Download PDF
+              Mandar Email
             </Button>
           </div>
+
+          {profile?.cvLink && (
+            <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
+              <Subheading className="flex items-center gap-3">
+                <RiDownloadLine className="h-5 w-5 text-zinc-400" />
+                Currículo
+              </Subheading>
+              <Button
+                href={profile?.cvLink}
+                download
+                variant="outline"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 w-full"
+              >
+                Download PDF
+              </Button>
+            </div>
+          )}
         </aside>
       </div>
     </div>

@@ -6,6 +6,6 @@ export interface IHeroSectionProps {
   description: string;
   phone?: string;
   imageUrl: string;
-  cvLink?: string;
+  email: string;
   socials: ISocials[];
 }

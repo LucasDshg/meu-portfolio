@@ -16,7 +16,7 @@ const Home: React.FC = () => {
         title={profile.pages.home.title}
         description={profile.pages.home.description}
         imageUrl={profile.imageUrl}
-        cvLink={profile.cvLink}
+        email={profile.email}
         socials={profile.socials}
         phone={profile.phone}
       />
