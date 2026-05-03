@@ -1,7 +1,7 @@
 import { onAuthStateChanged, User } from 'firebase/auth';
 import React, {
   createContext,
-  JSX,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -44,7 +44,7 @@ const PortfolioContext = createContext<IPortfolioContextType | undefined>(
 
 export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
-}): JSX.Element => {
+}) => {
   const { pathname } = useLocation();
   const slug = pathname.startsWith('/u/') ? pathname.split('/')[2] : undefined;
 
@@ -66,6 +66,54 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
     return () => unsubscribe();
   }, []);
 
+  const fetchDataByUid = useCallback(
+    async (uid: string): Promise<void> => {
+      try {
+        let currentProfile = await getProfileByUid(uid);
+
+        if (!currentProfile && user && user.uid === uid) {
+          currentProfile = await createInitialProfileDocument(user);
+        }
+
+        setProfile(currentProfile);
+
+        if (currentProfile) {
+          const [expData, projData, certData] = await Promise.all([
+            getSubCollectionItems<IExperience>(uid, 'experiences'),
+            getSubCollectionItems<IProject>(uid, 'projects'),
+            getSubCollectionItems<ICertifications>(uid, 'certifications'),
+          ]);
+
+          setExperiences(expData);
+          setProjects(projData);
+          setCertifications(certData);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar dados');
+      } finally {
+        setLoading(false);
+      }
+    },
+    [user],
+  );
+
+  const fetchDataBySlug = useCallback(
+    async (userSlug: string): Promise<void> => {
+      try {
+        const result = await getProfileAndUidBySlug(userSlug);
+        if (result) {
+          await fetchDataByUid(result.uid);
+        } else {
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar slug:');
+        setLoading(false);
+      }
+    },
+    [fetchDataByUid],
+  );
+
   useEffect(() => {
     const loadPortfolioData = async (): Promise<void> => {
       setLoading(true);
@@ -84,93 +132,52 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
     };
 
     loadPortfolioData();
-  }, [slug, user]);
+  }, [slug, user, fetchDataBySlug, fetchDataByUid]);
 
-  const fetchDataBySlug = async (userSlug: string): Promise<void> => {
-    try {
-      const result = await getProfileAndUidBySlug(userSlug);
-      if (result) {
-        await fetchDataByUid(result.uid);
-      } else {
-        setLoading(false);
+  const updateProfile = useCallback(
+    async (updatedData: Partial<IProfile>): Promise<void> => {
+      if (!user || !profile)
+        throw new Error('Usuário não autenticado ou perfil não carregado.');
+
+      try {
+        await updateProfileDocument(user.uid, updatedData);
+        setProfile((prev) =>
+          prev ? ({ ...prev, ...updatedData } as IProfile) : prev,
+        );
+      } catch (error: any) {
+        throw new Error('Erro ao salvar perfil');
       }
-    } catch (error) {
-      console.error('Erro ao buscar slug:', error);
-      setLoading(false);
-    }
-  };
+    },
+    [user, profile],
+  );
 
-  const fetchDataByUid = async (uid: string): Promise<void> => {
-    try {
-      let currentProfile = await getProfileByUid(uid);
-
-      if (!currentProfile && user && user.uid === uid) {
-        currentProfile = await createInitialProfileDocument(user);
+  const saveSubItem = useCallback(
+    async <T,>(collectionName: TCollection, data: T): Promise<void> => {
+      if (!user || !profile)
+        throw new Error('Usuário não autenticado ou perfil não carregado.');
+      try {
+        await saveSubCollectionItem<T>(user.uid, collectionName, data);
+        await fetchDataByUid(user.uid);
+      } catch (error: any) {
+        throw new Error(`Erro ao salvar em ${collectionName}:`);
       }
+    },
+    [user, profile, fetchDataByUid],
+  );
 
-      setProfile(currentProfile);
-
-      if (currentProfile) {
-        const [expData, projData, certData] = await Promise.all([
-          getSubCollectionItems<IExperience>(uid, 'experiences'),
-          getSubCollectionItems<IProject>(uid, 'projects'),
-          getSubCollectionItems<ICertifications>(uid, 'certifications'),
-        ]);
-
-        setExperiences(expData);
-        setProjects(projData);
-        setCertifications(certData);
+  const deleteSubItem = useCallback(
+    async (collectionName: TCollection, id: string | number): Promise<void> => {
+      if (!user || !profile)
+        throw new Error('Usuário não autenticado ou perfil não carregado.');
+      try {
+        await deleteSubCollectionItem(user.uid, collectionName, id);
+        await fetchDataByUid(user.uid);
+      } catch (error: any) {
+        throw new Error('Erro ao remover item');
       }
-    } catch (error) {
-      console.error('Erro ao carregar dados do Firebase:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const updateProfile = async (
-    updatedData: Partial<IProfile>,
-  ): Promise<void> => {
-    if (!user || !profile)
-      throw new Error('Usuário não autenticado ou perfil não carregado.');
-
-    try {
-      await updateProfileDocument(user.uid, updatedData);
-      setProfile((prev) =>
-        prev ? ({ ...prev, ...updatedData } as IProfile) : prev,
-      );
-    } catch (error: any) {
-      throw new Error('Erro ao salvar perfil');
-    }
-  };
-
-  const saveSubItem = async <T,>(
-    collectionName: TCollection,
-    data: T,
-  ): Promise<void> => {
-    if (!user || !profile)
-      throw new Error('Usuário não autenticado ou perfil não carregado.');
-    try {
-      await saveSubCollectionItem<T>(user.uid, collectionName, data);
-      await fetchDataByUid(user.uid);
-    } catch (error: any) {
-      throw new Error(`Erro ao salvar em ${collectionName}:`);
-    }
-  };
-
-  const deleteSubItem = async (
-    collectionName: TCollection,
-    id: string | number,
-  ): Promise<void> => {
-    if (!user || !profile)
-      throw new Error('Usuário não autenticado ou perfil não carregado.');
-    try {
-      await deleteSubCollectionItem(user.uid, collectionName, id);
-      await fetchDataByUid(user.uid);
-    } catch (error: any) {
-      throw new Error('Erro ao remover item');
-    }
-  };
+    },
+    [user, profile, fetchDataByUid],
+  );
 
   return (
     <PortfolioContext.Provider
@@ -191,6 +198,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const usePortfolio = (): IPortfolioContextType => {
   const context = useContext(PortfolioContext);
   if (!context)

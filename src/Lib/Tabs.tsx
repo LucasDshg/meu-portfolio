@@ -1,18 +1,18 @@
-import { motion } from "framer-motion";
-import React, { useState } from "react";
+import { motion } from 'framer-motion';
+import React, { useState } from 'react';
 
-interface Tab {
+interface ITab {
   id: string;
   label: string;
   content: React.ReactNode;
 }
 
-interface TabsProps {
-  tabs: Tab[];
+interface ITabsProps {
+  tabs: ITab[];
   className?: string;
 }
 
-export const Tabs: React.FC<TabsProps> = ({ tabs, className = "" }) => {
+export const Tabs: React.FC<ITabsProps> = ({ tabs, className = '' }) => {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
 
   return (
@@ -27,7 +27,7 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, className = "" }) => {
               onClick={() => setActiveTab(tab.id)}
               className={`
                 relative flex-1 px-3 sm:px-6 py-2.5 text-base font-medium transition-colors duration-300 cursor-pointer whitespace-nowrap rounded-xl
-                ${isActive ? "text-teal-700 dark:text-teal-300" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100"}
+                ${isActive ? 'text-teal-700 dark:text-teal-300' : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100'}
               `}
             >
               <span className="relative z-10">{tab.label}</span>
@@ -35,7 +35,7 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, className = "" }) => {
                 <motion.div
                   layoutId="activeTab"
                   className="absolute inset-0 bg-teal-50 dark:bg-teal-400/10 rounded-xl shadow-sm"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                 />
               )}
             </button>
@@ -46,7 +46,7 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, className = "" }) => {
         {tabs.map((tab) => (
           <div
             key={tab.id}
-            className={activeTab === tab.id ? "block" : "hidden"}
+            className={activeTab === tab.id ? 'block' : 'hidden'}
           >
             {tab.content}
           </div>

@@ -1,12 +1,12 @@
-import { motion } from "framer-motion";
-import React from "react";
-import { Card } from "../Lib/Card";
-import { Heading } from "../Lib/Heading";
-import { Subheading } from "../Lib/Subheading";
-import { Text } from "../Lib/Text";
-import { TextLink } from "../Lib/TextLink";
-import { usePortfolio } from "../context/PortfolioContext";
-import { getSocialHref, getSocialIcon } from "../utils/navigation.utils";
+import { motion } from 'framer-motion';
+import React from 'react';
+import { Card } from '../Lib/Card';
+import { Heading } from '../Lib/Heading';
+import { Subheading } from '../Lib/Subheading';
+import { Text } from '../Lib/Text';
+import { TextLink } from '../Lib/TextLink';
+import { usePortfolio } from '../context/PortfolioContext';
+import { getSocialHref, getSocialIcon } from '../utils/navigation.utils';
 
 const About: React.FC = () => {
   const { profile, certifications } = usePortfolio();

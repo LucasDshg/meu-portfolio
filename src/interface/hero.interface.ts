@@ -1,4 +1,4 @@
-import { ISocials } from "./portfolio.interface";
+import { ISocials } from './portfolio.interface';
 
 export interface IHeroSectionProps {
   name: string;

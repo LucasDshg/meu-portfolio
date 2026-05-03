@@ -1,8 +1,8 @@
-import { getAnalytics } from "firebase/analytics";
-import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import { getAnalytics } from 'firebase/analytics';
+import { initializeApp } from 'firebase/app';
+import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -19,6 +19,6 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const storage = getStorage(app);
 const googleProvider = new GoogleAuthProvider();
-const analytics = typeof window !== "undefined" ? getAnalytics(app) : null;
+const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;
 
 export { analytics, app, auth, db, googleProvider, storage };

@@ -1,12 +1,15 @@
+import React from 'react';
 import { IProfile } from '../../../interface/portfolio.interface';
 import { Input } from '../../../Lib/Input';
 import { Switch } from '../../../Lib/Switch';
 import { Textarea } from '../../../Lib/Textarea';
 
-export const AboutPageSection = ({
-  data,
-}: {
+interface IAboutPageSectionProps {
   data?: IProfile['pages']['about'];
+}
+
+export const AboutPageSection: React.FC<IAboutPageSectionProps> = ({
+  data,
 }) => (
   <div className="p-6 space-y-6">
     <div className="pb-4 border-b border-zinc-100 dark:border-zinc-700/40">

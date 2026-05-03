@@ -1,11 +1,11 @@
-import { Route, Routes } from "react-router-dom";
-import MainLayout from "../layout/MainLayout";
-import About from "./About";
-import Admin from "./Admin";
-import Experience from "./Experience";
-import Home from "./Home";
-import Login from "./Login";
-import Projects from "./Projects";
+import { Route, Routes } from 'react-router-dom';
+import MainLayout from '../layout/MainLayout';
+import About from './About';
+import Admin from './Admin';
+import Experience from './Experience';
+import Home from './Home';
+import Login from './Login';
+import Projects from './Projects';
 
 function App() {
   return (

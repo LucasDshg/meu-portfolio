@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
 }
 
-export const Input: React.FC<InputProps> = ({
+export const Input: React.FC<IInputProps> = ({
   label,
-  className = "",
+  className = '',
   ...props
 }) => {
   const [isTouched, setIsTouched] = useState(false);
@@ -22,7 +22,7 @@ export const Input: React.FC<InputProps> = ({
       <input
         onBlur={() => setIsTouched(true)}
         className={`w-full rounded-xl border bg-white px-4 py-2 text-zinc-900 shadow-sm transition-all focus:outline-none focus:ring-4 dark:bg-zinc-800 dark:text-zinc-100 
-          ${isTouched ? "invalid:border-red-500 invalid:ring-red-500/10 border-zinc-200 dark:border-zinc-700" : "border-zinc-200 dark:border-zinc-700"}
+          ${isTouched ? 'invalid:border-red-500 invalid:ring-red-500/10 border-zinc-200 dark:border-zinc-700' : 'border-zinc-200 dark:border-zinc-700'}
           focus:border-teal-500 focus:ring-teal-500/10 dark:focus:border-teal-400 ${className}`}
         {...props}
       />

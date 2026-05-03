@@ -1,11 +1,11 @@
 // components/HeroSection.tsx
-import { motion } from "framer-motion";
-import React from "react";
-import { IHeroSectionProps } from "../interface/hero.interface";
-import { Button } from "../Lib/Button";
-import { Text } from "../Lib/Text";
-import { TextLink } from "../Lib/TextLink";
-import { getSocialHref, getSocialIcon } from "../utils/navigation.utils";
+import { motion } from 'framer-motion';
+import React from 'react';
+import { IHeroSectionProps } from '../interface/hero.interface';
+import { Button } from '../Lib/Button';
+import { Text } from '../Lib/Text';
+import { TextLink } from '../Lib/TextLink';
+import { getSocialHref, getSocialIcon } from '../utils/navigation.utils';
 
 const HeroSection: React.FC<IHeroSectionProps> = ({
   title,

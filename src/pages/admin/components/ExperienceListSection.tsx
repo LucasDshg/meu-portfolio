@@ -1,18 +1,19 @@
-import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
 import {
   RiAddLine,
   RiDeleteBinLine,
   RiEditLine,
   RiSaveLine,
-} from "react-icons/ri";
-import { usePortfolio } from "../../../context/PortfolioContext";
-import { IExperience } from "../../../interface/experience.interface";
-import { Button } from "../../../Lib/Button";
-import { Heading } from "../../../Lib/Heading";
-import { Input } from "../../../Lib/Input";
-import { Textarea } from "../../../Lib/Textarea";
-import { Toast } from "../../../Lib/Toast";
+} from 'react-icons/ri';
+import { usePortfolio } from '../../../context/PortfolioContext';
+import { ECollection } from '../../../data/firebase.service';
+import { IExperience } from '../../../interface/experience.interface';
+import { Button } from '../../../Lib/Button';
+import { Heading } from '../../../Lib/Heading';
+import { Input } from '../../../Lib/Input';
+import { Textarea } from '../../../Lib/Textarea';
+import { Toast } from '../../../Lib/Toast';
 
 export const ExperienceListSection = ({
   experiences,
@@ -25,7 +26,7 @@ export const ExperienceListSection = ({
   );
   const [toast, setToast] = useState<{
     message: string;
-    type: "success" | "error";
+    type: 'success' | 'error';
   } | null>(null);
 
   const handleSave = async () => {
@@ -37,28 +38,31 @@ export const ExperienceListSection = ({
         technologies: Array.isArray(editingItem.technologies)
           ? editingItem.technologies
           : (editingItem.technologies as unknown as string)
-              .split(",")
+              .split(',')
               .map((t) => t.trim())
               .filter(Boolean),
       };
 
-      await saveSubItem<Partial<IExperience>>("experiences", itemToSave);
+      await saveSubItem<Partial<IExperience>>(
+        ECollection.EXPERIENCES,
+        itemToSave,
+      );
       setEditingItem(null);
-      setToast({ message: "Experiência salva com sucesso!", type: "success" });
+      setToast({ message: 'Experiência salva com sucesso!', type: 'success' });
     } catch (error) {
-      setToast({ message: "Erro ao salvar experiência.", type: "error" });
+      setToast({ message: 'Erro ao salvar experiência.', type: 'error' });
     }
   };
 
   const handleDelete = async (id: number) => {
     try {
-      await deleteSubItem("experiences", id);
+      await deleteSubItem(ECollection.EXPERIENCES, id);
       setToast({
-        message: "Experiência removida com sucesso!",
-        type: "success",
+        message: 'Experiência removida com sucesso!',
+        type: 'success',
       });
     } catch (error) {
-      setToast({ message: "Erro ao remover experiência.", type: "error" });
+      setToast({ message: 'Erro ao remover experiência.', type: 'error' });
     }
   };
 
@@ -73,10 +77,10 @@ export const ExperienceListSection = ({
             className="w-full gap-2 border-dashed"
             onClick={() =>
               setEditingItem({
-                company: "",
-                role: "",
-                duration: "",
-                description: "",
+                company: '',
+                role: '',
+                duration: '',
+                description: '',
                 technologies: [],
               })
             }
@@ -147,7 +151,7 @@ export const ExperienceListSection = ({
             />
             <Input
               label="Tecnologias (Vírgula)"
-              value={editingItem.technologies?.join(", ")}
+              value={editingItem.technologies?.join(', ')}
               onChange={(e) =>
                 setEditingItem({
                   ...editingItem,

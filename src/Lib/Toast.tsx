@@ -1,19 +1,19 @@
-import { motion } from "framer-motion";
-import React, { useEffect } from "react";
+import { motion } from 'framer-motion';
+import React, { useEffect } from 'react';
 import {
   RiCheckboxCircleLine,
   RiCloseLine,
   RiErrorWarningLine,
-} from "react-icons/ri";
+} from 'react-icons/ri';
 
-interface ToastProps {
+interface IToastProps {
   message: string;
-  type: "success" | "error";
+  type: 'success' | 'error';
   onClose: () => void;
   duration?: number;
 }
 
-export const Toast: React.FC<ToastProps> = ({
+export const Toast: React.FC<IToastProps> = ({
   message,
   type,
   onClose,
@@ -25,11 +25,11 @@ export const Toast: React.FC<ToastProps> = ({
   }, [onClose, duration]);
 
   const styles = {
-    success: "bg-teal-500 text-white",
-    error: "bg-red-500 text-white",
+    success: 'bg-teal-500 text-white',
+    error: 'bg-red-500 text-white',
   };
 
-  const Icon = type === "success" ? RiCheckboxCircleLine : RiErrorWarningLine;
+  const Icon = type === 'success' ? RiCheckboxCircleLine : RiErrorWarningLine;
 
   return (
     <motion.div

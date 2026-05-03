@@ -1,21 +1,21 @@
-import { AnimatePresence, motion } from "framer-motion";
-import React from "react";
-import { Link } from "react-router-dom";
-import { usePortfolio } from "../context/PortfolioContext";
-import { Avatar } from "../Lib/Avatar";
-import { TextLink } from "../Lib/TextLink";
-import { useNavigationMenu } from "../utils/navigation.utils";
-import { ThemeToggle } from "./ThemeToggle";
+import { AnimatePresence, motion } from 'framer-motion';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { usePortfolio } from '../context/PortfolioContext';
+import { Avatar } from '../Lib/Avatar';
+import { TextLink } from '../Lib/TextLink';
+import { useNavigationMenu } from '../utils/navigation.utils';
+import { ThemeToggle } from './ThemeToggle';
 
-interface HeaderProps {
+interface IHeaderProps {
   darkMode: boolean;
   setDarkMode: (value: boolean) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
+const Header: React.FC<IHeaderProps> = ({ darkMode, setDarkMode }) => {
   const { profile } = usePortfolio();
-  const { menus, slug, pathname, basePath } = useNavigationMenu(profile!);
-  const isVisible = pathname !== basePath && pathname !== "/";
+  const { menus, pathname, basePath } = useNavigationMenu(profile!);
+  const isVisible = pathname !== basePath && pathname !== '/';
 
   return (
     <header className="pointer-events-none sticky top-0 z-50 flex h-0 flex-col items-center overflow-visible">
@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.5, y: 20 }}
                 transition={{
-                  type: "spring",
+                  type: 'spring',
                   stiffness: 260,
                   damping: 20,
                 }}
@@ -56,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
                   <TextLink
                     href={menu.href}
                     className="relative block px-3 py-2 transition"
-                    color={isActive ? "text-teal-500 dark:text-teal-400" : ""}
+                    color={isActive ? 'text-teal-500 dark:text-teal-400' : ''}
                   >
                     {menu.name}
                   </TextLink>

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import { LoadingPage } from "../components/LoadingPage";
-import { usePortfolio } from "../context/PortfolioContext";
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import { LoadingPage } from '../components/LoadingPage';
+import { usePortfolio } from '../context/PortfolioContext';
 
 interface IMainLayoutProps {
   children: React.ReactNode;
@@ -13,20 +13,20 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
   const { pathname } = useLocation();
   const { loading, profile } = usePortfolio();
   const [darkMode, setDarkMode] = useState(() => {
-    const savedTheme = localStorage.getItem("theme");
+    const savedTheme = localStorage.getItem('theme');
     return (
-      savedTheme === "dark" ||
-      (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+      savedTheme === 'dark' ||
+      (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
     );
   });
 
   useEffect(() => {
     if (darkMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
     } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
     }
   }, [darkMode]);
 
@@ -34,7 +34,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-zinc-600 dark:text-zinc-400 font-sans transition-colors duration-500">
-      {pathname !== "/login" && profile && (
+      {pathname !== '/login' && profile && (
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
       )}
 
@@ -43,7 +43,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
           <div className="mx-auto max-w-2xl lg:max-w-5xl flex-1 w-full">
             {children}
           </div>
-          {pathname !== "/login" && profile && <Footer />}
+          {pathname !== '/login' && profile && <Footer />}
         </div>
       </div>
     </div>

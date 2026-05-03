@@ -1,16 +1,16 @@
 // components/ProjectsSection.tsx
-import { motion } from "framer-motion";
-import React from "react";
-import { FaGithub } from "react-icons/fa6";
-import { RiExternalLinkLine } from "react-icons/ri";
-import { Avatar } from "../Lib/Avatar";
-import { Badge } from "../Lib/Badge";
-import { Button } from "../Lib/Button";
-import { Card } from "../Lib/Card";
-import { Heading } from "../Lib/Heading";
-import { Subheading } from "../Lib/Subheading";
-import { Text } from "../Lib/Text";
-import { IProjectsSectionProps } from "../interface/project.interface";
+import { motion } from 'framer-motion';
+import React from 'react';
+import { FaGithub } from 'react-icons/fa6';
+import { RiExternalLinkLine } from 'react-icons/ri';
+import { Avatar } from '../Lib/Avatar';
+import { Badge } from '../Lib/Badge';
+import { Button } from '../Lib/Button';
+import { Card } from '../Lib/Card';
+import { Heading } from '../Lib/Heading';
+import { Subheading } from '../Lib/Subheading';
+import { Text } from '../Lib/Text';
+import { IProjectsSectionProps } from '../interface/project.interface';
 
 const ProjectsSection: React.FC<IProjectsSectionProps> = ({ projects }) => {
   return (

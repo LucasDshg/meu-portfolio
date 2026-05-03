@@ -1,30 +1,29 @@
-import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
-import { FaGithub } from "react-icons/fa6";
-import { RiExternalLinkLine } from "react-icons/ri";
-import { Badge } from "../Lib/Badge";
-import { Button } from "../Lib/Button";
-import { Card } from "../Lib/Card";
-import { Heading } from "../Lib/Heading";
-import { Subheading } from "../Lib/Subheading";
-import { Text } from "../Lib/Text";
-import { usePortfolio } from "../context/PortfolioContext";
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { FaGithub } from 'react-icons/fa6';
+import { RiExternalLinkLine } from 'react-icons/ri';
+import { Badge } from '../Lib/Badge';
+import { Button } from '../Lib/Button';
+import { Card } from '../Lib/Card';
+import { Heading } from '../Lib/Heading';
+import { Subheading } from '../Lib/Subheading';
+import { Text } from '../Lib/Text';
+import { usePortfolio } from '../context/PortfolioContext';
 
-const ProjectCarousel = ({
-  images,
-  name,
-}: {
+interface IProjectCarouselProps {
   images: string[];
   name: string;
-}) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+}
 
-  useEffect(() => {
+const ProjectCarousel: React.FC<IProjectCarouselProps> = ({ images, name }) => {
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  useEffect((): void | (() => void) => {
     if (images.length <= 1) return;
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
+      setCurrentIndex((prev: number): number => (prev + 1) % images.length);
     }, 4000);
-    return () => clearInterval(timer);
+    return (): void => clearInterval(timer);
   }, [images.length]);
 
   return (
@@ -49,7 +48,7 @@ const ProjectCarousel = ({
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
           className="absolute inset-0 h-full w-full object-contain z-10 p-2 rounded-md"
         />
       </AnimatePresence>
@@ -61,7 +60,7 @@ const ProjectCarousel = ({
               key={i}
               onClick={() => setCurrentIndex(i)}
               className={`h-1.5 rounded-full transition-all ${
-                i === currentIndex ? "w-4 bg-teal-500" : "w-1.5 bg-white/50"
+                i === currentIndex ? 'w-4 bg-teal-500' : 'w-1.5 bg-white/50'
               }`}
             />
           ))}

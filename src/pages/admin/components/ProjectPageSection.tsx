@@ -1,12 +1,12 @@
-import { IProfile } from "../../../interface/portfolio.interface";
-import { Input } from "../../../Lib/Input";
-import { Switch } from "../../../Lib/Switch";
-import { Textarea } from "../../../Lib/Textarea";
+import { IProfile } from '../../../interface/portfolio.interface';
+import { Input } from '../../../Lib/Input';
+import { Switch } from '../../../Lib/Switch';
+import { Textarea } from '../../../Lib/Textarea';
 
 export const ProjectPageSection = ({
   data,
 }: {
-  data?: IProfile["pages"]["project"];
+  data?: IProfile['pages']['project'];
 }) => (
   <div className="p-6 space-y-6">
     <div className="pb-4 border-b border-zinc-100 dark:border-zinc-700/40">

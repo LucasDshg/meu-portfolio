@@ -7,31 +7,31 @@ import {
   RiThreadsLine,
   RiTwitterXFill,
   RiWhatsappLine,
-} from "react-icons/ri";
-import { useLocation } from "react-router-dom";
-import { IProfile } from "../interface/portfolio.interface";
-export const pathName = () => {
+} from 'react-icons/ri';
+import { useLocation } from 'react-router-dom';
+import { IProfile } from '../interface/portfolio.interface';
+export const usePathName = () => {
   const { pathname } = useLocation();
 
-  const slug = pathname.startsWith("/u/") ? pathname.split("/")[2] : undefined;
+  const slug = pathname.startsWith('/u/') ? pathname.split('/')[2] : undefined;
   return {
     slug,
     pathname,
-    basePath: slug ? `/u/${slug}` : "/",
+    basePath: slug ? `/u/${slug}` : '/',
   };
 };
 
 export const useNavigationMenu = (profile: IProfile) => {
-  const path = pathName();
+  const path = usePathName();
 
   const slug = profile?.slug || path.slug;
-  const basePath = slug ? `/u/${slug}` : "/";
+  const basePath = slug ? `/u/${slug}` : '/';
 
   const menus = profile?.pages
     ? Object.entries(profile.pages)
         .map(([id, page]) => ({
           id,
-          href: id === "home" ? basePath : `${basePath}/${id}`,
+          href: id === 'home' ? basePath : `${basePath}/${id}`,
           ...page,
         }))
         .filter((page) => page.show)
@@ -48,21 +48,21 @@ export const useNavigationMenu = (profile: IProfile) => {
 
 export const getSocialIcon = (name: string) => {
   const lowerName = name.toLowerCase();
-  if (lowerName.includes("github")) return RiGithubLine;
-  if (lowerName.includes("linkedin")) return RiLinkedinLine;
-  if (lowerName.includes("whatsapp")) return RiWhatsappLine;
-  if (lowerName.includes("instagram")) return RiInstagramLine;
-  if (lowerName.includes("threads")) return RiThreadsLine;
-  if (lowerName.includes("facebook")) return RiFacebookCircleLine;
-  if (lowerName.includes("twitter")) return RiTwitterXFill;
-  if (lowerName.includes("mail") || lowerName.includes("email"))
+  if (lowerName.includes('github')) return RiGithubLine;
+  if (lowerName.includes('linkedin')) return RiLinkedinLine;
+  if (lowerName.includes('whatsapp')) return RiWhatsappLine;
+  if (lowerName.includes('instagram')) return RiInstagramLine;
+  if (lowerName.includes('threads')) return RiThreadsLine;
+  if (lowerName.includes('facebook')) return RiFacebookCircleLine;
+  if (lowerName.includes('twitter')) return RiTwitterXFill;
+  if (lowerName.includes('mail') || lowerName.includes('email'))
     return RiMailLine;
   return null;
 };
 
 export const getSocialHref = (name: string, link: string) => {
   const lowerName = name.toLowerCase();
-  if (lowerName.includes("mail") || lowerName.includes("email")) {
+  if (lowerName.includes('mail') || lowerName.includes('email')) {
     return `mailto:${link}`;
   }
   return link;

@@ -1,12 +1,12 @@
-import { motion } from "framer-motion";
-import React from "react";
-import { RiBriefcaseLine, RiDownloadLine } from "react-icons/ri";
-import { Badge } from "../Lib/Badge";
-import { Button } from "../Lib/Button";
-import { Heading } from "../Lib/Heading";
-import { Subheading } from "../Lib/Subheading";
-import { Text } from "../Lib/Text";
-import { usePortfolio } from "../context/PortfolioContext";
+import { motion } from 'framer-motion';
+import React from 'react';
+import { RiBriefcaseLine, RiDownloadLine } from 'react-icons/ri';
+import { Badge } from '../Lib/Badge';
+import { Button } from '../Lib/Button';
+import { Heading } from '../Lib/Heading';
+import { Subheading } from '../Lib/Subheading';
+import { Text } from '../Lib/Text';
+import { usePortfolio } from '../context/PortfolioContext';
 
 const Experience: React.FC = () => {
   const { experiences, profile } = usePortfolio();
@@ -38,7 +38,7 @@ const Experience: React.FC = () => {
                   {exp.duration}
                 </Text>
                 <Subheading className="mt-2 text-lg">
-                  {exp.role} —{" "}
+                  {exp.role} —{' '}
                   <span className="text-teal-500">{exp.company}</span>
                 </Subheading>
                 <Text className="mt-4 leading-relaxed text-justify">

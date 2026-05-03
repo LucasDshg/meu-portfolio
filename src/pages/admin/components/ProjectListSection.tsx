@@ -1,21 +1,22 @@
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
 import {
   RiAddLine,
   RiDeleteBinLine,
   RiEditLine,
   RiSaveLine,
-} from "react-icons/ri";
-import { usePortfolio } from "../../../context/PortfolioContext";
-import { storage } from "../../../data/firebase";
-import { IProject } from "../../../interface/project.interface";
-import { Button } from "../../../Lib/Button";
-import { FileUpload } from "../../../Lib/FileUpload";
-import { Heading } from "../../../Lib/Heading";
-import { Input } from "../../../Lib/Input";
-import { Textarea } from "../../../Lib/Textarea";
-import { Toast } from "../../../Lib/Toast";
+} from 'react-icons/ri';
+import { usePortfolio } from '../../../context/PortfolioContext';
+import { storage } from '../../../data/firebase';
+import { ECollection } from '../../../data/firebase.service';
+import { IProject } from '../../../interface/project.interface';
+import { Button } from '../../../Lib/Button';
+import { FileUpload } from '../../../Lib/FileUpload';
+import { Heading } from '../../../Lib/Heading';
+import { Input } from '../../../Lib/Input';
+import { Textarea } from '../../../Lib/Textarea';
+import { Toast } from '../../../Lib/Toast';
 
 export const ProjectListSection = ({ projects }: { projects: IProject[] }) => {
   const { saveSubItem, deleteSubItem, user } = usePortfolio();
@@ -24,7 +25,7 @@ export const ProjectListSection = ({ projects }: { projects: IProject[] }) => {
   );
   const [toast, setToast] = useState<{
     message: string;
-    type: "success" | "error";
+    type: 'success' | 'error';
   } | null>(null);
 
   const handleSave = async () => {
@@ -32,8 +33,8 @@ export const ProjectListSection = ({ projects }: { projects: IProject[] }) => {
 
     if (!editingItem.name || !editingItem.description || !editingItem.image) {
       setToast({
-        message: "Nome, descrição e imagem são obrigatórios.",
-        type: "error",
+        message: 'Nome, descrição e imagem são obrigatórios.',
+        type: 'error',
       });
       return;
     }
@@ -44,34 +45,34 @@ export const ProjectListSection = ({ projects }: { projects: IProject[] }) => {
         technologies: Array.isArray(editingItem.technologies)
           ? editingItem.technologies
           : (editingItem.technologies as unknown as string)
-              .split(",")
+              .split(',')
               .map((t) => t.trim())
               .filter(Boolean),
         images: (editingItem.images || []).filter(Boolean),
       };
 
-      await saveSubItem<Partial<IProject>>("projects", itemToSave);
+      await saveSubItem<Partial<IProject>>(ECollection.PROJECTS, itemToSave);
       setEditingItem(null);
-      setToast({ message: "Projeto salvo com sucesso!", type: "success" });
+      setToast({ message: 'Projeto salvo com sucesso!', type: 'success' });
     } catch (error) {
-      setToast({ message: "Erro ao salvar projeto.", type: "error" });
+      setToast({ message: 'Erro ao salvar projeto.', type: 'error' });
     }
   };
 
   const handleDelete = async (id: number) => {
     try {
-      await deleteSubItem("projects", id);
-      setToast({ message: "Projeto removido com sucesso!", type: "success" });
+      await deleteSubItem(ECollection.PROJECTS, id);
+      setToast({ message: 'Projeto removido com sucesso!', type: 'success' });
     } catch (error) {
-      setToast({ message: "Erro ao remover projeto.", type: "error" });
+      setToast({ message: 'Erro ao remover projeto.', type: 'error' });
     }
   };
 
   const handleUpload = async (file: File, fileName: string) => {
-    if (!user) throw new Error("Usuário não autenticado");
+    if (!user) throw new Error('Usuário não autenticado');
 
     const projectId = editingItem?.id || Date.now();
-    const extension = file.name.split(".").pop();
+    const extension = file.name.split('.').pop();
     const path = `${user.uid}/projects/${projectId}/${fileName}.${extension}`;
     const storageRef = ref(storage, path);
     await uploadBytes(storageRef, file);
@@ -89,11 +90,11 @@ export const ProjectListSection = ({ projects }: { projects: IProject[] }) => {
             className="w-full gap-2 border-dashed"
             onClick={() =>
               setEditingItem({
-                name: "",
-                description: "",
+                name: '',
+                description: '',
                 technologies: [],
-                githubLink: "",
-                liveLink: "",
+                githubLink: '',
+                liveLink: '',
                 images: [],
                 image: null,
               })
@@ -115,7 +116,7 @@ export const ProjectListSection = ({ projects }: { projects: IProject[] }) => {
                       {project.name}
                     </h4>
                     <p className="text-sm text-zinc-500">
-                      {project.technologies.slice(0, 3).join(", ")}...
+                      {project.technologies.slice(0, 3).join(', ')}...
                     </p>
                   </div>
                   <div className="flex gap-2">
@@ -151,7 +152,7 @@ export const ProjectListSection = ({ projects }: { projects: IProject[] }) => {
             />
             <Input
               label="Tecnologias (Vírgula)"
-              value={editingItem.technologies?.join(", ")}
+              value={editingItem.technologies?.join(', ')}
               onChange={(e) =>
                 setEditingItem({
                   ...editingItem,
@@ -161,14 +162,14 @@ export const ProjectListSection = ({ projects }: { projects: IProject[] }) => {
             />
             <Input
               label="Link GitHub"
-              value={editingItem.githubLink || ""}
+              value={editingItem.githubLink || ''}
               onChange={(e) =>
                 setEditingItem({ ...editingItem, githubLink: e.target.value })
               }
             />
             <Input
               label="Link Live Demo"
-              value={editingItem.liveLink || ""}
+              value={editingItem.liveLink || ''}
               onChange={(e) =>
                 setEditingItem({ ...editingItem, liveLink: e.target.value })
               }
@@ -179,9 +180,9 @@ export const ProjectListSection = ({ projects }: { projects: IProject[] }) => {
             <FileUpload
               label="Logo do Projeto"
               accept="image/*"
-              initialUrl={editingItem.image || ""}
+              initialUrl={editingItem.image || ''}
               onFileSelect={async (file) => {
-                const url = await handleUpload(file, "logo");
+                const url = await handleUpload(file, 'logo');
                 setEditingItem((prev) => ({ ...prev, image: url }));
                 return url;
               }}
@@ -197,7 +198,7 @@ export const ProjectListSection = ({ projects }: { projects: IProject[] }) => {
                     key={i}
                     label={`Imagem ${i + 1}`}
                     accept="image/*"
-                    initialUrl={editingItem.images?.[i] || ""}
+                    initialUrl={editingItem.images?.[i] || ''}
                     onFileSelect={async (file) => {
                       const url = await handleUpload(file, `carousel-${i}`);
                       const newImages = [...(editingItem.images || [])];

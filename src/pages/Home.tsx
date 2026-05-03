@@ -1,8 +1,8 @@
-import React from "react";
-import ExperienceSection from "../components/ExperienceSection";
-import HeroSection from "../components/HeroSection";
-import ProjectsSection from "../components/ProjectsSection";
-import { usePortfolio } from "../context/PortfolioContext";
+import React from 'react';
+import ExperienceSection from '../components/ExperienceSection';
+import HeroSection from '../components/HeroSection';
+import ProjectsSection from '../components/ProjectsSection';
+import { usePortfolio } from '../context/PortfolioContext';
 
 const Home: React.FC = () => {
   const { profile, experiences, projects, loading } = usePortfolio();

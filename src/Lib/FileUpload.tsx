@@ -1,14 +1,14 @@
-import { AnimatePresence } from "framer-motion";
-import React, { useRef, useState } from "react";
+import { AnimatePresence } from 'framer-motion';
+import React, { useRef, useState } from 'react';
 import {
   RiFileTextLine,
   RiImageLine,
   RiLoader4Line,
   RiUpload2Line,
-} from "react-icons/ri";
-import { Toast } from "./Toast";
+} from 'react-icons/ri';
+import { Toast } from './Toast';
 
-interface FileUploadProps {
+interface IFileUploadProps {
   label: string;
   accept?: string;
   onFileSelect: (file: File) => Promise<string>;
@@ -17,12 +17,12 @@ interface FileUploadProps {
   name?: string;
 }
 
-export const FileUpload: React.FC<FileUploadProps> = ({
+export const FileUpload: React.FC<IFileUploadProps> = ({
   label,
   accept,
   onFileSelect,
   initialUrl,
-  className = "",
+  className = '',
   name,
 }) => {
   const [url, setUrl] = useState(initialUrl);
@@ -30,7 +30,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [toast, setToast] = useState<{
     message: string;
-    type: "success" | "error";
+    type: 'success' | 'error';
   } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -50,9 +50,10 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       const downloadUrl = await onFileSelect(selectedFile);
       setUrl(downloadUrl);
       setSelectedFile(null);
-      setToast({ message: "Upload concluído com sucesso!", type: "success" });
+      setToast({ message: 'Upload concluído com sucesso!', type: 'success' });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
     } catch (error) {
-      setToast({ message: "Falha ao enviar arquivo.", type: "error" });
+      setToast({ message: 'Falha ao enviar arquivo.', type: 'error' });
     } finally {
       setLoading(false);
     }
@@ -70,13 +71,13 @@ export const FileUpload: React.FC<FileUploadProps> = ({
             flex items-center gap-3 px-4 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 
             bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm cursor-pointer
             transition-all hover:border-teal-500 dark:hover:border-teal-400
-            ${loading ? "opacity-70 cursor-wait" : ""}
+            ${loading ? 'opacity-70 cursor-wait' : ''}
           `}
         >
           <div className="flex-none text-zinc-400 group-hover:text-teal-500 transition-colors">
             {loading ? (
               <RiLoader4Line className="animate-spin size-5" />
-            ) : accept?.includes("image") ? (
+            ) : accept?.includes('image') ? (
               <RiImageLine className="size-5" />
             ) : (
               <RiFileTextLine className="size-5" />
@@ -108,7 +109,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
               </button>
             )}
             <div className="flex-none bg-zinc-50 dark:bg-zinc-700 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider text-zinc-500">
-              {loading ? "Enviando" : <RiUpload2Line className="size-3" />}
+              {loading ? 'Enviando' : <RiUpload2Line className="size-3" />}
             </div>
           </div>
         </div>
@@ -121,7 +122,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           onChange={handleChange}
         />
 
-        <input type="hidden" name={name} value={url || ""} />
+        <input type="hidden" name={name} value={url || ''} />
       </div>
 
       <AnimatePresence>

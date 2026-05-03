@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 
-interface AvatarProps extends React.ComponentPropsWithoutRef<"span"> {
+interface IAvatarProps extends React.ComponentPropsWithoutRef<'span'> {
   src?: string | null;
   initials?: string;
   alt?: string;
   className?: string;
 }
 
-export const Avatar: React.FC<AvatarProps> = ({
+export const Avatar: React.FC<IAvatarProps> = ({
   src,
   initials,
-  alt = "",
+  alt = '',
   className,
   ...props
 }) => {

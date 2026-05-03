@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-export const Heading: React.FC<React.ComponentPropsWithoutRef<"h2">> = ({
-  className = "",
+export const Heading: React.FC<React.ComponentPropsWithoutRef<'h2'>> = ({
+  className = '',
   ...props
 }) => {
   return (

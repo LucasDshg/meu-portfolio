@@ -35,13 +35,15 @@ const Admin: React.FC = () => {
     type: 'success' | 'error';
   } | null>(null);
 
-  useEffect(() => {
+  useEffect((): void => {
     if (!loading && !user) {
       navigate('/login');
     }
   }, [user, loading, navigate]);
 
-  const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSave = async (
+    e: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     e.preventDefault();
     if (!user || !profile) return; // Adicionada verificação para 'profile'
 

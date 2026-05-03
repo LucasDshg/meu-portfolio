@@ -4,7 +4,7 @@ import {
   signInWithPopup,
 } from 'firebase/auth';
 import { AnimatePresence } from 'framer-motion';
-import React, { JSX, useState } from 'react';
+import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
 import logoIcon from '../assets/logo.svg';
@@ -17,7 +17,7 @@ import { Input } from '../Lib/Input';
 import { Text } from '../Lib/Text';
 import { Toast } from '../Lib/Toast';
 
-const Login: React.FC = (): JSX.Element => {
+const Login: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

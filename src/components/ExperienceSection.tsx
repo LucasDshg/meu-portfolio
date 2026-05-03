@@ -1,18 +1,18 @@
 // components/ExperienceSection.tsx
-import { motion } from "framer-motion";
-import React from "react";
-import { IExperienceSectionProps } from "../interface/experience.interface";
-import { Badge } from "../Lib/Badge";
-import { Button } from "../Lib/Button";
-import { Heading } from "../Lib/Heading";
-import { Subheading } from "../Lib/Subheading";
-import { Text } from "../Lib/Text";
-import { pathName } from "../utils/navigation.utils";
+import { motion } from 'framer-motion';
+import React from 'react';
+import { IExperienceSectionProps } from '../interface/experience.interface';
+import { Badge } from '../Lib/Badge';
+import { Button } from '../Lib/Button';
+import { Heading } from '../Lib/Heading';
+import { Subheading } from '../Lib/Subheading';
+import { Text } from '../Lib/Text';
+import { usePathName } from '../utils/navigation.utils';
 
 const ExperienceSection: React.FC<IExperienceSectionProps> = ({
   experiences,
 }) => {
-  const path = pathName();
+  const path = usePathName();
   const href = `/u/${path.slug}/experience`;
 
   return (

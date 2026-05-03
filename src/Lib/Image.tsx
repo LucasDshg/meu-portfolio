@@ -1,4 +1,4 @@
-import React, { JSX } from 'react';
+import React from 'react';
 
 interface IImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   alt: string; // Tornamos obrigatório para garantir acessibilidade
@@ -9,6 +9,6 @@ export const Image: React.FC<IImageProps> = ({
   loading = 'lazy',
   decoding = 'async',
   ...props
-}): JSX.Element => {
+}) => {
   return <img alt={alt} loading={loading} decoding={decoding} {...props} />;
 };

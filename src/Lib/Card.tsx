@@ -1,23 +1,23 @@
-import React from "react";
+import React from 'react';
 
-interface CardProps {
+interface ICardProps {
   children: React.ReactNode;
-  variant?: "outline" | "primary";
+  variant?: 'outline' | 'primary';
   className?: string;
   height?: string;
 }
 
-export const Card: React.FC<CardProps> = ({
+export const Card: React.FC<ICardProps> = ({
   children,
-  variant = "outline",
-  className = "",
-  height = "auto",
+  variant = 'outline',
+  className = '',
+  height = 'auto',
 }) => {
   const variants = {
     outline:
-      "border border-zinc-100 dark:border-zinc-700/40 shadow-sm shadow-zinc-800/5",
+      'border border-zinc-100 dark:border-zinc-700/40 shadow-sm shadow-zinc-800/5',
     primary:
-      "bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-100/50 dark:border-zinc-700/10 shadow-sm shadow-zinc-800/5",
+      'bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-100/50 dark:border-zinc-700/10 shadow-sm shadow-zinc-800/5',
   };
 
   return (

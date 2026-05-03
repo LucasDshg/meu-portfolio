@@ -1,9 +1,9 @@
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { usePortfolio } from "../../../context/PortfolioContext";
-import { storage } from "../../../data/firebase";
-import { IProfile } from "../../../interface/portfolio.interface";
-import { FileUpload } from "../../../Lib/FileUpload";
-import { Input } from "../../../Lib/Input";
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { usePortfolio } from '../../../context/PortfolioContext';
+import { storage } from '../../../data/firebase';
+import { IProfile } from '../../../interface/portfolio.interface';
+import { FileUpload } from '../../../Lib/FileUpload';
+import { Input } from '../../../Lib/Input';
 
 export const PersonalInfoSection = ({
   profile,
@@ -13,9 +13,9 @@ export const PersonalInfoSection = ({
   const { user } = usePortfolio();
 
   const handleUpload = async (file: File, fieldName: string) => {
-    if (!user) throw new Error("Usuário não autenticado");
+    if (!user) throw new Error('Usuário não autenticado');
 
-    const extension = file.name.split(".").pop();
+    const extension = file.name.split('.').pop();
     const path = `${user.uid}/${fieldName}.${extension}`;
     const storageRef = ref(storage, path);
     await uploadBytes(storageRef, file);
@@ -51,14 +51,14 @@ export const PersonalInfoSection = ({
           name="imageUrl"
           accept="image/*"
           initialUrl={profile?.imageUrl}
-          onFileSelect={(file) => handleUpload(file, "profile-image")}
+          onFileSelect={(file) => handleUpload(file, 'profile-image')}
         />
         <FileUpload
           label="Currículo (PDF)"
           name="cvLink"
           accept=".pdf"
           initialUrl={profile?.cvLink}
-          onFileSelect={(file) => handleUpload(file, "cv")}
+          onFileSelect={(file) => handleUpload(file, 'cv')}
         />
       </div>
     </div>

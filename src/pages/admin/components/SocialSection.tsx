@@ -1,6 +1,6 @@
-import { ISocials } from "../../../interface/portfolio.interface";
-import { Heading } from "../../../Lib/Heading";
-import { Input } from "../../../Lib/Input";
+import { ISocials } from '../../../interface/portfolio.interface';
+import { Heading } from '../../../Lib/Heading';
+import { Input } from '../../../Lib/Input';
 
 export const SocialSection = ({ socials }: { socials?: ISocials[] }) => (
   <div className="p-6 space-y-6">
@@ -13,7 +13,7 @@ export const SocialSection = ({ socials }: { socials?: ISocials[] }) => (
             key={social.id}
             label={social.name}
             name={`social-${social.id}`}
-            defaultValue={social.link || ""}
+            defaultValue={social.link || ''}
             placeholder={`Link do ${social.name}`}
           />
         ))}

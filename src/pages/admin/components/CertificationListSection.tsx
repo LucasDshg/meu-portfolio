@@ -1,17 +1,18 @@
-import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
 import {
   RiAddLine,
   RiDeleteBinLine,
   RiEditLine,
   RiSaveLine,
-} from "react-icons/ri";
-import { usePortfolio } from "../../../context/PortfolioContext";
-import { ICertifications } from "../../../interface/certifications.interface";
-import { Button } from "../../../Lib/Button";
-import { Heading } from "../../../Lib/Heading";
-import { Input } from "../../../Lib/Input";
-import { Toast } from "../../../Lib/Toast";
+} from 'react-icons/ri';
+import { usePortfolio } from '../../../context/PortfolioContext';
+import { ECollection } from '../../../data/firebase.service';
+import { ICertifications } from '../../../interface/certifications.interface';
+import { Button } from '../../../Lib/Button';
+import { Heading } from '../../../Lib/Heading';
+import { Input } from '../../../Lib/Input';
+import { Toast } from '../../../Lib/Toast';
 
 export const CertificationListSection = ({
   certifications,
@@ -23,38 +24,38 @@ export const CertificationListSection = ({
     useState<Partial<ICertifications> | null>(null);
   const [toast, setToast] = useState<{
     message: string;
-    type: "success" | "error";
+    type: 'success' | 'error';
   } | null>(null);
 
   const handleSave = async () => {
     if (!editingItem) return;
 
     if (!editingItem.name || !editingItem.institution || !editingItem.year) {
-      setToast({ message: "Todos os campos são obrigatórios.", type: "error" });
+      setToast({ message: 'Todos os campos são obrigatórios.', type: 'error' });
       return;
     }
 
     try {
       await saveSubItem<Partial<ICertifications>>(
-        "certifications",
+        ECollection.CERTIFICATIONS,
         editingItem,
       );
       setEditingItem(null);
-      setToast({ message: "Certificação salva com sucesso!", type: "success" });
+      setToast({ message: 'Certificação salva com sucesso!', type: 'success' });
     } catch (error) {
-      setToast({ message: "Erro ao salvar certificação.", type: "error" });
+      setToast({ message: 'Erro ao salvar certificação.', type: 'error' });
     }
   };
 
   const handleDelete = async (id: number) => {
     try {
-      await deleteSubItem("certifications", id);
+      await deleteSubItem(ECollection.CERTIFICATIONS, id);
       setToast({
-        message: "Certificação removida com sucesso!",
-        type: "success",
+        message: 'Certificação removida com sucesso!',
+        type: 'success',
       });
     } catch (error) {
-      setToast({ message: "Erro ao remover certificação.", type: "error" });
+      setToast({ message: 'Erro ao remover certificação.', type: 'error' });
     }
   };
 
@@ -69,8 +70,8 @@ export const CertificationListSection = ({
             className="w-full gap-2 border-dashed"
             onClick={() =>
               setEditingItem({
-                name: "",
-                institution: "",
+                name: '',
+                institution: '',
                 year: new Date().getFullYear(),
               })
             }

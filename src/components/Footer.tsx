@@ -8,7 +8,7 @@ import { useNavigationMenu } from '../utils/navigation.utils';
 
 const Footer: React.FC = () => {
   const { profile, user } = usePortfolio();
-  const { menus, slug } = useNavigationMenu(profile!);
+  const { menus } = useNavigationMenu(profile!);
 
   return (
     <footer className="mt-32 flex-none">

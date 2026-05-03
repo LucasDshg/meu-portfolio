@@ -1,20 +1,20 @@
-import { AnimatePresence, motion } from "framer-motion";
-import React, { useState } from "react";
-import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
-import { Heading } from "./Heading";
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri';
+import { Heading } from './Heading';
 
-interface CollapsibleProps {
+interface ICollapsibleProps {
   title: string;
   children: React.ReactNode;
   defaultOpen?: boolean;
   className?: string;
 }
 
-export const Collapsible: React.FC<CollapsibleProps> = ({
+export const Collapsible: React.FC<ICollapsibleProps> = ({
   title,
   children,
   defaultOpen = false,
-  className = "",
+  className = '',
 }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
@@ -43,9 +43,9 @@ export const Collapsible: React.FC<CollapsibleProps> = ({
         {isOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
+            animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="p-6 space-y-6"
           >
             {children}
