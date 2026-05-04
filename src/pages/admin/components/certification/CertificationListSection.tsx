@@ -65,6 +65,7 @@ export const CertificationListSection = ({
 
       <CertificationModal
         isOpen={isModalOpen}
+        setToast={setToast}
         onClose={() => setIsModalOpen(false)}
         certification={editingItem}
       />

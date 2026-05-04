@@ -19,12 +19,12 @@ const Header: React.FC<IHeaderProps> = ({ darkMode, setDarkMode }) => {
 
   return (
     <header className="pointer-events-none sticky top-0 z-50 flex h-0 flex-col items-center overflow-visible max-w-[1220px] mx-auto">
-      <div className="pointer-events-auto flex items-center justify-between gap-4 py-3 px-4 md:px-12 w-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md">
+      <div className="pointer-events-auto flex items-center justify-between gap-2 sm:gap-4 py-3 px-4 md:px-12 w-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md">
         <div className="flex flex-1">
           <AnimatePresence>
             {isVisible && (
               <motion.div
-                className="pl-24"
+                className="sm:pl-24"
                 initial={{ opacity: 0, scale: 0.5, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.5, y: 20 }}
@@ -48,7 +48,7 @@ const Header: React.FC<IHeaderProps> = ({ darkMode, setDarkMode }) => {
 
         {!pathname.includes('/admin') && profile && (
           <nav className="pointer-events-auto block">
-            <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
+            <ul className="flex rounded-full bg-white/90 sm:px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
               {menus.map((menu) => {
                 const isActive = pathname === menu.href;
 
@@ -68,7 +68,7 @@ const Header: React.FC<IHeaderProps> = ({ darkMode, setDarkMode }) => {
           </nav>
         )}
 
-        <div className="flex flex-1 justify-end">
+        <div className="flex flex-1 justify-end hidden sm:flex">
           <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
         </div>
       </div>

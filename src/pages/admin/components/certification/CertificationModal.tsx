@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { usePortfolio } from '../../../../context/PortfolioContext';
+import { logAppError } from '../../../../data/analytics.service';
 import { ECollection } from '../../../../data/firebase.service';
 import { ICertifications } from '../../../../interface/certifications.interface';
 import { Button } from '../../../../Lib/Button';
@@ -8,14 +9,18 @@ import { Modal } from '../../../../Lib/Modal';
 
 interface ICertificationModalProps {
   isOpen: boolean;
-  onClose: () => void;
   certification?: ICertifications;
+  onClose: () => void;
+  setToast: (
+    toast: { message: string; type: 'success' | 'error' } | null,
+  ) => void;
 }
 
 export const CertificationModal: React.FC<ICertificationModalProps> = ({
   isOpen,
-  onClose,
   certification,
+  onClose,
+  setToast,
 }) => {
   const { saveSubItem } = usePortfolio();
   const [formData, setFormData] = useState<Partial<ICertifications>>({
@@ -45,8 +50,16 @@ export const CertificationModal: React.FC<ICertificationModalProps> = ({
         id: certification?.id || Date.now(),
       });
       onClose();
+      setToast({
+        message: 'Certificação salvo com sucesso!',
+        type: 'success',
+      });
     } catch (error) {
-      console.error('Erro ao salvar certificação:', error);
+      logAppError('Certification_Modal_Save', error);
+      setToast({
+        message: 'Erro ao salvar certificação.',
+        type: 'error',
+      });
     }
   };
 
@@ -56,7 +69,7 @@ export const CertificationModal: React.FC<ICertificationModalProps> = ({
       onClose={onClose}
       title={certification ? 'Editar Certificação' : 'Nova Certificação'}
     >
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form className="space-y-6">
         <div className="grid grid-cols-1 gap-6">
           <Input
             label="Nome do Curso/Certificado"
@@ -87,7 +100,9 @@ export const CertificationModal: React.FC<ICertificationModalProps> = ({
           <Button variant="ghost" onClick={onClose} type="button">
             Cancelar
           </Button>
-          <Button type="submit">Salvar</Button>
+          <Button type="button" onClick={handleSubmit}>
+            Salvar
+          </Button>
         </div>
       </form>
     </Modal>

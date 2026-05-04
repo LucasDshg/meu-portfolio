@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
 import React from 'react';
+import { Button } from '../Lib/Button';
 import { Card } from '../Lib/Card';
 import { Heading } from '../Lib/Heading';
+import { Image } from '../Lib/Image';
 import { Text } from '../Lib/Text';
-import { TextLink } from '../Lib/TextLink';
 import { usePortfolio } from '../context/PortfolioContext';
 import { IArticle } from '../interface/article.interface';
 import { useNavigationMenu } from '../utils/navigation.utils';
@@ -21,8 +22,8 @@ const Articles: React.FC = () => {
       </div>
 
       <div className="mt-16 sm:mt-20">
-        <div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
-          <div className="flex max-w-3xl flex-col gap-16">
+        <div className="md:dark:border-zinc-700/40">
+          <div className="flex flex-col gap-16">
             {articles.length > 0 ? (
               articles.map((article: IArticle) => (
                 <ArticleCard key={article.slug} article={article} />
@@ -45,54 +46,36 @@ const ArticleCard: React.FC<{ article: IArticle }> = ({ article }) => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="md:grid md:grid-cols-4 md:items-baseline"
     >
-      <Card className="md:col-span-3">
-        <time
-          dateTime={article.date}
-          className="md:hidden relative z-10 order-first mb-3 flex items-center text-sm text-zinc-400 dark:text-zinc-500 pl-3.5"
-        >
-          <span
-            className="absolute inset-y-0 left-0 flex items-center"
-            aria-hidden="true"
-          >
-            <span className="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500" />
-          </span>
-          {article.date}
-        </time>
-
-        <Heading className="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
-          <TextLink href={`${basePath}/articles/${article.slug}`}>
-            {article.title}
-          </TextLink>
-        </Heading>
-
-        <Text className="relative z-10 mt-2 text-sm">
-          {article.description}
-        </Text>
-
-        <div
-          aria-hidden="true"
-          className="relative z-10 mt-4 flex items-center text-sm font-medium text-teal-500"
-        >
-          Ler artigo
-          <svg
-            viewBox="0 0 16 16"
-            fill="none"
-            className="ml-1 h-4 w-4 stroke-current"
-          >
-            <path
-              d="M6.75 5.75 9.25 8l-2.5 2.25"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+      <Card className="relative overflow-hidden group min-h-[220px] flex flex-col justify-end">
+        {article.image && (
+          <div className="absolute inset-0 z-0">
+            <Image
+              src={article.image}
+              alt=""
+              className="h-full w-full object-cover transition duration-500 group-hover:scale-105 blur-xs
+"
             />
-          </svg>
+            <div className="absolute inset-0 bg-zinc-950/70 dark:bg-zinc-950/85" />
+          </div>
+        )}
+
+        <div className="relative z-10">
+          <Heading className="text-lg font-semibold tracking-tight !text-white">
+            {article.title}
+          </Heading>
+
+          <Text className="mt-2 !text-zinc-300">{article.description}</Text>
+
+          <Button
+            href={`${basePath}/articles/${article.slug}`}
+            variant="primary"
+            className="mt-6 px-6"
+          >
+            Ler artigo
+          </Button>
         </div>
       </Card>
-      <time className="mt-1 hidden md:block relative z-10 order-first mb-3 flex items-center text-sm text-zinc-400 dark:text-zinc-500">
-        {article.date}
-      </time>
     </motion.article>
   );
 };

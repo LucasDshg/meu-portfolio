@@ -70,6 +70,7 @@ export const ExperienceListSection: React.FC<IExperienceListSectionProps> = ({
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         experience={editingItem}
+        setToast={setToast}
       />
 
       <AnimatePresence>

@@ -1,6 +1,7 @@
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import React, { useState } from 'react';
 import { usePortfolio } from '../../../../context/PortfolioContext';
+import { logAppError } from '../../../../data/analytics.service';
 import { storage } from '../../../../data/firebase';
 import { ECollection } from '../../../../data/firebase.service';
 import { IProject } from '../../../../interface/project.interface';
@@ -14,21 +15,25 @@ interface IProjectModalProps {
   isOpen: boolean;
   onClose: () => void;
   project?: IProject;
+  setToast: (
+    toast: { message: string; type: 'success' | 'error' } | null,
+  ) => void;
 }
 
 export const ProjectModal: React.FC<IProjectModalProps> = ({
   isOpen,
   onClose,
   project,
+  setToast,
 }) => {
   const { saveSubItem, user } = usePortfolio();
+  const [prevProject, setPrevProject] = useState<IProject | undefined>(
+    undefined,
+  );
   const [formData, setFormData] = useState<Partial<IProject>>({});
-  const [prevProjectId, setPrevProjectId] = useState<
-    string | number | undefined
-  >(undefined);
 
-  if (isOpen && project?.id !== prevProjectId) {
-    setPrevProjectId(project?.id);
+  if (project !== prevProject) {
+    setPrevProject(project);
     setFormData(
       project || {
         name: '',
@@ -41,6 +46,8 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
       },
     );
   }
+
+  if (!isOpen) return null;
 
   const handleUpload = async (
     file: File,
@@ -57,6 +64,8 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
+
     try {
       const itemToSave = {
         ...formData,
@@ -72,8 +81,16 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
 
       await saveSubItem(ECollection.PROJECTS, itemToSave);
       onClose();
+      setToast({
+        message: 'Projeto salvo com sucesso!',
+        type: 'success',
+      });
     } catch (error) {
-      console.error('Erro ao salvar projeto:', error);
+      logAppError('Project_Modal_Save', error);
+      setToast({
+        message: 'Erro ao salvar projeto.',
+        type: 'error',
+      });
     }
   };
 
@@ -84,7 +101,7 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
       title={project ? 'Editar Projeto' : 'Novo Projeto'}
       maxWidth="max-w-4xl"
     >
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input
             label="Nome do Projeto"
@@ -97,10 +114,13 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
             value={
               Array.isArray(formData.technologies)
                 ? formData.technologies.join(', ')
-                : ''
+                : formData.technologies || ''
             }
             onChange={(e) =>
-              setFormData({ ...formData, technologies: e.target.value as any })
+              setFormData({
+                ...formData,
+                technologies: e.target.value as any,
+              })
             }
             required
           />
@@ -167,7 +187,9 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
           <Button variant="ghost" onClick={onClose} type="button">
             Cancelar
           </Button>
-          <Button type="submit">Salvar</Button>
+          <Button type="button" onClick={handleSubmit}>
+            Salvar
+          </Button>
         </div>
       </form>
     </Modal>

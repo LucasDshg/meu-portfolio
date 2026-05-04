@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { usePortfolio } from '../../../../context/PortfolioContext';
+import { logAppError } from '../../../../data/analytics.service';
 import { ECollection } from '../../../../data/firebase.service';
 import { IExperience } from '../../../../interface/experience.interface';
 import { Button } from '../../../../Lib/Button';
@@ -11,21 +12,25 @@ interface IExperienceModalProps {
   isOpen: boolean;
   onClose: () => void;
   experience?: IExperience;
+  setToast: (
+    toast: { message: string; type: 'success' | 'error' } | null,
+  ) => void;
 }
 
 export const ExperienceModal: React.FC<IExperienceModalProps> = ({
   isOpen,
-  onClose,
   experience,
+  onClose,
+  setToast,
 }) => {
   const { saveSubItem } = usePortfolio();
+  const [prevExperience, setPrevExperience] = useState<IExperience | undefined>(
+    undefined,
+  );
   const [formData, setFormData] = useState<Partial<IExperience>>({});
-  const [prevExperienceId, setPrevExperienceId] = useState<
-    string | number | undefined
-  >(undefined);
 
-  if (isOpen && experience?.id !== prevExperienceId) {
-    setPrevExperienceId(experience?.id);
+  if (experience !== prevExperience) {
+    setPrevExperience(experience);
     setFormData(
       experience || {
         company: '',
@@ -37,14 +42,18 @@ export const ExperienceModal: React.FC<IExperienceModalProps> = ({
     );
   }
 
+  if (!isOpen) return null;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
+
     try {
       const itemToSave = {
         ...formData,
         technologies: Array.isArray(formData.technologies)
           ? formData.technologies
-          : (formData.technologies as unknown as string)
+          : ((formData.technologies as unknown as string) || '')
               .split(',')
               .map((t) => t.trim())
               .filter(Boolean),
@@ -53,8 +62,16 @@ export const ExperienceModal: React.FC<IExperienceModalProps> = ({
 
       await saveSubItem(ECollection.EXPERIENCES, itemToSave);
       onClose();
+      setToast({
+        message: 'Experiência salvo com sucesso!',
+        type: 'success',
+      });
     } catch (error) {
-      console.error('Erro ao salvar experiência:', error);
+      logAppError('Project_Modal_Save', error);
+      setToast({
+        message: 'Erro ao salvar experiência.',
+        type: 'error',
+      });
     }
   };
 
@@ -64,7 +81,7 @@ export const ExperienceModal: React.FC<IExperienceModalProps> = ({
       onClose={onClose}
       title={experience ? 'Editar Experiência' : 'Nova Experiência'}
     >
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input
             label="Empresa"
@@ -94,7 +111,7 @@ export const ExperienceModal: React.FC<IExperienceModalProps> = ({
             value={
               Array.isArray(formData.technologies)
                 ? formData.technologies.join(', ')
-                : ''
+                : formData.technologies || ''
             }
             onChange={(e) =>
               setFormData({
@@ -117,7 +134,9 @@ export const ExperienceModal: React.FC<IExperienceModalProps> = ({
           <Button variant="ghost" onClick={onClose} type="button">
             Cancelar
           </Button>
-          <Button type="submit">Salvar</Button>
+          <Button type="button" onClick={handleSubmit}>
+            Salvar
+          </Button>
         </div>
       </form>
     </Modal>

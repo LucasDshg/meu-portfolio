@@ -70,6 +70,7 @@ export function AdminListSection<T extends { id: string | number }>({
                 <Button
                   variant="ghost"
                   className="!p-2"
+                  type="button"
                   onClick={() => onEdit(item)}
                 >
                   <RiEditLine size={18} />
@@ -77,6 +78,7 @@ export function AdminListSection<T extends { id: string | number }>({
                 <Button
                   variant="ghost"
                   className="!p-2"
+                  type="button"
                   onClick={() =>
                     confirm(deleteConfirmationMessage) && onDelete(item)
                   }

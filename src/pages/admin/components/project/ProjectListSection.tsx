@@ -66,6 +66,7 @@ export const ProjectListSection: React.FC<IProjectListSectionProps> = ({
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         project={editingItem}
+        setToast={setToast}
       />
 
       <AnimatePresence>

@@ -1,15 +1,18 @@
 import { motion } from 'framer-motion';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { usePortfolio } from '../context/PortfolioContext';
 import { IArticle } from '../interface/article.interface';
+import { Button } from '../Lib/Button';
 import { Card } from '../Lib/Card';
 import { Heading } from '../Lib/Heading';
+import { Image } from '../Lib/Image';
 import { Subheading } from '../Lib/Subheading';
 import { Text } from '../Lib/Text';
 
 const ArticleDetail: React.FC = () => {
   const { articleSlug } = useParams();
+  const navigate = useNavigate();
   const { articles = [] } = usePortfolio() as { articles: IArticle[] };
 
   const article = articles.find((a: IArticle) => a.slug === articleSlug);
@@ -29,15 +32,27 @@ const ArticleDetail: React.FC = () => {
       className="mx-auto max-w-2xl lg:max-w-5xl flex-1 w-full mt-24"
     >
       <Card variant="outline">
-        <Heading className="text-4xl sm:text-5xl">{article.title}</Heading>
-        <Subheading className="mb-4 text-sm mt-4 tracking-widest text-zinc-400 dark:text-zinc-500">
-          Publicado em {article.date}
-        </Subheading>
+        <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div className="flex-1">
+            <Heading className="text-4xl sm:text-5xl">{article.title}</Heading>
+            <Subheading className="mb-4 text-sm mt-4 tracking-widest">
+              Publicado em {article.date}
+            </Subheading>
+          </div>
+          <Button
+            onClick={() => navigate(-1)}
+            variant="secondary"
+            className="self-end sm:self-start gap-2"
+          >
+            Voltar
+          </Button>
+        </div>
+
         {article.image && (
-          <img
+          <Image
             src={article.image}
-            alt=""
-            className="mt-8 aspect-video rounded-2xl object-cover shadow-md"
+            alt="Carregando..."
+            className="mt-8 aspect-video rounded-2xl object-cover shadow-md scale-110"
           />
         )}
 

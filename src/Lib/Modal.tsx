@@ -46,7 +46,6 @@ export const Modal: React.FC<IModalProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
             className="absolute inset-0 bg-black/50 backdrop-blur-sm"
           />
 
@@ -63,6 +62,7 @@ export const Modal: React.FC<IModalProps> = ({
                 onClick={onClose}
                 className="p-1 rounded-lg text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                 aria-label="Fechar"
+                type="button"
               >
                 <svg
                   className="w-6 h-6"
