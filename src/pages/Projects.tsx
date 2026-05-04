@@ -74,7 +74,7 @@ const Projects: React.FC = () => {
   const { projects, profile } = usePortfolio();
 
   return (
-    <div className="mt-32">
+    <div className="mt-24">
       <div className="max-w-2xl">
         <Heading className="text-4xl sm:text-5xl">
           {profile?.pages.project.title}

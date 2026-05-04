@@ -22,7 +22,7 @@ const HeroSection: React.FC<IHeroSectionProps> = ({
 
   return (
     <section id="hero" className="mt-9">
-      <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-[2fr_1fr] lg:gap-y-12 mt-32 items-center">
+      <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-[2fr_1fr] lg:gap-y-12 mt-24 items-center">
         <div className="lg:pl-20">
           <div className="max-w-xs px-4 mx-auto lg:mx-0">
             <motion.img

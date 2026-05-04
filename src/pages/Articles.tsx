@@ -5,23 +5,19 @@ import { Heading } from '../Lib/Heading';
 import { Text } from '../Lib/Text';
 import { TextLink } from '../Lib/TextLink';
 import { usePortfolio } from '../context/PortfolioContext';
-import { IArticle } from '../interface/article.interface'; // Importando a interface IArticle
+import { IArticle } from '../interface/article.interface';
+import { useNavigationMenu } from '../utils/navigation.utils';
 
 const Articles: React.FC = () => {
-  const { articles = [] } = usePortfolio() as unknown as {
-    articles: IArticle[];
-  };
+  const { articles, profile } = usePortfolio();
 
   return (
-    <div className="mt-32">
+    <div className="mt-24">
       <div className="max-w-2xl">
         <Heading className="text-4xl sm:text-5xl">
-          Escrita técnica e pensamentos sobre desenvolvimento.
+          {profile?.pages.articles.title}
         </Heading>
-        <Text className="mt-6">
-          Espaço dedicado a compartilhar conhecimentos, tutoriais e reflexões
-          sobre tecnologia e engenharia de software.
-        </Text>
+        <Text className="mt-6">{profile?.pages.articles.description}</Text>
       </div>
 
       <div className="mt-16 sm:mt-20">
@@ -42,6 +38,8 @@ const Articles: React.FC = () => {
 };
 
 const ArticleCard: React.FC<{ article: IArticle }> = ({ article }) => {
+  const { profile } = usePortfolio();
+  const { basePath } = useNavigationMenu(profile!);
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
@@ -64,7 +62,7 @@ const ArticleCard: React.FC<{ article: IArticle }> = ({ article }) => {
         </time>
 
         <Heading className="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
-          <TextLink href={`/articles/${article.slug}`}>
+          <TextLink href={`${basePath}/articles/${article.slug}`}>
             {article.title}
           </TextLink>
         </Heading>

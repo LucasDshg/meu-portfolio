@@ -16,7 +16,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({
   const href = `/u/${path.slug}/experience`;
 
   return (
-    <section id="experience" className="mt-24 md:mt-28">
+    <section id="experience" className="mt-24 md:mt-24">
       <Heading className="mb-8">Experiência</Heading>
       <div className="mt-12 space-y-16 border-l border-zinc-100 dark:border-zinc-700/40 ml-2">
         {experiences.slice(0, 2).map((exp, index) => (

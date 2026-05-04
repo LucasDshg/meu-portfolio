@@ -49,7 +49,7 @@ const Admin: React.FC = () => {
     e: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     e.preventDefault();
-    if (!user || !profile) return; // Adicionada verificação para 'profile'
+    if (!user || !profile) return;
 
     try {
       const formData = new FormData(e.currentTarget);
@@ -196,7 +196,7 @@ const Admin: React.FC = () => {
   ];
 
   return (
-    <form onSubmit={handleSave} className="mt-32 max-w-4xl mx-auto pb-20">
+    <form onSubmit={handleSave} className="mt-9 max-w-4xl mx-auto pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-12">
         <div>
           <Heading className="text-4xl">Meu Portfólio</Heading>
