@@ -1,7 +1,7 @@
 import { IProfile } from '../interface/portfolio.interface';
 
 export const INITIAL_PROFILE_DATA: IProfile = {
-  articles: [], // Inicializando a lista de artigos
+  articles: [],
   name: '',
   imageUrl: '',
   cvLink: '',
