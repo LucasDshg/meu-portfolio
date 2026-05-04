@@ -31,7 +31,12 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({
             <Text className="text-sm font-medium text-zinc-400 dark:text-zinc-500">
               {exp.duration}
             </Text>
-            <Subheading className="mt-2 text-lg">{exp.role}</Subheading>
+            <Subheading
+              className="mt-2 text-lg"
+              color="text-zinc-950 dark:text-white"
+            >
+              {exp.role}
+            </Subheading>
             <Text className="mt-4 text-justify">{exp.description}</Text>
             <div className="mt-4 flex flex-wrap gap-2">
               {exp.technologies.map((tech) => (

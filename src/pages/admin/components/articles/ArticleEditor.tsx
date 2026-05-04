@@ -62,7 +62,7 @@ const ArticleEditor: React.FC = () => {
   };
 
   return (
-    <div className="mt-32 max-w-5xl mx-auto pb-20 px-4">
+    <div className="mt-9 max-w-5xl mx-auto pb-20 px-4">
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
           <button

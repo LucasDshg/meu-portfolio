@@ -25,7 +25,7 @@ export const Card: React.FC<ICardProps> = ({
       <div className="absolute -inset-y-1 -inset-x-1 z-0 bg-zinc-50 opacity-0 transition dark:bg-zinc-800/50 sm:rounded-2xl" />
 
       <div
-        className={`relative z-10 flex flex-col w-full rounded-2xl p-6  ${variants[variant]} ${className}`}
+        className={`relative z-10 flex flex-col w-full rounded-2xl p-6 ${variants[variant]} ${className}`}
       >
         {children}
       </div>

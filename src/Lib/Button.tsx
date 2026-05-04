@@ -21,11 +21,11 @@ export const Button: React.FC<IButtonProps> = ({
 
   const variants = {
     secondary:
-      'bg-zinc-800 text-zinc-100 hover:bg-zinc-700 active:bg-zinc-900 dark:bg-zinc-700 dark:hover:bg-zinc-600 dark:active:bg-zinc-700',
+      'bg-zinc-500 text-zinc-100 hover:bg-zinc-700 active:bg-zinc-900 dark:bg-zinc-700 dark:hover:bg-zinc-600 dark:active:bg-zinc-700',
     primary:
-      'bg-teal-50 text-teal-700 hover:bg-teal-100 active:bg-teal-200 dark:bg-teal-400/10 dark:text-teal-300 dark:hover:bg-teal-400/20',
+      'bg-teal-100 text-teal-700 hover:bg-teal-200 active:bg-teal-200 dark:bg-teal-400/10 dark:text-teal-300 dark:hover:bg-teal-400/20',
     outline:
-      'ring-1 ring-zinc-900/10 text-zinc-900 hover:ring-teal-500 hover:text-teal-600 dark:ring-white/10 dark:text-zinc-400 dark:hover:ring-teal-400 dark:hover:text-teal-400',
+      'ring-1 ring-zinc-900/20 text-zinc-500 hover:ring-teal-500 hover:text-teal-600 dark:ring-white/10 dark:text-zinc-400 dark:hover:ring-teal-400 dark:hover:text-teal-400',
     ghost:
       'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100',
   };

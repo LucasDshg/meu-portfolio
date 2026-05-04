@@ -24,7 +24,6 @@ const Header: React.FC<IHeaderProps> = ({ darkMode, setDarkMode }) => {
           <AnimatePresence>
             {isVisible && (
               <motion.div
-                className="sm:pl-24"
                 initial={{ opacity: 0, scale: 0.5, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.5, y: 20 }}
@@ -57,7 +56,11 @@ const Header: React.FC<IHeaderProps> = ({ darkMode, setDarkMode }) => {
                     <TextLink
                       href={menu.href}
                       className="relative block px-3 py-2 transition"
-                      color={isActive ? 'text-teal-500 dark:text-teal-400' : ''}
+                      color={
+                        isActive
+                          ? 'text-teal-500 dark:text-teal-400 font-semibold'
+                          : ''
+                      }
                     >
                       {menu.name}
                     </TextLink>

@@ -34,7 +34,7 @@ export const Tabs: React.FC<ITabsProps> = ({ tabs, className = '' }) => {
               {isActive && (
                 <motion.div
                   layoutId="activeTab"
-                  className="absolute inset-0 bg-teal-50 dark:bg-teal-400/10 rounded-xl shadow-sm"
+                  className="absolute inset-0 bg-teal-200 dark:bg-teal-400/10 rounded-xl shadow-sm"
                   transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                 />
               )}

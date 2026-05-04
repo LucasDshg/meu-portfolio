@@ -105,7 +105,9 @@ const Projects: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col p-6 flex-1">
-                  <Subheading>{project.name}</Subheading>
+                  <Subheading color="text-zinc-950 dark:text-white">
+                    {project.name}
+                  </Subheading>
                   <Text className="mt-2 text-sm flex-grow text-justify">
                     {project.description}
                   </Text>

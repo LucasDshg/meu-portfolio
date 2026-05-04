@@ -37,7 +37,12 @@ const Experience: React.FC = () => {
                 <Text className="text-sm font-medium text-zinc-400 dark:text-zinc-500">
                   {exp.duration}
                 </Text>
-                <Subheading className="mt-2 text-lg">{exp.role}</Subheading>
+                <Subheading
+                  className="mt-2 text-lg"
+                  color="text-zinc-950 dark:text-white"
+                >
+                  {exp.role}
+                </Subheading>
                 <Text
                   className="mt-2 leading-relaxed text-sm text-justify"
                   color="text-teal-500"
