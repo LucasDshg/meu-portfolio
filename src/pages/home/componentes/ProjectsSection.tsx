@@ -21,7 +21,7 @@ const ProjectsSection: React.FC<IProjectsSectionProps> = ({ projects }) => {
     <section id="projects" className="mt-24 md:mt-24">
       <Heading className="mb-8">Projetos</Heading>
       <ul className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-2">
-        {projects.slice(0, 4).map((project) => (
+        {projects.slice(0, 2).map((project) => (
           <motion.li
             key={project.id}
             initial={{ opacity: 0, y: 20 }}
