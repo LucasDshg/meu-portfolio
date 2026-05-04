@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import { usePortfolio } from '../context/PortfolioContext';
 import { IArticle } from '../interface/article.interface';
 import { Card } from '../Lib/Card';
+import { Heading } from '../Lib/Heading';
+import { Subheading } from '../Lib/Subheading';
 import { Text } from '../Lib/Text';
 
 const ArticleDetail: React.FC = () => {
@@ -24,9 +26,13 @@ const ArticleDetail: React.FC = () => {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="mt-24 max-w-3xl mx-auto pb-20"
+      className="mx-auto max-w-2xl lg:max-w-5xl flex-1 w-full mt-24"
     >
       <Card variant="outline">
+        <Heading className="text-4xl sm:text-5xl">{article.title}</Heading>
+        <Subheading className="mb-4 text-sm mt-4 tracking-widest text-zinc-400 dark:text-zinc-500">
+          Publicado em {article.date}
+        </Subheading>
         {article.image && (
           <img
             src={article.image}
@@ -41,15 +47,6 @@ const ArticleDetail: React.FC = () => {
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
         </div>
-
-        <footer className="flex flex-col">
-          <time
-            dateTime={article.date}
-            className="order-first flex items-center text-sm text-zinc-400 dark:text-zinc-500"
-          >
-            <span className="ml-3">Publicado em {article.date}</span>
-          </time>
-        </footer>
       </Card>
     </motion.div>
   );

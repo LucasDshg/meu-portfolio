@@ -18,8 +18,8 @@ const Header: React.FC<IHeaderProps> = ({ darkMode, setDarkMode }) => {
   const isVisible = pathname !== basePath && pathname !== '/';
 
   return (
-    <header className="pointer-events-none sticky top-0 z-50 flex h-0 flex-col items-center overflow-visible">
-      <div className="pointer-events-auto flex items-center justify-between gap-4 py-6 px-4 md:px-12 w-full max-w-7xl">
+    <header className="pointer-events-none sticky top-0 z-50 flex h-0 flex-col items-center overflow-visible max-w-[1220px] mx-auto">
+      <div className="pointer-events-auto flex items-center justify-between gap-4 py-3 px-4 md:px-12 w-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md">
         <div className="flex flex-1">
           <AnimatePresence>
             {isVisible && (
