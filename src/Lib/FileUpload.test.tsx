@@ -110,4 +110,48 @@ describe('FileUpload Component', () => {
 
     expect(screen.getByText('url-2.jpg')).toBeInTheDocument();
   });
+
+  it('deve mostrar erro ao selecionar um tipo de arquivo não permitido', () => {
+    const { container } = render(
+      <FileUpload
+        label="Upload"
+        accept="image/*"
+        onFileSelect={mockOnFileSelect}
+      />,
+    );
+
+    const input = container.querySelector(
+      'input[type="file"]',
+    ) as HTMLInputElement;
+    // Tentando subir um arquivo de texto quando o accept é apenas imagens
+    const file = new File(['content'], 'test.txt', { type: 'text/plain' });
+
+    fireEvent.change(input, { target: { files: [file] } });
+
+    expect(screen.getByTestId('toast')).toHaveTextContent(
+      /Tipo de arquivo inválido/i,
+    );
+    expect(screen.queryByText(/Aguardando envio/i)).not.toBeInTheDocument();
+  });
+
+  it('deve mostrar erro ao selecionar um arquivo maior que 5MB', () => {
+    const { container } = render(
+      <FileUpload label="Upload" onFileSelect={mockOnFileSelect} />,
+    );
+
+    const input = container.querySelector(
+      'input[type="file"]',
+    ) as HTMLInputElement;
+    const largeFile = new File([''], 'large-image.png', { type: 'image/png' });
+
+    // Mockando a propriedade size do arquivo para 6MB
+    Object.defineProperty(largeFile, 'size', { value: 6 * 1024 * 1024 });
+
+    fireEvent.change(input, { target: { files: [largeFile] } });
+
+    expect(screen.getByTestId('toast')).toHaveTextContent(
+      /Arquivo muito grande/i,
+    );
+    expect(screen.queryByText(/Aguardando envio/i)).not.toBeInTheDocument();
+  });
 });

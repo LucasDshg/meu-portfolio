@@ -45,6 +45,28 @@ export const FileUpload: React.FC<IFileUploadProps> = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      const isImage =
+        accept?.includes('image') && file.type.startsWith('image/');
+      const isPdf = accept?.includes('.pdf') && file.type === 'application/pdf';
+
+      if (accept && !isImage && !isPdf) {
+        setToast({
+          message: `Tipo de arquivo inválido. Use apenas ${accept.includes('image') ? 'Imagens' : ''}${accept.includes('image') && accept.includes('pdf') ? ' ou ' : ''}${accept.includes('pdf') ? 'PDF' : ''}.`,
+          type: 'error',
+        });
+        if (fileInputRef.current) fileInputRef.current.value = '';
+        return;
+      }
+
+      if (file.size > 5 * 1024 * 1024) {
+        setToast({
+          message: 'Arquivo muito grande (máximo 5MB).',
+          type: 'error',
+        });
+        if (fileInputRef.current) fileInputRef.current.value = '';
+        return;
+      }
+
       setSelectedFile(file);
     }
   };
