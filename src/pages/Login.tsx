@@ -101,12 +101,12 @@ const Login: React.FC = () => {
                 required
                 placeholder="••••••••"
               />
-              <div className="flex item-center">
+              <div className="flex items-center relative">
                 <Button
                   variant="ghost"
-                  className="right-0 absolute top-7"
                   type="button"
                   name="showPassword"
+                  className="absolute right-0 top-7"
                   onClick={() =>
                     setTypeInput(typeInput === 'password' ? 'text' : 'password')
                   }
