@@ -73,12 +73,14 @@ export const CertificationModal: React.FC<ICertificationModalProps> = ({
         <div className="grid grid-cols-1 gap-6">
           <Input
             label="Nome do Curso/Certificado"
+            name="name"
             value={formData.name || ''}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
           />
           <Input
             label="Instituição"
+            name="institution"
             value={formData.institution || ''}
             onChange={(e) =>
               setFormData({ ...formData, institution: e.target.value })
@@ -87,6 +89,7 @@ export const CertificationModal: React.FC<ICertificationModalProps> = ({
           />
           <Input
             label="Ano de Conclusão"
+            name="year"
             type="number"
             value={formData.year || ''}
             onChange={(e) =>

@@ -7,12 +7,14 @@ interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   download?: boolean | string;
   target?: string;
   rel?: string;
+  name?: string;
 }
 
 export const Button: React.FC<IButtonProps> = ({
   href,
   variant = 'primary',
   className = '',
+  name,
   children,
   ...props
 }) => {
@@ -36,6 +38,7 @@ export const Button: React.FC<IButtonProps> = ({
     return (
       <a
         href={href}
+        aria-label={name}
         className={combinedClassName}
         {...(props as {
           download: boolean | string;
@@ -49,7 +52,7 @@ export const Button: React.FC<IButtonProps> = ({
   }
 
   return (
-    <button className={combinedClassName} {...props}>
+    <button className={combinedClassName} aria-label={name} {...props}>
       {children}
     </button>
   );

@@ -15,6 +15,7 @@ interface IFileUploadProps {
   initialUrl?: string;
   className?: string;
   name?: string;
+  id?: string;
 }
 
 export const FileUpload: React.FC<IFileUploadProps> = ({
@@ -23,6 +24,7 @@ export const FileUpload: React.FC<IFileUploadProps> = ({
   onFileSelect,
   initialUrl,
   className = '',
+  id,
   name,
 }) => {
   const [url, setUrl] = useState<string | undefined>(initialUrl);
@@ -65,9 +67,14 @@ export const FileUpload: React.FC<IFileUploadProps> = ({
     }
   };
 
+  const inputId = id || name;
+
   return (
     <div className={`w-full ${className}`}>
-      <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5 ml-1">
+      <label
+        htmlFor={inputId}
+        className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5 ml-1"
+      >
         {label}
       </label>
       <div className="relative group">
@@ -123,6 +130,7 @@ export const FileUpload: React.FC<IFileUploadProps> = ({
         <input
           type="file"
           ref={fileInputRef}
+          id={inputId}
           className="hidden"
           accept={accept}
           onChange={handleChange}

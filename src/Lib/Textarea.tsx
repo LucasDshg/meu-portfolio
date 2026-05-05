@@ -11,16 +11,21 @@ export const Textarea: React.FC<ITextareaProps> = ({
   ...props
 }) => {
   const [isTouched, setIsTouched] = useState(false);
+  const textAreaId = props.id || props.name;
 
   return (
     <div className="w-full">
       {label && (
-        <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5 ml-1">
+        <label
+          htmlFor={textAreaId}
+          className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5 ml-1"
+        >
           {label}
           {props.required && <span className="text-red-500 ml-1">*</span>}
         </label>
       )}
       <textarea
+        id={textAreaId}
         rows={rows}
         onBlur={() => setIsTouched(true)}
         className={`w-full rounded-xl border bg-white px-4 py-2 text-zinc-900 shadow-sm transition-all focus:outline-none focus:ring-4 dark:bg-zinc-800 dark:text-zinc-100 

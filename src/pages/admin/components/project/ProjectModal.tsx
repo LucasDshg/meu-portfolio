@@ -105,12 +105,14 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input
             label="Nome do Projeto"
+            name="name"
             value={formData.name || ''}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
           />
           <Input
             label="Tecnologias (Separadas por vírgula)"
+            name="technologies"
             value={
               Array.isArray(formData.technologies)
                 ? formData.technologies.join(', ')
@@ -126,6 +128,7 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
           />
           <Input
             label="Link GitHub"
+            name="githubLink"
             value={formData.githubLink || ''}
             onChange={(e) =>
               setFormData({ ...formData, githubLink: e.target.value })
@@ -133,6 +136,7 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
           />
           <Input
             label="Link Live Demo"
+            name="liveLink"
             value={formData.liveLink || ''}
             onChange={(e) =>
               setFormData({ ...formData, liveLink: e.target.value })
@@ -143,6 +147,7 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
         <div className="space-y-4">
           <FileUpload
             label="Logo do Projeto"
+            name="image"
             accept="image/*"
             initialUrl={formData.image || ''}
             onFileSelect={async (file) => {
@@ -160,6 +165,7 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
                 <FileUpload
                   key={i}
                   label={`Imagem ${i + 1}`}
+                  name={`carousel-${i}`}
                   accept="image/*"
                   initialUrl={formData.images?.[i] || ''}
                   onFileSelect={async (file) => {
@@ -176,6 +182,7 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
         </div>
         <Textarea
           label="Descrição"
+          name="description"
           value={formData.description || ''}
           rows={6}
           onChange={(e) =>

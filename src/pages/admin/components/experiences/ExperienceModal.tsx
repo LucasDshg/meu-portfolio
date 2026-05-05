@@ -85,6 +85,7 @@ export const ExperienceModal: React.FC<IExperienceModalProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input
             label="Empresa"
+            name="company"
             value={formData.company || ''}
             onChange={(e) =>
               setFormData({ ...formData, company: e.target.value })
@@ -93,12 +94,14 @@ export const ExperienceModal: React.FC<IExperienceModalProps> = ({
           />
           <Input
             label="Cargo"
+            name="role"
             value={formData.role || ''}
             onChange={(e) => setFormData({ ...formData, role: e.target.value })}
             required
           />
           <Input
             label="Duração"
+            name="duration"
             value={formData.duration || ''}
             onChange={(e) =>
               setFormData({ ...formData, duration: e.target.value })
@@ -108,6 +111,7 @@ export const ExperienceModal: React.FC<IExperienceModalProps> = ({
           />
           <Input
             label="Tecnologias (Separadas por vírgula)"
+            name="technologies"
             value={
               Array.isArray(formData.technologies)
                 ? formData.technologies.join(', ')
@@ -123,6 +127,7 @@ export const ExperienceModal: React.FC<IExperienceModalProps> = ({
         </div>
         <Textarea
           label="Descrição"
+          name="description"
           value={formData.description || ''}
           onChange={(e) =>
             setFormData({ ...formData, description: e.target.value })

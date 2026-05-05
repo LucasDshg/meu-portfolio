@@ -83,6 +83,7 @@ const ArticleEditor: React.FC = () => {
         <Card variant="outline" className="space-y-4">
           <Input
             label="Slug da URL"
+            name="slug"
             value={formData.slug}
             onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
             placeholder="url-do-artigo"
@@ -90,6 +91,7 @@ const ArticleEditor: React.FC = () => {
           />
           <Input
             label="URL da Imagem de Capa"
+            name="image"
             value={formData.image}
             onChange={(e) =>
               setFormData({ ...formData, image: e.target.value })
@@ -98,6 +100,7 @@ const ArticleEditor: React.FC = () => {
           />
           <Textarea
             label="Breve Descrição"
+            name="description"
             value={formData.description}
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
@@ -109,6 +112,7 @@ const ArticleEditor: React.FC = () => {
         <Card variant="outline" className="space-y-4">
           <Input
             label="Título do Artigo"
+            name="title"
             value={formData.title}
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })

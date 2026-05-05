@@ -65,6 +65,7 @@ export const ArticleListSection: React.FC<{ articles?: IArticle[] }> = ({
                   <button
                     onClick={() => handleEdit(article)}
                     className="p-2 text-zinc-400 hover:text-teal-500 transition-colors"
+                    aria-label="Editar artigo"
                     type="button"
                   >
                     <RiEditLine size={20} />
@@ -75,6 +76,7 @@ export const ArticleListSection: React.FC<{ articles?: IArticle[] }> = ({
                       deleteSubItem('articles', article.id)
                     }
                     className="p-2 text-zinc-400 hover:text-red-500 transition-colors"
+                    aria-label="Excluir artigo"
                     type="button"
                   >
                     <RiDeleteBinLine size={20} />
