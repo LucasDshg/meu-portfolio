@@ -6,6 +6,7 @@ import {
 import { AnimatePresence } from 'framer-motion';
 import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
+import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import logoIcon from '../assets/logo.svg';
 import { logAppError } from '../data/analytics.service';
@@ -22,6 +23,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [typeInput, setTypeInput] = useState('password');
   const [isRegistering, setIsRegistering] = useState(false);
   const [toast, setToast] = useState<{
     message: string;
@@ -86,18 +88,35 @@ const Login: React.FC = () => {
               required
               placeholder="seu@email.com"
             />
-            <Input
-              label="Senha"
-              type="password"
-              id="password"
-              name="password"
-              value={password}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setPassword(e.target.value)
-              }
-              required
-              placeholder="••••••••"
-            />
+            <div className="flex item-center">
+              <Input
+                label="Senha"
+                type={typeInput}
+                id="password"
+                name="password"
+                value={password}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setPassword(e.target.value)
+                }
+                required
+                placeholder="••••••••"
+              />
+              <Button
+                variant="ghost"
+                className="right-0 absolute top-7"
+                type="button"
+                name="showPassword"
+                onClick={() =>
+                  setTypeInput(typeInput === 'password' ? 'text' : 'password')
+                }
+              >
+                {typeInput === 'password' ? (
+                  <RiEyeFill size={20} />
+                ) : (
+                  <RiEyeOffFill size={20} />
+                )}
+              </Button>
+            </div>
             <Button type="submit" className="w-full py-3 mt-2">
               {isRegistering ? 'Criar Conta' : 'Entrar'}
             </Button>
