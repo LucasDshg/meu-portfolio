@@ -101,21 +101,23 @@ const Login: React.FC = () => {
                 required
                 placeholder="••••••••"
               />
-              <Button
-                variant="ghost"
-                className="right-0 absolute top-7"
-                type="button"
-                name="showPassword"
-                onClick={() =>
-                  setTypeInput(typeInput === 'password' ? 'text' : 'password')
-                }
-              >
-                {typeInput === 'password' ? (
-                  <RiEyeFill size={20} />
-                ) : (
-                  <RiEyeOffFill size={20} />
-                )}
-              </Button>
+              <div className="flex item-center">
+                <Button
+                  variant="ghost"
+                  className="right-0 absolute top-7"
+                  type="button"
+                  name="showPassword"
+                  onClick={() =>
+                    setTypeInput(typeInput === 'password' ? 'text' : 'password')
+                  }
+                >
+                  {typeInput === 'password' ? (
+                    <RiEyeFill size={20} />
+                  ) : (
+                    <RiEyeOffFill size={20} />
+                  )}
+                </Button>
+              </div>
             </div>
             <Button type="submit" className="w-full py-3 mt-2">
               {isRegistering ? 'Criar Conta' : 'Entrar'}
