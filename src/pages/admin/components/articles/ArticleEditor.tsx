@@ -1,3 +1,4 @@
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { AnimatePresence } from 'framer-motion';
 import React, { useCallback, useState } from 'react';
 import { RiArrowLeftLine, RiSaveLine } from 'react-icons/ri';
@@ -5,10 +6,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { LexicalEditor } from '../../../../components/lexical-editor/LexicalEditor';
 import { usePortfolio } from '../../../../context/PortfolioContext';
 import { logAppError } from '../../../../data/analytics.service';
+import { storage } from '../../../../data/firebase';
 import { ECollection } from '../../../../data/firebase.service';
 import { IArticle } from '../../../../interface/article.interface';
 import { Button } from '../../../../Lib/Button';
 import { Card } from '../../../../Lib/Card';
+import { FileUpload } from '../../../../Lib/FileUpload';
 import { Heading } from '../../../../Lib/Heading';
 import { Input } from '../../../../Lib/Input';
 import { Textarea } from '../../../../Lib/Textarea';
@@ -17,7 +20,7 @@ import { Toast } from '../../../../Lib/Toast';
 const ArticleEditor: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { articles, saveSubItem } = usePortfolio();
+  const { articles, saveSubItem, user } = usePortfolio();
   const [toast, setToast] = useState<{
     message: string;
     type: 'success' | 'error';
@@ -40,6 +43,16 @@ const ArticleEditor: React.FC = () => {
   const handleHtmlChange = useCallback((html: string) => {
     setFormData((prev) => ({ ...prev, content: html }));
   }, []);
+
+  const handleUpload = async (file: File): Promise<string> => {
+    if (!user) throw new Error('Usuário não autenticado');
+    const articleId = id || Date.now();
+    const extension = file.name.split('.').pop();
+    const path = `${user.uid}/articles/${articleId}/cover.${extension}`;
+    const storageRef = ref(storage, path);
+    await uploadBytes(storageRef, file);
+    return await getDownloadURL(storageRef);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -89,14 +102,16 @@ const ArticleEditor: React.FC = () => {
             placeholder="url-do-artigo"
             required
           />
-          <Input
-            label="URL da Imagem de Capa"
+          <FileUpload
+            label="Imagem de Capa"
             name="image"
-            value={formData.image}
-            onChange={(e) =>
-              setFormData({ ...formData, image: e.target.value })
-            }
-            placeholder="https://..."
+            accept="image/*"
+            initialUrl={formData.image}
+            onFileSelect={async (file) => {
+              const url = await handleUpload(file);
+              setFormData((prev) => ({ ...prev, image: url }));
+              return url;
+            }}
           />
           <Textarea
             label="Breve Descrição"

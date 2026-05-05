@@ -69,6 +69,13 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
     try {
       const itemToSave = {
         ...formData,
+        // Validação básica de links para evitar javascript: alert(1)
+        githubLink: formData.githubLink?.startsWith('http')
+          ? formData.githubLink
+          : '',
+        liveLink: formData.liveLink?.startsWith('http')
+          ? formData.liveLink
+          : '',
         technologies: Array.isArray(formData.technologies)
           ? formData.technologies
           : (formData.technologies as unknown as string)
