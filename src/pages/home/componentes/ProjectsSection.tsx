@@ -17,6 +17,8 @@ const ProjectsSection: React.FC<IProjectsSectionProps> = ({ projects }) => {
   const path = usePathName();
   const href = `/u/${path.slug}/project`;
 
+  if (!projects || projects.length === 0) return null;
+
   return (
     <section id="projects" className="mt-24 md:mt-24">
       <Heading className="mb-8">Projetos</Heading>

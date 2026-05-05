@@ -15,6 +15,8 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({
   const path = usePathName();
   const href = `/u/${path.slug}/experience`;
 
+  if (!experiences || experiences.length === 0) return null;
+
   return (
     <section id="experience" className="mt-24 md:mt-24">
       <Heading className="mb-8">Experiência</Heading>
