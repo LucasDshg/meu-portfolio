@@ -1,5 +1,5 @@
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import React from 'react';
+import React, { useState } from 'react';
 import { usePortfolio } from '../../../context/PortfolioContext';
 import { storage } from '../../../data/firebase';
 import { IProfile } from '../../../interface/portfolio.interface';
@@ -15,7 +15,34 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
   profile,
 }) => {
   const { user } = usePortfolio();
+  const [slug, setSlug] = useState(profile?.slug || '');
+  const [prevProfileSlug, setPrevProfileSlug] = useState<string | undefined>(
+    undefined,
+  );
 
+  if (profile?.slug !== prevProfileSlug) {
+    setPrevProfileSlug(profile?.slug);
+    setSlug(profile?.slug || '');
+  }
+
+  const slugify = (text: string) => {
+    return text
+      .toString()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9 -]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+  };
+
+  const handleNameBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (e.target.value) {
+      const generatedSlug = `${slugify(e.target.value)}-${Math.floor(1000 + Math.random() * 9000)}`;
+      setSlug(generatedSlug);
+    }
+  };
   const handleUpload = async (
     file: File,
     fieldName: string,
@@ -39,11 +66,14 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
             defaultValue={profile?.name}
             placeholder="Seu nome"
             required
+            onBlur={handleNameBlur}
           />
           <Input
             label="Slug da URL"
             name="slug"
+            value={slug}
             defaultValue={profile?.slug}
+            readOnly
             placeholder="ex: lucas-gomes"
             required
           />

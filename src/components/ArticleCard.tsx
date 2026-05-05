@@ -25,7 +25,7 @@ export const ArticleCard: React.FC<{ article: IArticle }> = ({ article }) => {
             <Image
               src={article.image}
               alt=""
-              className="h-full w-full object-cover transition duration-500 group-hover:scale-105 blur-xs"
+              className="h-full w-full object-cover transition duration-500 group-hover:scale-105 blur-xs rounded-2xl"
             />
             <div className="absolute inset-0 bg-zinc-950/70 dark:bg-zinc-950/85" />
           </div>

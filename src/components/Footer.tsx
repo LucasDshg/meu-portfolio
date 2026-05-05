@@ -19,14 +19,18 @@ const Footer: React.FC = () => {
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm font-medium text-zinc-800 dark:text-zinc-200">
               {menus.map((menu) => {
                 return (
-                  <TextLink key={menu.id} href={menu.href}>
+                  <TextLink
+                    key={menu.id}
+                    href={menu.href}
+                    color="text-zinc-600 dark:text-zinc-400 hover:text-teal-600"
+                  >
                     {menu.name}
                   </TextLink>
                 );
               })}
               <TextLink
                 href={user ? '/admin' : '/login'}
-                className="text-teal-500 hover:text-teal-600 dark:text-teal-400"
+                color="text-zinc-600 hover:text-teal-600 dark:text-zinc-400"
               >
                 {user ? 'Editar meu portfólio' : 'Criar meu portfólio'}
               </TextLink>

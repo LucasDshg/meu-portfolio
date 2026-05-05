@@ -56,4 +56,23 @@ describe('Page: Login', () => {
       screen.getByRole('button', { name: /criar conta/i }),
     ).toBeInTheDocument();
   });
+
+  it('deve alternar a visibilidade da senha ao clicar no botão de olho', () => {
+    render(
+      <MemoryRouter>
+        <Login />
+      </MemoryRouter>,
+    );
+
+    const passwordInput = screen.getByLabelText(/senha/i);
+    const toggleBtn = screen.getByLabelText('showPassword');
+
+    expect(passwordInput).toHaveAttribute('type', 'password');
+
+    fireEvent.click(toggleBtn);
+    expect(passwordInput).toHaveAttribute('type', 'text');
+
+    fireEvent.click(toggleBtn);
+    expect(passwordInput).toHaveAttribute('type', 'password');
+  });
 });

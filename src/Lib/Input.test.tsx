@@ -36,4 +36,10 @@ describe('Input Component', () => {
     fireEvent.change(input, { target: { value: 'Novo valor' } });
     expect(input.value).toBe('Novo valor');
   });
+
+  it('deve aplicar o atributo readOnly quando a prop for passada', () => {
+    render(<Input placeholder="Somente leitura" readOnly />);
+    const input = screen.getByPlaceholderText('Somente leitura');
+    expect(input).toHaveAttribute('readonly');
+  });
 });

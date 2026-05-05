@@ -73,9 +73,11 @@ const Experience: React.FC = () => {
             <Text className="mt-4 text-sm">
               {profile?.pages.experience.disponibleText}
             </Text>
-            <Button href="/about" variant="secondary" className="mt-6 w-full">
-              Sobre mim
-            </Button>
+            {profile?.pages.about.show && (
+              <Button href="/about" variant="secondary" className="mt-6 w-full">
+                Sobre mim
+              </Button>
+            )}
           </div>
           <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
             <Subheading className="flex items-center gap-3">

@@ -21,9 +21,11 @@ const Home: React.FC = () => {
         socials={profile.socials}
         phone={profile.phone}
       />
-      <ProjectsSection projects={projects} />
-      <ArticlesSection articles={articles} />
-      <ExperienceSection experiences={experiences} />
+      {profile.pages.project.show && <ProjectsSection projects={projects} />}
+      {profile.pages.articles.show && <ArticlesSection articles={articles} />}
+      {profile.pages.experience.show && (
+        <ExperienceSection experiences={experiences} />
+      )}
     </main>
   );
 };

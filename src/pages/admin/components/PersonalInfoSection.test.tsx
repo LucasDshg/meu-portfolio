@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { getDownloadURL, uploadBytes } from 'firebase/storage';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -81,5 +81,20 @@ describe('PersonalInfoSection', () => {
     });
 
     consoleSpy.mockRestore();
+  });
+
+  it('deve gerar um slug automaticamente ao perder o foco do campo nome', async () => {
+    render(<PersonalInfoSection profile={mockProfile as any} />);
+
+    const nameInput = screen.getByLabelText(/Nome Exibido/i);
+    const slugInput = screen.getByLabelText(/Slug da URL/i);
+
+    expect(slugInput).toHaveValue('lucas-gomes');
+
+    await userEvent.clear(nameInput);
+    await userEvent.type(nameInput, 'Novo Nome');
+    fireEvent.blur(nameInput);
+
+    expect((slugInput as HTMLInputElement).value).toMatch(/^novo-nome-\d{4}$/);
   });
 });
