@@ -5,9 +5,9 @@ import {
   doc,
   getDoc,
   getDocs,
-  orderBy,
   query,
   setDoc,
+  Timestamp,
   updateDoc,
   where,
 } from 'firebase/firestore';
@@ -106,8 +106,16 @@ export async function getSubCollectionItems<T>(
 ): Promise<T[]> {
   const userDocRef = getUserDocRef(uid);
   const subColRef = collection(userDocRef, collectionName);
-  const snapshot = await getDocs(query(subColRef, orderBy('id', 'asc')));
-  return snapshot.docs.map((doc) => doc.data() as T);
+  const snapshot = await getDocs(subColRef);
+  return snapshot.docs.map((doc) => {
+    const data = doc.data() as any;
+    // Converte Timestamps do Firebase para Date do JS para facilitar a ordenação
+    if (data.date instanceof Timestamp) {
+      data.date = data.date.toDate();
+    }
+
+    return { ...data, id: doc.id } as T;
+  });
 }
 
 /**
@@ -124,9 +132,19 @@ export async function saveSubCollectionItem<T>(
   const userDocRef = getUserDocRef(uid);
   const subColRef = collection(userDocRef, collectionName);
   const id = (data as any)['id'];
-  const docId = String(id || Date.now());
+  const docId = id ? String(id) : crypto.randomUUID();
   const docRef = doc(subColRef, docId);
-  await setDoc(docRef, { ...data, id: id || Number(docId) });
+
+  // Prepara os dados: garante que temos uma data para ordenação mas não sobrescreve a existente
+  const incomingDate = (data as any).date;
+  const dataToSave = {
+    ...data,
+    date: incomingDate ? new Date(incomingDate) : new Date(),
+  } as any;
+
+  delete dataToSave.id;
+
+  await setDoc(docRef, dataToSave);
 }
 
 /**

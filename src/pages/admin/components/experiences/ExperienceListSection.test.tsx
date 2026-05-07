@@ -13,20 +13,22 @@ vi.mock('../../../../context/PortfolioContext', () => ({
 describe('ExperienceListSection', () => {
   const mockExperiences = [
     {
-      id: 1,
+      id: 'uuid-1',
       role: 'Senior Software Engineer',
       company: 'Tech Corp',
       duration: '2022 - Presente',
       description: 'Desenvolvimento Fullstack',
       technologies: ['React', 'NestJS'],
+      date: new Date(),
     },
     {
-      id: 2,
+      id: 'uuid-2',
       role: 'Frontend Developer',
       company: 'Startup X',
       duration: '2020 - 2022',
       description: 'Angular e UI/UX',
       technologies: ['React', 'NestJS'],
+      date: new Date(),
     },
   ];
 
@@ -67,11 +69,8 @@ describe('ExperienceListSection', () => {
 
     render(<ExperienceListSection experiences={mockExperiences} />);
 
-    // A lista é ordenada por ID decrescente (b.id - a.id).
-    // mockExperiences[0] (ID 1) e mockExperiences[1] (ID 2) resultam na ordem: [ID 2, ID 1].
-    // Portanto, deleteButtons[1] é o botão para excluir o item com ID 1.
     const deleteButtons = screen.getAllByLabelText(/delete/i);
-    await userEvent.click(deleteButtons[1]);
+    await userEvent.click(deleteButtons[0]);
 
     await waitFor(
       () => {

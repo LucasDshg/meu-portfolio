@@ -49,15 +49,30 @@ export const ExperienceModal: React.FC<IExperienceModalProps> = ({
     e.stopPropagation();
 
     try {
+      const durationLower = (formData.duration || '').toLowerCase();
+      let experienceDate = new Date();
+
+      if (
+        !durationLower.includes('presente') &&
+        !durationLower.includes('atualmente')
+      ) {
+        const years = durationLower.match(/\d{4}/g);
+        if (years && years.length > 0) {
+          const lastYear = parseInt(years[years.length - 1]);
+          experienceDate = new Date(lastYear, 0, 1);
+        }
+      }
+
       const itemToSave = {
         ...formData,
+        date: experienceDate,
         technologies: Array.isArray(formData.technologies)
           ? formData.technologies
           : ((formData.technologies as unknown as string) || '')
               .split(',')
               .map((t) => t.trim())
               .filter(Boolean),
-        id: experience?.id || Date.now(),
+        id: experience?.id,
       };
 
       await saveSubItem(ECollection.EXPERIENCES, itemToSave);

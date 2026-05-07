@@ -1,5 +1,7 @@
 export interface IProject {
-  id: number;
+  id: string;
+  order: number;
+  date: Date;
   name: string;
   description: string;
   technologies: string[];

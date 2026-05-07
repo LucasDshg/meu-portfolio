@@ -16,11 +16,11 @@ const Experience: React.FC = () => {
       <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:gap-x-12">
         <div className="lg:order-first">
           <Heading className="text-4xl sm:text-5xl">
-            {profile!.pages.experience.title}
+            {profile?.pages?.experience?.title || ''}
           </Heading>
           <div className="mt-6">
             <Text className="text-justify">
-              {profile!.pages.experience.description}
+              {profile?.pages?.experience?.description || ''}
             </Text>
           </div>
 
@@ -71,9 +71,9 @@ const Experience: React.FC = () => {
               Disponibilidade
             </Subheading>
             <Text className="mt-4 text-sm">
-              {profile?.pages.experience.disponibleText}
+              {profile?.pages?.experience?.disponibleText}
             </Text>
-            {profile?.pages.about.show && (
+            {profile?.pages?.about?.show && (
               <Button href="/about" variant="secondary" className="mt-6 w-full">
                 Sobre mim
               </Button>
@@ -92,7 +92,7 @@ const Experience: React.FC = () => {
               rel="noopener noreferrer"
               className="mt-6 w-full"
             >
-              Mandar Email
+              Enviar Email
             </Button>
           </div>
 

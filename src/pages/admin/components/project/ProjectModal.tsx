@@ -43,6 +43,7 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
         liveLink: '',
         images: [],
         image: '',
+        order: 0,
       },
     );
   }
@@ -54,7 +55,7 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
     fileName: string,
   ): Promise<string> => {
     if (!user) throw new Error('Usuário não autenticado');
-    const projectId = project?.id || Date.now();
+    const projectId = project?.id;
     const extension = file.name.split('.').pop();
     const path = `${user.uid}/projects/${projectId}/${fileName}.${extension}`;
     const storageRef = ref(storage, path);
@@ -69,7 +70,6 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
     try {
       const itemToSave = {
         ...formData,
-        // Validação básica de links para evitar javascript: alert(1)
         githubLink: formData.githubLink?.startsWith('http')
           ? formData.githubLink
           : '',
@@ -83,7 +83,7 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
               .map((t) => t.trim())
               .filter(Boolean),
         images: (formData.images || []).filter(Boolean),
-        id: project?.id || Date.now(),
+        id: project?.id,
       };
 
       await saveSubItem(ECollection.PROJECTS, itemToSave);
@@ -101,6 +101,9 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
     }
   };
 
+  const technologiesInputValue = Array.isArray(formData.technologies)
+    ? formData.technologies.join(', ')
+    : formData.technologies || '';
   return (
     <Modal
       isOpen={isOpen}
@@ -109,30 +112,26 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
       maxWidth="max-w-4xl"
     >
       <form className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Input
-            label="Nome do Projeto"
-            name="name"
-            value={formData.name || ''}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            required
-          />
-          <Input
-            label="Tecnologias (Separadas por vírgula)"
-            name="technologies"
-            value={
-              Array.isArray(formData.technologies)
-                ? formData.technologies.join(', ')
-                : formData.technologies || ''
-            }
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                technologies: e.target.value as any,
-              })
-            }
-            required
-          />
+        <Input
+          label="Nome do Projeto"
+          name="name"
+          value={formData.name || ''}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          required
+        />
+        <Input
+          label="Tecnologias (Separadas por vírgula)"
+          name="technologies"
+          value={technologiesInputValue}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              technologies: e.target.value as any,
+            })
+          }
+          required
+        />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Input
             label="Link GitHub"
             name="githubLink"
@@ -148,6 +147,16 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
             onChange={(e) =>
               setFormData({ ...formData, liveLink: e.target.value })
             }
+          />
+          <Input
+            label="Ordem"
+            name="order"
+            type="number"
+            value={formData.order ?? 0}
+            onChange={(e) =>
+              setFormData({ ...formData, order: Number(e.target.value) })
+            }
+            required
           />
         </div>
 
@@ -165,7 +174,7 @@ export const ProjectModal: React.FC<IProjectModalProps> = ({
           />
           <div className="space-y-4">
             <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 ml-1">
-              Imagens de Apresentação (Carrossel)
+              Imagens de Apresentação (Carrossel - Aspector de 1:1)
             </label>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[0, 1, 2].map((i) => (

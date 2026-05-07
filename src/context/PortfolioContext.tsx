@@ -95,10 +95,18 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
             ],
           );
 
-          setExperiences(expData);
-          setProjects(projData);
-          setCertifications(certData);
-          setArticles(articlesData);
+          setExperiences(
+            expData.sort(
+              (a, b) => (b.date?.getTime() || 0) - (a.date?.getTime() || 0),
+            ),
+          );
+          setProjects(projData.sort((a, b) => a.order - b.order));
+          setCertifications(certData.sort((a, b) => b.year - a.year));
+          setArticles(
+            articlesData.sort(
+              (a, b) => (b.date?.getTime() || 0) - (a.date?.getTime() || 0),
+            ),
+          );
         }
       } catch (error) {
         logAppError('fetchDataByUid', error);

@@ -1,8 +1,9 @@
 export interface ICertifications {
-  id: number;
+  id: string;
   name: string;
   institution: string;
   year: number;
+  date: Date;
 }
 
 export interface ICertificationsSectionProps {

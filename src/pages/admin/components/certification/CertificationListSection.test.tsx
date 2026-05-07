@@ -15,16 +15,18 @@ vi.mock('../../../../data/analytics.service');
 describe('CertificationListSection', () => {
   const mockCertifications = [
     {
-      id: 1,
+      id: 'cert-1',
       name: 'AWS Certified Cloud Practitioner',
       institution: 'Amazon Web Services',
       year: 2021,
+      date: new Date(),
     },
     {
-      id: 2,
+      id: 'cert-2',
       name: 'Angular Expert',
       institution: 'Udemy',
       year: 2023,
+      date: new Date(),
     },
   ];
 
@@ -54,7 +56,6 @@ describe('CertificationListSection', () => {
   it('deve abrir o modal preenchido ao clicar no botão de editar', async () => {
     render(<CertificationListSection certifications={mockCertifications} />);
 
-    // Como está ordenado por ano desc, o primeiro item (index 0) é o de 2023 (id 2)
     const editButtons = screen.getAllByLabelText(/edit/i);
     await userEvent.click(editButtons[0]);
 
@@ -73,7 +74,10 @@ describe('CertificationListSection', () => {
     await userEvent.click(deleteButtons[0]);
 
     await waitFor(() => {
-      expect(mockDeleteSubItem).toHaveBeenCalledWith('certifications', 2);
+      expect(mockDeleteSubItem).toHaveBeenCalledWith(
+        'certifications',
+        'cert-2',
+      );
     });
 
     expect(

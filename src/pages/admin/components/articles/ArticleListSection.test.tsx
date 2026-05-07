@@ -20,20 +20,20 @@ describe('ArticleListSection', () => {
     {
       id: '1',
       title: 'Artigo 1',
-      date: '10/10/2023',
       slug: 'artigo-1',
       image: 'image.png',
       description: 'Desc',
       content: '<p>Conteúdo</p>',
+      date: new Date(),
     },
     {
       id: '2',
       title: 'Artigo 2',
-      date: '11/10/2023',
       slug: 'artigo-2',
       image: 'image.png',
       description: 'Desc',
       content: '<p>Conteúdo</p>',
+      date: new Date(),
     },
   ];
 
@@ -91,7 +91,7 @@ describe('ArticleListSection', () => {
     const deleteButtons = screen.getAllByRole('button', {
       name: /excluir artigo/i,
     });
-    fireEvent.click(deleteButtons[0]); // Clica no excluir do primeiro artigo (ID 1)
+    fireEvent.click(deleteButtons[0]);
     expect(mockDeleteSubItem).toHaveBeenCalledWith('articles', '1');
   });
 });

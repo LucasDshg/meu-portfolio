@@ -46,7 +46,7 @@ describe('Page: Experience', () => {
     expect(screen.getByText('Dev Senior')).toBeInTheDocument();
     expect(screen.getByText('Tech Corp')).toBeInTheDocument();
     expect(screen.getByText('Download PDF')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /mandar email/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /enviar email/i })).toHaveAttribute(
       'href',
       'mailto:teste@dev.com',
     );

@@ -11,7 +11,7 @@ vi.mock('../../../../data/analytics.service');
 
 const mockProjects = [
   {
-    id: 1,
+    id: 'proj-1',
     name: 'Projeto Alfa',
     description: 'Descrição Alfa',
     technologies: ['React', 'NestJS'],
@@ -19,6 +19,8 @@ const mockProjects = [
     images: [],
     githubLink: '',
     liveLink: '',
+    order: 1,
+    date: new Date(),
   },
 ];
 
@@ -106,7 +108,7 @@ describe('ProjectListSection & ProjectModal', () => {
 
     await waitFor(
       () => {
-        expect(mockDeleteSubItem).toHaveBeenCalledWith('projects', 1);
+        expect(mockDeleteSubItem).toHaveBeenCalledWith('projects', 'proj-1');
       },
       { timeout: 2000 },
     );

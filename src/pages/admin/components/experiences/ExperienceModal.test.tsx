@@ -32,7 +32,7 @@ describe('ExperienceModal', () => {
 
   it('deve preencher os campos corretamente ao editar uma experiência existente', () => {
     const existingExperience = {
-      id: 123,
+      id: 'uuid-123',
       company: 'Google',
       role: 'Software Engineer',
       duration: '2020 - 2024',
@@ -73,7 +73,7 @@ describe('ExperienceModal', () => {
       target: { value: 'Frontend Dev' },
     });
     fireEvent.change(screen.getByLabelText(/duração/i), {
-      target: { value: '2023' },
+      target: { value: '2020 - 2023' },
     });
     fireEvent.change(screen.getByLabelText(/tecnologias/i), {
       target: { value: 'React, Swift, CSS' },
@@ -91,6 +91,7 @@ describe('ExperienceModal', () => {
         expect.objectContaining({
           company: 'Apple',
           technologies: ['React', 'Swift', 'CSS'],
+          date: new Date(2023, 0, 1),
         }),
       );
       expect(mockOnClose).toHaveBeenCalled();
@@ -98,6 +99,45 @@ describe('ExperienceModal', () => {
         expect.objectContaining({ type: 'success' }),
       );
     });
+  });
+
+  it('deve salvar com a data atual se a duração contiver "Presente"', async () => {
+    const now = new Date(2024, 5, 20);
+    vi.useFakeTimers();
+    vi.setSystemTime(now);
+
+    render(
+      <ExperienceModal
+        isOpen={true}
+        onClose={mockOnClose}
+        setToast={mockSetToast}
+      />,
+    );
+
+    fireEvent.change(screen.getByLabelText(/empresa/i), {
+      target: { value: 'Meta' },
+    });
+    fireEvent.change(screen.getByLabelText(/cargo/i), {
+      target: { value: 'Tech Lead' },
+    });
+    fireEvent.change(screen.getByLabelText(/duração/i), {
+      target: { value: 'Jan 2024 - Atualmente' },
+    });
+
+    const saveButton = screen.getByRole('button', { name: /salvar/i });
+    fireEvent.click(saveButton);
+    await Promise.resolve();
+    await Promise.resolve();
+
+    expect(mockSaveSubItem).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        company: 'Meta',
+        date: now,
+      }),
+    );
+
+    vi.useRealTimers();
   });
 
   it('não deve renderizar nada se isOpen for false', () => {

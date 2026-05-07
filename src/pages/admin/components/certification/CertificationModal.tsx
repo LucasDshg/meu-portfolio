@@ -47,7 +47,7 @@ export const CertificationModal: React.FC<ICertificationModalProps> = ({
     try {
       await saveSubItem(ECollection.CERTIFICATIONS, {
         ...formData,
-        id: certification?.id || Date.now(),
+        id: certification?.id,
       });
       onClose();
       setToast({

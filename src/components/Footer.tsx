@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
       <div className="border-t border-zinc-100 pt-10 dark:border-zinc-700/40">
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           <div className="flex items-center gap-6">
-            <Image src={logoIcon} alt="Logo" className="h-14 w-14" />
+            <Image src={logoIcon} alt="Logo" className="h-10 w-10" />
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm font-medium text-zinc-800 dark:text-zinc-200">
               {menus.map((menu) => {
                 return (

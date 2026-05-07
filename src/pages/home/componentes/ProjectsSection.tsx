@@ -33,7 +33,7 @@ const ProjectsSection: React.FC<IProjectsSectionProps> = ({ projects }) => {
           >
             <Card variant="outline" height="h-full">
               <div className="flex gap-4">
-                <Avatar className="size-16" src={project.image} />
+                <Avatar size="size-16" src={project.image} />
                 <Subheading
                   className="mt-6"
                   color="text-zinc-950 dark:text-white"

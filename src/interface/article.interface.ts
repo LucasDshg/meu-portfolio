@@ -4,6 +4,6 @@ export interface IArticle {
   image: string;
   description: string;
   content: string;
-  date: string;
+  date: Date;
   slug: string;
 }

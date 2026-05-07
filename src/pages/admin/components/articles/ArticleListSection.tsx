@@ -18,6 +18,18 @@ export const ArticleListSection: React.FC<{ articles?: IArticle[] }> = ({
 }) => {
   const { deleteSubItem } = usePortfolio();
   const navigate = useNavigate();
+  const formatArticleDate = (date: Date | string | number): string => {
+    if (date instanceof Date) {
+      return date.toLocaleDateString('pt-BR');
+    }
+
+    const parsedDate = new Date(date);
+    if (!Number.isNaN(parsedDate.getTime())) {
+      return parsedDate.toLocaleDateString('pt-BR');
+    }
+
+    return String(date);
+  };
 
   const handleEdit = (article: IArticle) => {
     navigate(`/admin/articles/edit/${article.id}`);
@@ -58,7 +70,7 @@ export const ArticleListSection: React.FC<{ articles?: IArticle[] }> = ({
                     {article.title}
                   </Text>
                   <Text className="text-xs">
-                    {article.date} — /{article.slug}
+                    {formatArticleDate(article.date)} — /{article.slug}
                   </Text>
                 </div>
                 <div className="flex gap-2">

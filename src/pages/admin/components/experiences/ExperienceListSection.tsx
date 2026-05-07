@@ -37,7 +37,7 @@ export const ExperienceListSection: React.FC<IExperienceListSectionProps> = ({
     setIsModalOpen(true);
   };
 
-  const handleDelete = async (id: number): Promise<void> => {
+  const handleDelete = async (id: string): Promise<void> => {
     try {
       await deleteSubItem(ECollection.EXPERIENCES, id);
       setToast({
@@ -56,7 +56,7 @@ export const ExperienceListSection: React.FC<IExperienceListSectionProps> = ({
         title="Experiências Profissionais"
         icon={RiBriefcaseLine}
         addButtonLabel="Adicionar"
-        items={[...(experiences || [])].sort((a, b) => b.id - a.id)}
+        items={[...(experiences || [])]}
         emptyMessage="Nenhuma experiência cadastrada."
         onAdd={handleAdd}
         onEdit={handleEdit}

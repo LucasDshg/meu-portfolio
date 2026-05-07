@@ -87,9 +87,15 @@ describe('Firebase Service', () => {
 
     expect(setDoc).toHaveBeenCalledWith(
       mockDocRef,
+      expect.not.objectContaining({
+        id: expect.any(String),
+      }),
+    );
+    expect(setDoc).toHaveBeenCalledWith(
+      mockDocRef,
       expect.objectContaining({
         title: 'Novo Projeto',
-        id: expect.any(Number),
+        date: expect.any(Date),
       }),
     );
   });

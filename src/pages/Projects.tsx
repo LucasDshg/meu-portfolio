@@ -2,13 +2,14 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { FaGithub } from 'react-icons/fa6';
 import { RiExternalLinkLine } from 'react-icons/ri';
+import { usePortfolio } from '../context/PortfolioContext';
+import { Avatar } from '../Lib/Avatar';
 import { Badge } from '../Lib/Badge';
 import { Button } from '../Lib/Button';
 import { Card } from '../Lib/Card';
 import { Heading } from '../Lib/Heading';
 import { Subheading } from '../Lib/Subheading';
 import { Text } from '../Lib/Text';
-import { usePortfolio } from '../context/PortfolioContext';
 
 interface IProjectCarouselProps {
   images: string[];
@@ -27,19 +28,7 @@ const ProjectCarousel: React.FC<IProjectCarouselProps> = ({ images, name }) => {
   }, [images.length]);
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
-      <AnimatePresence mode="wait">
-        <motion.img
-          key={`bg-${currentIndex}`}
-          src={images[currentIndex]}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.4 }}
-          exit={{ opacity: 0 }}
-          className="absolute inset-0 h-full w-full object-cover blur-2xl scale-110 rounded-md"
-          aria-hidden="true"
-        />
-      </AnimatePresence>
-
+    <div className="relative h-full aspect-square overflow-hidden bg-zinc-100 dark:bg-zinc-800">
       <AnimatePresence mode="wait">
         <motion.img
           key={currentIndex}
@@ -49,7 +38,7 @@ const ProjectCarousel: React.FC<IProjectCarouselProps> = ({ images, name }) => {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.5, ease: 'easeInOut' }}
-          className="absolute inset-0 h-full w-full object-contain z-10 p-2 rounded-md"
+          className="absolute inset-0 h-full w-full object-cover z-10 rounded-md"
         />
       </AnimatePresence>
 
@@ -97,7 +86,7 @@ const Projects: React.FC = () => {
                 variant="outline"
                 className="overflow-hidden !p-0 !flex-row"
               >
-                <div className="relative w-48 sm:w-64 md:w-96 overflow-hidden flex-none border-r border-zinc-100 dark:border-zinc-700/40">
+                <div className="relative w-48 sm:w-64 md:w-96 aspect-square overflow-hidden flex-none border-r border-zinc-100 dark:border-zinc-700/40">
                   <ProjectCarousel
                     images={project.images!}
                     name={project.name}
@@ -105,9 +94,13 @@ const Projects: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col p-6 flex-1">
-                  <Subheading color="text-zinc-950 dark:text-white">
-                    {project.name}
-                  </Subheading>
+                  <div className="flex gap-3 items-center">
+                    <Avatar size="size-12" src={project.image} />
+                    <Subheading color="text-zinc-950 dark:text-white">
+                      {project.name}
+                    </Subheading>
+                  </div>
+
                   <Text className="mt-2 text-sm flex-grow text-justify">
                     {project.description}
                   </Text>

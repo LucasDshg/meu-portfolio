@@ -14,8 +14,23 @@ const ArticleDetail: React.FC = () => {
   const { articleSlug } = useParams();
   const navigate = useNavigate();
   const { articles = [] } = usePortfolio() as { articles: IArticle[] };
+  const formatArticleDate = (date: Date | string | number): string => {
+    if (date instanceof Date) {
+      return date.toLocaleDateString('pt-BR');
+    }
+
+    const parsedDate = new Date(date);
+    if (!Number.isNaN(parsedDate.getTime())) {
+      return parsedDate.toLocaleDateString('pt-BR');
+    }
+
+    return String(date);
+  };
 
   const article = articles.find((a: IArticle) => a.slug === articleSlug);
+  const formattedDate = article
+    ? formatArticleDate(article.date as Date | string | number)
+    : '';
 
   if (!article) {
     return (
@@ -36,7 +51,7 @@ const ArticleDetail: React.FC = () => {
           <div className="flex-1">
             <Heading className="text-4xl sm:text-5xl">{article.title}</Heading>
             <Subheading className="mb-4 text-sm mt-4 tracking-widest">
-              Publicado em {article.date}
+              Publicado em {formattedDate}
             </Subheading>
           </div>
           <Button

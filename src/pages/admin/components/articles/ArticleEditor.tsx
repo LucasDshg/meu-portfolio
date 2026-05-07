@@ -34,7 +34,7 @@ const ArticleEditor: React.FC = () => {
       title: '',
       description: '',
       slug: '',
-      date: new Date().toLocaleDateString('pt-BR'),
+      date: new Date(),
       content: '',
       image: '',
     };
@@ -46,7 +46,7 @@ const ArticleEditor: React.FC = () => {
 
   const handleUpload = async (file: File): Promise<string> => {
     if (!user) throw new Error('Usuário não autenticado');
-    const articleId = id || Date.now();
+    const articleId = id;
     const extension = file.name.split('.').pop();
     const path = `${user.uid}/articles/${articleId}/cover.${extension}`;
     const storageRef = ref(storage, path);
@@ -59,7 +59,7 @@ const ArticleEditor: React.FC = () => {
     try {
       await saveSubItem(ECollection.ARTICLES, {
         ...formData,
-        id: id ? (isNaN(Number(id)) ? id : Number(id)) : Date.now(),
+        id: id,
       });
       setToast({
         message: 'Artigo publicado com sucesso!',

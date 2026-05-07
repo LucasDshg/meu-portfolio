@@ -23,6 +23,9 @@ export const CertificationListSection = ({
     message: string;
     type: 'success' | 'error';
   } | null>(null);
+  const sortedCertifications = [...(certifications || [])].sort(
+    (a, b) => b.year - a.year,
+  );
 
   const handleEdit = (cert: ICertifications) => {
     setEditingItem(cert);
@@ -34,7 +37,7 @@ export const CertificationListSection = ({
     setIsModalOpen(true);
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     try {
       await deleteSubItem(ECollection.CERTIFICATIONS, id);
       setToast({
@@ -53,7 +56,7 @@ export const CertificationListSection = ({
         title="Certificações"
         icon={RiAwardLine}
         addButtonLabel="Adicionar"
-        items={[...(certifications || [])].sort((a, b) => b.year - a.year)}
+        items={sortedCertifications}
         emptyMessage="Nenhuma certificação cadastrada."
         onAdd={handleAdd}
         onEdit={handleEdit}

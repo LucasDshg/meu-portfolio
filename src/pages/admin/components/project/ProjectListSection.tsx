@@ -27,7 +27,7 @@ export const ProjectListSection: React.FC<IProjectListSectionProps> = ({
     type: 'success' | 'error';
   } | null>(null);
 
-  const handleDelete = async (id: number): Promise<void> => {
+  const handleDelete = async (id: string): Promise<void> => {
     try {
       await deleteSubItem(ECollection.PROJECTS, id);
       setToast({ message: 'Projeto removido com sucesso!', type: 'success' });
@@ -43,7 +43,7 @@ export const ProjectListSection: React.FC<IProjectListSectionProps> = ({
         title="Projetos"
         icon={RiCodeSSlashLine}
         addButtonLabel="Adicionar Projeto"
-        items={[...(projects || [])].sort((a, b) => b.id - a.id)}
+        items={[...(projects || [])]}
         emptyMessage="Nenhum projeto cadastrado."
         onAdd={() => {
           setEditingItem(undefined);

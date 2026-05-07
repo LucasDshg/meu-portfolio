@@ -9,21 +9,22 @@ const Home: React.FC = () => {
   const { profile, experiences, projects, articles, loading } = usePortfolio();
 
   if (loading || !profile) return null;
+  const homePage = profile.pages?.home;
 
   return (
     <main>
       <HeroSection
         name={profile.name}
-        title={profile.pages.home.title}
-        description={profile.pages.home.description}
+        title={homePage?.title || ''}
+        description={homePage?.description || ''}
         imageUrl={profile.imageUrl}
         email={profile.email}
         socials={profile.socials}
         phone={profile.phone}
       />
-      {profile.pages.project.show && <ProjectsSection projects={projects} />}
-      {profile.pages.articles.show && <ArticlesSection articles={articles} />}
-      {profile.pages.experience.show && (
+      {profile.pages?.project?.show && <ProjectsSection projects={projects} />}
+      {profile.pages?.articles?.show && <ArticlesSection articles={articles} />}
+      {profile.pages?.experience?.show && (
         <ExperienceSection experiences={experiences} />
       )}
     </main>

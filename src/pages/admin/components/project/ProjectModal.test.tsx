@@ -37,6 +37,7 @@ describe('ProjectModal', () => {
       description: 'Descrição Alfa',
       technologies: ['React', 'NestJS'],
       image: 'logo.png',
+      order: 10,
     };
 
     render(
@@ -53,6 +54,7 @@ describe('ProjectModal', () => {
     );
     expect(screen.getByLabelText(/tecnologias/i)).toHaveValue('React, NestJS');
     expect(screen.getByLabelText(/descrição/i)).toHaveValue('Descrição Alfa');
+    expect(screen.getByLabelText(/ordem/i)).toHaveValue(10);
   });
 
   it('deve converter a string de tecnologias em array ao salvar', async () => {
@@ -73,6 +75,9 @@ describe('ProjectModal', () => {
     fireEvent.change(screen.getByLabelText(/descrição/i), {
       target: { value: 'Descrição do novo projeto' },
     });
+    fireEvent.change(screen.getByLabelText(/ordem/i), {
+      target: { value: '5' },
+    });
 
     const saveButton = screen.getByRole('button', { name: /salvar/i });
     fireEvent.click(saveButton);
@@ -84,6 +89,7 @@ describe('ProjectModal', () => {
           expect.objectContaining({
             name: 'Novo Projeto',
             technologies: ['Angular', 'Vitest', 'Tailwind'],
+            order: 5,
           }),
         );
       },
