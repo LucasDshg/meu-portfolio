@@ -109,7 +109,7 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        
+
       - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
@@ -121,6 +121,7 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-version: latest
           vercel-args: '--prod'
           working-directory: ./dist
 
