@@ -74,11 +74,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          NEW_VERSION=$(npm version patch -m "chore: bump version to %s")
+          # Bump na raiz: altera package.json, cria commit e tag
+          NEW_VERSION=$(npm version patch -m "Chore: Bump version to %s")
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
           
-          # Push da tag e do commit de bump
-          git push origin ${{ github.base_ref }} --tags
+          # Envia o commit de bump e a nova tag para o repositório
+          git push origin main --tags
 
   build:
     name: Build Project
