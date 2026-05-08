@@ -7,12 +7,16 @@ permissions:
   id-token: write
 
 on:
-  pull_request:
+  push:
     branches:
-      - main
       - master
-    types:
-      - closed
+
+  # pull_request:
+  #   branches:
+  #     - main
+  #     - master
+  #   types:
+  #     - closed
 
 jobs:
   validate:
