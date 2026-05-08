@@ -40,7 +40,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
 
       <div className="mx-auto max-w-7xl lg:px-8">
         <div className="relative bg-white px-4 pt-16 pb-16 sm:px-8 lg:px-12 dark:bg-zinc-900 ring-1 ring-zinc-100 dark:ring-zinc-300/20 shadow-2xl min-h-screen flex flex-col">
-          <div className="mx-auto max-w-2xl lg:max-w-5xl flex-1 w-full">
+          <div className="mx-auto max-w-4xl lg:max-w-5xl flex-1 w-full">
             {children}
           </div>
           {pathname !== '/login' && profile && <Footer />}

@@ -84,9 +84,9 @@ const Projects: React.FC = () => {
             >
               <Card
                 variant="outline"
-                className="overflow-hidden !p-0 !flex-row"
+                className="overflow-hidden !p-0 flex-col md:flex-row"
               >
-                <div className="relative w-48 sm:w-64 md:w-96 aspect-square overflow-hidden flex-none border-r border-zinc-100 dark:border-zinc-700/40">
+                <div className="relative w-full sm:w-full md:w-96 aspect-square overflow-hidden flex-none border-b sm:border-b-0 sm:border-r border-zinc-100 dark:border-zinc-700/40">
                   <ProjectCarousel
                     images={project.images!}
                     name={project.name}
