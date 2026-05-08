@@ -14,7 +14,7 @@ const mockArticles = [
     id: 1,
     title: 'Artigo 1',
     description: 'Resumo 1',
-    date: '2024-01-01',
+    date: new Date(),
     slug: 'art-1',
     image: 'img.jpg',
     content: 'Conteúdo do artigo 1',

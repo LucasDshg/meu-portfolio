@@ -5,28 +5,31 @@ import ExperienceSection from './ExperienceSection';
 
 const mockExperiences = [
   {
-    id: 1,
+    id: '1',
     role: 'Dev 1',
     duration: '2020-2021',
     description: 'Desc 1',
     company: 'Tech Corp',
     technologies: ['React'],
+    date: new Date(),
   },
   {
-    id: 2,
+    id: '2',
     role: 'Dev 2',
     duration: '2021-2022',
     company: 'Tech Corp',
     description: 'Desc 2',
     technologies: ['Angular'],
+    date: new Date(),
   },
   {
-    id: 3,
+    id: '3',
     role: 'Dev 3',
     company: 'Tech Corp',
     duration: '2022-2023',
     description: 'Desc 3',
     technologies: ['NestJS'],
+    date: new Date(),
   },
 ];
 

@@ -5,13 +5,15 @@ import ProjectsSection from './ProjectsSection';
 
 const mockProjects = [
   {
-    id: 1,
+    id: '1',
     name: 'Projeto A',
     description: 'Desc A',
     image: 'a.jpg',
     technologies: ['TS'],
     githubLink: 'git.com',
     liveLink: 'live.link.com',
+    order: 1,
+    date: new Date(),
   },
 ];
 

@@ -30,7 +30,7 @@ describe('ArticleCard', () => {
     title: 'Testando React com Vitest',
     description: 'Um guia prático sobre testes unitários.',
     slug: 'testando-react-com-vitest',
-    date: '10/10/2023',
+    date: new Date(),
     content: '<p>Conteúdo</p>',
     image: 'https://test.com/image.jpg',
   };
