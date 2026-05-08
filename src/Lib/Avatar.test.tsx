@@ -32,7 +32,7 @@ describe('Avatar Component', () => {
     const avatarContainer = container.querySelector('[data-slot="avatar"]');
 
     expect(avatarContainer).toHaveClass(customClass);
-    expect(avatarContainer).toHaveClass('inline-grid');
+    expect(avatarContainer).toHaveClass('inline-flex');
   });
   it('deve repassar atributos adicionais (props) para o elemento span', () => {
     render(<Avatar id="avatar-test" aria-label="user-avatar" />);
