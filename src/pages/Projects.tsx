@@ -135,7 +135,7 @@ const Projects: React.FC = () => {
                         className="flex-1"
                       >
                         <RiExternalLinkLine className="mr-2 h-4 w-4" />
-                        Vesualizar
+                        Visualizar
                       </Button>
                     )}
                   </div>
