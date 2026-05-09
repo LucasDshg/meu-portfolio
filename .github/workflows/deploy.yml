@@ -7,10 +7,12 @@ permissions:
   id-token: write
 
 on:
-  push:
+  pull_request:
     branches:
       - main
-
+      - master
+    types:
+      - closed
 env:
   VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
   VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
@@ -20,16 +22,11 @@ env:
   VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
   VITE_FIREBASE_MEASUREMENT_ID: ${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }}
 
-  # pull_request:
-  #   branches:
-  #     - main
-  #     - master
-  #   types:
-  #     - closed
+
 
 jobs:
   validate:
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
