@@ -1,11 +1,16 @@
 import { AnimatePresence } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-import { RiSaveLine } from 'react-icons/ri';
+import {
+  RiAdvertisementLine,
+  RiSaveLine,
+  RiVipCrownLine,
+} from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import { usePortfolio } from '../context/PortfolioContext';
-import { logAppError } from '../data/analytics.service';
+import { logAppError, logInteraction } from '../data/analytics.service';
 import { IProfile } from '../interface/portfolio.interface';
 import { Button } from '../Lib/Button';
+import { Card } from '../Lib/Card';
 import { Heading } from '../Lib/Heading';
 import { Tabs } from '../Lib/Tabs';
 import { Text } from '../Lib/Text';
@@ -61,6 +66,9 @@ const Admin: React.FC = () => {
         email: (formData.get('email') as string) || profile?.email,
         imageUrl: (formData.get('imageUrl') as string) || profile?.imageUrl,
         cvLink: (formData.get('cvLink') as string) || profile?.cvLink,
+        adFreeUntil: formData.get('adFreeUntil')
+          ? new Date(formData.get('adFreeUntil') as string)
+          : profile?.adFreeUntil,
         socials: profile?.socials.map((s) => ({
           ...s,
           link: (formData.get(`social-${s.id}`) as string) || null,
@@ -129,6 +137,18 @@ const Admin: React.FC = () => {
     }
   };
 
+  const getAdFreeDate = (date: any) => {
+    if (!date) return null;
+    if (date.toDate) return date.toDate();
+    return new Date(date);
+  };
+
+  const now = new Date().getTime();
+  const adFreeDate = getAdFreeDate(profile?.adFreeUntil);
+  const isAdFree = adFreeDate ? adFreeDate.getTime() > now : false;
+
+  const STRIPE_PAYMENT_URL = 'https://buy.stripe.com/exemplo-link-pagamento';
+
   const adminTabs = [
     {
       id: 'general',
@@ -137,6 +157,40 @@ const Admin: React.FC = () => {
         <div className="space-y-6">
           <PersonalInfoSection profile={profile} />
           <SocialSection socials={profile?.socials} />
+
+          <Card className="p-4">
+            <div className="flex items-center gap-3 mb-4">
+              <RiAdvertisementLine className="h-5 w-5 text-teal-500" />
+              <Heading className="text-xl">Plano Pro</Heading>
+            </div>
+            {isAdFree ? (
+              <div className="flex items-center gap-2 text-teal-600 dark:text-teal-400 font-medium">
+                <RiVipCrownLine size={20} />
+                <span>
+                  Sua assinatura está ativa até{' '}
+                  {adFreeDate?.toLocaleDateString('pt-BR')}
+                </span>
+              </div>
+            ) : (
+              <div>
+                <div className="mb-6">
+                  <Text className="mb-4">
+                    Remova todos os anúncios do seu portfólio e blog por apenas
+                    R$ 25,00/ano.
+                  </Text>
+                </div>
+                <Button
+                  href={STRIPE_PAYMENT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="secondary"
+                  onClick={() => logInteraction('upgrade_pro_click', 'button')}
+                >
+                  Ativar Plano Pro
+                </Button>
+              </div>
+            )}
+          </Card>
         </div>
       ),
     },
