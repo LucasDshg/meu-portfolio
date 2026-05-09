@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { LoadingPage } from '../components/LoadingPage';
 import { usePortfolio } from '../context/PortfolioContext';
+import { logPageView } from '../data/analytics.service';
 
 interface IMainLayoutProps {
   children: React.ReactNode;
@@ -29,6 +30,12 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
       localStorage.setItem('theme', 'light');
     }
   }, [darkMode]);
+
+  useEffect(() => {
+    if (pathname && !pathname.startsWith('/admin')) {
+      logPageView(pathname);
+    }
+  }, [pathname]);
 
   if (loading) return <LoadingPage />;
 

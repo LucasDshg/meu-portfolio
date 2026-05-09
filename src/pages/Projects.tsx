@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { FaGithub } from 'react-icons/fa6';
 import { RiExternalLinkLine } from 'react-icons/ri';
 import { usePortfolio } from '../context/PortfolioContext';
+import { logInteraction } from '../data/analytics.service';
 import { Avatar } from '../Lib/Avatar';
 import { Badge } from '../Lib/Badge';
 import { Button } from '../Lib/Button';
@@ -121,6 +122,11 @@ const Projects: React.FC = () => {
                         rel="noopener noreferrer"
                         variant="outline"
                         className="flex-1"
+                        onClick={() =>
+                          logInteraction('project_github_view', 'social_link', {
+                            project_name: project.name,
+                          })
+                        }
                       >
                         <FaGithub className="mr-2 h-4 w-4" />
                         GitHub
@@ -133,6 +139,11 @@ const Projects: React.FC = () => {
                         rel="noopener noreferrer"
                         variant="secondary"
                         className="flex-1"
+                        onClick={() =>
+                          logInteraction('project_live_view', 'link', {
+                            project_name: project.name,
+                          })
+                        }
                       >
                         <RiExternalLinkLine className="mr-2 h-4 w-4" />
                         Visualizar

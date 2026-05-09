@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { usePortfolio } from '../context/PortfolioContext';
+import { logInteraction } from '../data/analytics.service';
 import { Avatar } from '../Lib/Avatar';
 import { TextLink } from '../Lib/TextLink';
 import { useNavigationMenu } from '../utils/navigation.utils';
@@ -37,6 +38,7 @@ const Header: React.FC<IHeaderProps> = ({ darkMode, setDarkMode }) => {
                   to={basePath}
                   aria-label="Home"
                   className="block h-10 w-10 rounded-full bg-white/90 p-0.5 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:ring-white/10"
+                  onClick={() => logInteraction('home_nav', 'menu_item')}
                 >
                   <Avatar src={profile?.imageUrl} size="size-9" />
                 </Link>
@@ -54,6 +56,9 @@ const Header: React.FC<IHeaderProps> = ({ darkMode, setDarkMode }) => {
                 return (
                   <li key={menu.id}>
                     <TextLink
+                      onClick={() =>
+                        logInteraction(`${menu.id}_nav`, 'menu_item')
+                      }
                       href={menu.href}
                       className="relative block px-3 py-2 transition"
                       color={

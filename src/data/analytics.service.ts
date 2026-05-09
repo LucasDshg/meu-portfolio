@@ -22,3 +22,35 @@ export const logAppError = (
     });
   }
 };
+
+/**
+ * Logs a page view event.
+ * @param screenName The name of the screen/section being viewed.
+ */
+export const logPageView = (screenName: string): void => {
+  if (analytics) {
+    logEvent(analytics, 'page_view', {
+      firebase_screen: screenName,
+    });
+  }
+};
+
+/**
+ * Logs a user interaction event (clicks on buttons, menus, etc).
+ * @param name Identification of the element interacted with.
+ * @param type The type of interaction (e.g., 'button', 'menu_item').
+ * @param metadata Optional additional parameters.
+ */
+export const logInteraction = (
+  name: string,
+  type: 'button' | 'menu_item' | 'link' | 'social_link',
+  metadata?: Record<string, unknown>,
+): void => {
+  if (analytics) {
+    logEvent(analytics, 'select_content', {
+      content_type: type,
+      item_id: name,
+      ...metadata,
+    });
+  }
+};

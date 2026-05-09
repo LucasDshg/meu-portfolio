@@ -1,34 +1,40 @@
+import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { LoadingPage } from '../components/LoadingPage';
 import MainLayout from '../layout/MainLayout';
 import About from './About';
-import Admin from './Admin';
-import ArticleEditor from './admin/components/articles/ArticleEditor';
-import ArticleDetail from './ArticleDetail';
 import Articles from './Articles';
 import Experience from './Experience';
 import Home from './Home';
 import Login from './Login';
 import Projects from './Projects';
 
+const Admin = lazy(() => import('./Admin'));
+const ArticleEditor = lazy(
+  () => import('./admin/components/articles/ArticleEditor'),
+);
+
 function App() {
   return (
     <MainLayout>
-      <Routes>
-        <Route path="/u/:slug" element={<Home />} />
-        <Route path="/u/:slug/about" element={<About />} />
-        <Route path="/u/:slug/experience" element={<Experience />} />
-        <Route path="/u/:slug/project" element={<Projects />} />
-        <Route path="/u/:slug/articles" element={<Articles />} />
-        <Route
-          path="/u/:slug/articles/:articleSlug"
-          element={<ArticleDetail />}
-        />
+      <Suspense fallback={<LoadingPage />}>
+        <Routes>
+          <Route path="/u/:slug">
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="experience" element={<Experience />} />
+            <Route path="project" element={<Projects />} />
+            <Route path="articles" element={<Articles />} />
+          </Route>
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/articles/new" element={<ArticleEditor />} />
-        <Route path="/admin/articles/edit/:id" element={<ArticleEditor />} />
-      </Routes>
+          <Route path="/admin">
+            <Route index element={<Admin />} />
+            <Route path="articles/new" element={<ArticleEditor />} />
+            <Route path="articles/edit/:id" element={<ArticleEditor />} />
+          </Route>
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </Suspense>
     </MainLayout>
   );
 }
