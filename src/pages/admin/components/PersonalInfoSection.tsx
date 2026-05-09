@@ -57,7 +57,7 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
   };
 
   return (
-    <div className="p-4 space-y-6">
+    <div className="space-y-6">
       <Card variant="outline" className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input

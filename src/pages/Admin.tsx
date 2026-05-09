@@ -154,11 +154,11 @@ const Admin: React.FC = () => {
       id: 'general',
       label: 'Geral',
       content: (
-        <div className="space-y-6">
+        <div className="space-y-6 p-4">
           <PersonalInfoSection profile={profile} />
           <SocialSection socials={profile?.socials} />
 
-          <Card className="p-4">
+          <Card variant="primary">
             <div className="flex items-center gap-3 mb-4">
               <RiAdvertisementLine className="h-5 w-5 text-teal-500" />
               <Heading className="text-xl">Plano Pro</Heading>
@@ -183,7 +183,7 @@ const Admin: React.FC = () => {
                   href={STRIPE_PAYMENT_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  variant="secondary"
+                  variant="primary"
                   onClick={() => logInteraction('upgrade_pro_click', 'button')}
                 >
                   Ativar Plano Pro
