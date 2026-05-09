@@ -1,0 +1,10 @@
+{
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/((?!assets/|favicon.ico|logo-CuGCXOrl.svg).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
