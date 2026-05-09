@@ -63,13 +63,9 @@ describe('analytics.service', () => {
     mockAnalyticsInstance = {};
     logPageView('Home');
 
-    expect(logEvent).toHaveBeenCalledWith(
-      mockAnalyticsInstance,
-      'screen_view',
-      {
-        firebase_screen: 'Home',
-      },
-    );
+    expect(logEvent).toHaveBeenCalledWith(mockAnalyticsInstance, 'page_view', {
+      firebase_screen: 'Home',
+    });
   });
 
   it('deve chamar logEvent para select_content quando logInteraction é chamado', () => {
