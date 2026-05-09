@@ -147,7 +147,8 @@ const Admin: React.FC = () => {
   const adFreeDate = getAdFreeDate(profile?.adFreeUntil);
   const isAdFree = adFreeDate ? adFreeDate.getTime() > now : false;
 
-  const STRIPE_PAYMENT_URL = 'https://buy.stripe.com/exemplo-link-pagamento';
+  const STRIPE_PAYMENT_URL =
+    'https://buy.stripe.com/test_4gM3cvagb9Cd1ujek11ZS00';
 
   const adminTabs = [
     {
@@ -184,7 +185,9 @@ const Admin: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   variant="primary"
-                  onClick={() => logInteraction('upgrade_pro_click', 'button')}
+                  onClick={() => {
+                    logInteraction('upgrade_pro_click', 'button');
+                  }}
                 >
                   Ativar Plano Pro
                 </Button>
