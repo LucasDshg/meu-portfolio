@@ -1,6 +1,7 @@
 import React from 'react';
 import logoIcon from '../assets/logo-icon.svg';
 import { usePortfolio } from '../context/PortfolioContext';
+import { logInteraction } from '../data/analytics.service';
 import { Image } from '../Lib/Image';
 import { Text } from '../Lib/Text';
 import { TextLink } from '../Lib/TextLink';
@@ -22,6 +23,9 @@ const Footer: React.FC = () => {
                   <TextLink
                     key={menu.id}
                     href={menu.href}
+                    onClick={() =>
+                      logInteraction(`footer_${menu.id}_nav`, 'menu_item')
+                    }
                     color="text-zinc-600 dark:text-zinc-400 hover:text-teal-600"
                   >
                     {menu.name}
@@ -30,6 +34,12 @@ const Footer: React.FC = () => {
               })}
               <TextLink
                 href={user ? '/admin' : '/login'}
+                onClick={() =>
+                  logInteraction(
+                    user ? 'footer_admin_click' : 'footer_login_click',
+                    'link',
+                  )
+                }
                 color="text-zinc-600 hover:text-teal-600 dark:text-zinc-400"
               >
                 {user ? 'Editar meu portfólio' : 'Criar meu portfólio'}

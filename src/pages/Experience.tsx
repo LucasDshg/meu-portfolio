@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 import { RiBriefcaseLine, RiDownloadLine, RiMailLine } from 'react-icons/ri';
+import { usePortfolio } from '../context/PortfolioContext';
+import { logInteraction } from '../data/analytics.service';
 import { Badge } from '../Lib/Badge';
 import { Button } from '../Lib/Button';
 import { Heading } from '../Lib/Heading';
 import { Subheading } from '../Lib/Subheading';
 import { Text } from '../Lib/Text';
-import { usePortfolio } from '../context/PortfolioContext';
 
 const Experience: React.FC = () => {
   const { experiences, profile } = usePortfolio();
@@ -91,6 +92,7 @@ const Experience: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="mt-6 w-full"
+              onClick={() => logInteraction('contact_email_click', 'button')}
             >
               Enviar Email
             </Button>
@@ -109,6 +111,7 @@ const Experience: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-6 w-full"
+                onClick={() => logInteraction('cv_download_click', 'button')}
               >
                 Download PDF
               </Button>
