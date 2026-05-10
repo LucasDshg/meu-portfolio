@@ -93,7 +93,6 @@ const Experience: React.FC = () => {
             </Subheading>
             <Button
               href={`mailto:${profile?.email}`}
-              download
               variant="outline"
               target="_blank"
               rel="noopener noreferrer"
@@ -128,10 +127,10 @@ const Experience: React.FC = () => {
                     className="w-full"
                     disabled={pdfLoading}
                     onClick={() =>
-                      logInteraction('cv_generated_download_click', 'button')
+                      logInteraction('cv_download_click', 'button')
                     }
                   >
-                    {pdfLoading ? 'Gerando PDF...' : 'Gerar CV Automático'}
+                    {pdfLoading ? 'Gerando PDF...' : 'Baixar Currículo'}
                   </Button>
                 )}
               </PDFDownloadLink>
