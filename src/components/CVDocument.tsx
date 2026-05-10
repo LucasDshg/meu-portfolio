@@ -29,6 +29,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     fontFamily: 'Helvetica',
     backgroundColor: '#FFFFFF',
+    paddingLeft: '30%',
+    paddingTop: 40,
+  },
+  sidebarBackground: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    width: '30%',
+    height: '100vh',
+    backgroundColor: '#18181b',
   },
   header: {
     marginBottom: 20,
@@ -46,16 +56,14 @@ const styles = StyleSheet.create({
     fontWeight: 'medium',
   },
   leftColumn: {
-    width: '30%',
-    backgroundColor: '#18181b',
-    padding: 16,
-    paddingTop: 40,
-    height: '100%',
+    width: '40%',
+    marginLeft: '-40%',
+    paddingHorizontal: 16,
     flexDirection: 'column',
   },
   rightColumn: {
-    width: '70%',
-    padding: 30,
+    width: '100%',
+    paddingHorizontal: 30,
   },
   sidebarSection: {
     marginBottom: 20,
@@ -96,12 +104,6 @@ const styles = StyleSheet.create({
   experienceItem: {
     marginBottom: 15,
   },
-  experienceHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 4,
-  },
   role: {
     fontSize: 12,
     fontWeight: 'medium',
@@ -109,13 +111,14 @@ const styles = StyleSheet.create({
   },
   duration: {
     fontSize: 10,
+    marginBottom: 14,
     color: '#71717A',
   },
   company: {
     fontSize: 11,
     fontWeight: 'medium',
     color: '#3F3F46',
-    marginBottom: 6,
+    marginVertical: 4,
   },
   description: {
     fontSize: 10,
@@ -152,6 +155,8 @@ export const CVDocument = ({
 }: ICVDocumentProps) => (
   <Document>
     <Page size="A4" style={styles.page}>
+      <View style={styles.sidebarBackground} fixed />
+
       <View style={styles.leftColumn}>
         <View style={styles.sidebarSection}>
           <Text style={styles.sidebarTitle}>Contato</Text>
@@ -216,11 +221,9 @@ export const CVDocument = ({
           <Text style={styles.sectionTitle}>Experiência Profissional</Text>
           {experiences.map((exp) => (
             <View key={exp.id} style={styles.experienceItem}>
-              <View style={styles.experienceHeader}>
-                <Text style={styles.role}>{exp.role}</Text>
-                <Text style={styles.duration}>{exp.duration}</Text>
-              </View>
+              <Text style={styles.role}>{exp.role}</Text>
               <Text style={styles.company}>{exp.company}</Text>
+              <Text style={styles.duration}>{exp.duration}</Text>
               <Text style={styles.description}>{exp.description}</Text>
               <View style={styles.skillsContainer}>
                 {exp.technologies.map((tech) => (
