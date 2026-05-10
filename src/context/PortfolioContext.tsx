@@ -34,6 +34,7 @@ interface IPortfolioContextType {
   certifications: ICertifications[];
   articles: IArticle[];
   loading: boolean;
+  fetchData: () => Promise<void>;
   updateProfile: (updatedData: Partial<IProfile>) => Promise<void>;
   saveSubItem: <T>(collectionName: TCollection, data: T) => Promise<void>;
   deleteSubItem: (
@@ -205,6 +206,14 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
     [user, profile, fetchDataByUid],
   );
 
+  const fetchData = useCallback(async (): Promise<void> => {
+    if (slug) {
+      await fetchDataBySlug(slug);
+    } else if (user) {
+      await fetchDataByUid(user.uid);
+    }
+  }, [slug, user, fetchDataBySlug, fetchDataByUid]);
+
   return (
     <PortfolioContext.Provider
       value={{
@@ -218,6 +227,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
         updateProfile,
         saveSubItem,
         deleteSubItem,
+        fetchData,
       }}
     >
       {children}
