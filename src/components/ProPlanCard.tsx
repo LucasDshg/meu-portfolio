@@ -24,6 +24,7 @@ export const ProPlanCard: React.FC<IProPlanCardProps> = ({ profile }) => {
   const now = new Date().getTime();
   const adFreeDate = getAdFreeDate(profile?.adFreeUntil);
   const isAdFree = adFreeDate ? adFreeDate.getTime() > now : false;
+  const paymentUrlWithId = `${STRIPE_PAYMENT_URL}?client_reference_id=${profile!.slug}`;
 
   return (
     <>
@@ -47,7 +48,7 @@ export const ProPlanCard: React.FC<IProPlanCardProps> = ({ profile }) => {
               25,00/ano.
             </Text>
             <Button
-              href={STRIPE_PAYMENT_URL}
+              href={paymentUrlWithId}
               target="_blank"
               rel="noopener noreferrer"
               type="button"

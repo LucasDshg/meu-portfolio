@@ -14,7 +14,7 @@ export interface IProfile {
   phone?: string;
   email: string;
   slug: string;
-  adFreeUntil: Date;
+  adFreeUntil: Date | null;
   articles: IArticle[];
   socials: ISocials[];
   pages: {
