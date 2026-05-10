@@ -1,6 +1,7 @@
 import {
   Document,
   Font,
+  Link,
   Page,
   StyleSheet,
   Text,
@@ -162,7 +163,12 @@ export const CVDocument = ({
           <Text style={styles.sidebarTitle}>Contato</Text>
           <Text style={styles.sidebarItem}>{profile.email}</Text>
           <Text style={styles.sidebarItem}>{profile.phone}</Text>
-          <Text style={styles.sidebarItem}>portfolio.com/u/{profile.slug}</Text>
+          <Link
+            src={`https://meu-portfolio-lucasdshgs-projects.vercel.app/u/${profile.slug}`}
+            style={[styles.sidebarItem, { textDecoration: 'none' }]}
+          >
+            Meu Portfólio
+          </Link>
         </View>
 
         {profile.socials && profile.socials.length > 0 && (
