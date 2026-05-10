@@ -27,6 +27,9 @@ describe('Button Component', () => {
 
     rerender(<Button variant="outline">Outline</Button>);
     expect(screen.getByRole('button')).toHaveClass('ring-1');
+
+    rerender(<Button variant="danger">Danger</Button>);
+    expect(screen.getByRole('button')).toHaveClass('bg-red-600');
   });
 
   it('deve disparar o evento onClick', () => {
