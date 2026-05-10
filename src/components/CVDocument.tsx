@@ -26,33 +26,56 @@ Font.register({
 
 const styles = StyleSheet.create({
   page: {
-    padding: 40,
+    flexDirection: 'row',
     fontFamily: 'Helvetica',
     backgroundColor: '#FFFFFF',
   },
   header: {
     marginBottom: 20,
+    paddingBottom: 10,
   },
   name: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#0D9488',
-    marginBottom: 4,
+    marginBottom: 2,
   },
   headline: {
-    fontSize: 14,
+    fontSize: 13,
     color: '#52525B',
-    marginBottom: 8,
     fontWeight: 'medium',
   },
-  contactRow: {
-    flexDirection: 'row',
+  leftColumn: {
+    width: '30%',
+    backgroundColor: '#18181b',
+    padding: 16,
+    paddingTop: 40,
+    height: '100%',
+    flexDirection: 'column',
+  },
+  rightColumn: {
+    width: '70%',
+    padding: 30,
+  },
+  sidebarSection: {
+    marginBottom: 20,
+  },
+  sidebarTitle: {
     fontSize: 10,
-    color: '#71717A',
-    gap: 10,
+    fontWeight: 'bold',
+    color: '#0D9488',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    marginBottom: 8,
+  },
+  sidebarItem: {
+    fontSize: 9,
+    color: '#FFFFFF',
+    marginBottom: 6,
+    lineHeight: 1.3,
   },
   section: {
-    marginTop: 20,
+    marginBottom: 25,
   },
   sectionTitle: {
     fontSize: 12,
@@ -129,57 +152,87 @@ export const CVDocument = ({
 }: ICVDocumentProps) => (
   <Document>
     <Page size="A4" style={styles.page}>
-      <View style={styles.header}>
-        <Text style={styles.name}>{profile.name}</Text>
-        <Text style={styles.headline}>{profile.pages.home.title}</Text>
-        <View style={styles.contactRow}>
-          <Text>{profile.email}</Text>
-          <Text>•</Text>
-          <Text>{profile.phone}</Text>
-          <Text>•</Text>
-          <Text>portfolio.com/u/{profile.slug}</Text>
+      <View style={styles.leftColumn}>
+        <View style={styles.sidebarSection}>
+          <Text style={styles.sidebarTitle}>Contato</Text>
+          <Text style={styles.sidebarItem}>{profile.email}</Text>
+          <Text style={styles.sidebarItem}>{profile.phone}</Text>
+          <Text style={styles.sidebarItem}>portfolio.com/u/{profile.slug}</Text>
         </View>
-      </View>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Resumo</Text>
-        <Text style={styles.aboutText}>{profile.pages.home.description}</Text>
-      </View>
-
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Experiência Profissional</Text>
-        {experiences.map((exp) => (
-          <View key={exp.id} style={styles.experienceItem}>
-            <View style={styles.experienceHeader}>
-              <Text style={styles.role}>{exp.role}</Text>
-              <Text style={styles.duration}>{exp.duration}</Text>
-            </View>
-            <Text style={styles.company}>{exp.company}</Text>
-            <Text style={styles.description}>{exp.description}</Text>
-            <View style={styles.skillsContainer}>
-              {exp.technologies.map((tech) => (
-                <Text key={tech} style={styles.skillBadge}>
-                  {tech}
+        {profile.socials && profile.socials.length > 0 && (
+          <View style={styles.sidebarSection}>
+            <Text style={styles.sidebarTitle}>Redes Sociais</Text>
+            {profile.socials
+              .filter((s) => s.link)
+              .sort((a, b) => a.order - b.order)
+              .map((social) => (
+                <Text key={social.id} style={styles.sidebarItem}>
+                  {social.name}: {social.link}
                 </Text>
               ))}
-            </View>
           </View>
-        ))}
+        )}
+
+        {certifications.length > 0 && (
+          <View style={styles.sidebarSection}>
+            <Text style={styles.sidebarTitle}>Certificações</Text>
+            {certifications.map((cert) => (
+              <View key={cert.id} style={{ marginBottom: 10 }}>
+                <Text
+                  style={[
+                    styles.sidebarItem,
+                    { fontWeight: 'bold', marginBottom: 2 },
+                  ]}
+                >
+                  {cert.name}
+                </Text>
+                <Text
+                  style={[
+                    styles.sidebarItem,
+                    { color: '#71717A', fontSize: 10 },
+                  ]}
+                >
+                  {cert.institution} ({cert.year})
+                </Text>
+              </View>
+            ))}
+          </View>
+        )}
       </View>
 
-      {certifications.length > 0 && (
+      <View style={styles.rightColumn}>
+        <View style={styles.header}>
+          <Text style={styles.name}>{profile.name}</Text>
+          <Text style={styles.headline}>{profile.pages.home.title}</Text>
+        </View>
+
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Certificações</Text>
-          {certifications.map((cert) => (
-            <View key={cert.id} style={{ marginBottom: 8 }}>
-              <Text style={styles.role}>{cert.name}</Text>
-              <Text style={styles.duration}>
-                {cert.institution} — {cert.year}
-              </Text>
+          <Text style={styles.sectionTitle}>Resumo</Text>
+          <Text style={styles.aboutText}>{profile.pages.home.description}</Text>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Experiência Profissional</Text>
+          {experiences.map((exp) => (
+            <View key={exp.id} style={styles.experienceItem}>
+              <View style={styles.experienceHeader}>
+                <Text style={styles.role}>{exp.role}</Text>
+                <Text style={styles.duration}>{exp.duration}</Text>
+              </View>
+              <Text style={styles.company}>{exp.company}</Text>
+              <Text style={styles.description}>{exp.description}</Text>
+              <View style={styles.skillsContainer}>
+                {exp.technologies.map((tech) => (
+                  <Text key={tech} style={styles.skillBadge}>
+                    {tech}
+                  </Text>
+                ))}
+              </View>
             </View>
           ))}
         </View>
-      )}
+      </View>
     </Page>
   </Document>
 );
