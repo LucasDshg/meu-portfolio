@@ -1,6 +1,8 @@
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import { motion } from 'framer-motion';
 import React from 'react';
 import { RiBriefcaseLine, RiDownloadLine, RiMailLine } from 'react-icons/ri';
+import { CVDocument } from '../components/CVDocument';
 import NotFound from '../components/NotFound';
 import { usePortfolio } from '../context/PortfolioContext';
 import { logInteraction } from '../data/analytics.service';
@@ -11,7 +13,7 @@ import { Subheading } from '../Lib/Subheading';
 import { Text } from '../Lib/Text';
 
 const Experience: React.FC = () => {
-  const { experiences, profile, loading } = usePortfolio();
+  const { experiences, profile, certifications, loading } = usePortfolio();
 
   if (loading) return null;
   if (!profile) return <NotFound />;
@@ -102,25 +104,52 @@ const Experience: React.FC = () => {
             </Button>
           </div>
 
-          {profile?.cvLink && (
-            <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
-              <Subheading className="flex items-center gap-3">
-                <RiDownloadLine className="h-5 w-5 text-zinc-400" />
-                Currículo
-              </Subheading>
-              <Button
-                href={profile?.cvLink}
-                download
-                variant="outline"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-6 w-full"
-                onClick={() => logInteraction('cv_download_click', 'button')}
+          <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
+            <Subheading className="flex items-center gap-3">
+              <RiDownloadLine className="h-5 w-5 text-zinc-400" />
+              Currículo
+            </Subheading>
+
+            {profile && (
+              <PDFDownloadLink
+                document={
+                  <CVDocument
+                    profile={profile}
+                    experiences={experiences}
+                    certifications={certifications}
+                  />
+                }
+                fileName={`curriculo-${profile.slug}.pdf`}
+                className="block mt-6"
               >
-                Download PDF
+                {({ loading: pdfLoading }) => (
+                  <Button
+                    variant="primary"
+                    className="w-full"
+                    disabled={pdfLoading}
+                    onClick={() =>
+                      logInteraction('cv_generated_download_click', 'button')
+                    }
+                  >
+                    {pdfLoading ? 'Gerando PDF...' : 'Gerar CV Automático'}
+                  </Button>
+                )}
+              </PDFDownloadLink>
+            )}
+
+            {profile?.cvLink && (
+              <Button
+                href={profile.cvLink}
+                variant="ghost"
+                className="mt-2 w-full text-xs"
+                onClick={() =>
+                  logInteraction('cv_manual_download_click', 'button')
+                }
+              >
+                Ou baixar versão manual
               </Button>
-            </div>
-          )}
+            )}
+          </div>
         </aside>
       </div>
     </div>
