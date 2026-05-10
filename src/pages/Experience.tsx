@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 import { RiBriefcaseLine, RiDownloadLine, RiMailLine } from 'react-icons/ri';
+import NotFound from '../components/NotFound';
 import { usePortfolio } from '../context/PortfolioContext';
 import { logInteraction } from '../data/analytics.service';
 import { Badge } from '../Lib/Badge';
@@ -10,7 +11,10 @@ import { Subheading } from '../Lib/Subheading';
 import { Text } from '../Lib/Text';
 
 const Experience: React.FC = () => {
-  const { experiences, profile } = usePortfolio();
+  const { experiences, profile, loading } = usePortfolio();
+
+  if (loading) return null;
+  if (!profile) return <NotFound />;
 
   return (
     <div className="mt-24">

@@ -1,12 +1,16 @@
 import React from 'react';
 import { ArticleCard } from '../components/ArticleCard';
+import NotFound from '../components/NotFound';
 import { usePortfolio } from '../context/PortfolioContext';
 import { IArticle } from '../interface/article.interface';
 import { Heading } from '../Lib/Heading';
 import { Text } from '../Lib/Text';
 
 const Articles: React.FC = () => {
-  const { articles, profile } = usePortfolio();
+  const { articles, profile, loading } = usePortfolio();
+
+  if (loading) return null;
+  if (!profile) return <NotFound />;
 
   return (
     <div className="mt-24">

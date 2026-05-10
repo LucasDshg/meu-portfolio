@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { RiShareLine } from 'react-icons/ri';
 import { useNavigate, useParams } from 'react-router-dom';
+import NotFound from '../components/NotFound';
 import { usePortfolio } from '../context/PortfolioContext';
 import { IArticle } from '../interface/article.interface';
 import { Button } from '../Lib/Button';
@@ -9,7 +10,6 @@ import { Card } from '../Lib/Card';
 import { Heading } from '../Lib/Heading';
 import { Image } from '../Lib/Image';
 import { Subheading } from '../Lib/Subheading';
-import { Text } from '../Lib/Text';
 import { Toast } from '../Lib/Toast';
 
 const ArticleDetail: React.FC = () => {
@@ -19,7 +19,7 @@ const ArticleDetail: React.FC = () => {
     message: string;
     type: 'success' | 'error';
   } | null>(null);
-  const { articles = [] } = usePortfolio() as { articles: IArticle[] };
+  const { articles = [], loading } = usePortfolio();
   const formatArticleDate = (date: Date | string | number): string => {
     if (date instanceof Date) {
       return date.toLocaleDateString('pt-BR');
@@ -60,12 +60,10 @@ const ArticleDetail: React.FC = () => {
     }
   };
 
+  if (loading) return null;
+
   if (!article) {
-    return (
-      <div className="mt-24 flex justify-center">
-        <Text>Artigo não encontrado.</Text>
-      </div>
-    );
+    return <NotFound />;
   }
 
   return (

@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { FaGithub } from 'react-icons/fa6';
 import { RiExternalLinkLine } from 'react-icons/ri';
+import NotFound from '../components/NotFound';
 import { usePortfolio } from '../context/PortfolioContext';
 import { logInteraction } from '../data/analytics.service';
 import { Avatar } from '../Lib/Avatar';
@@ -61,7 +62,10 @@ const ProjectCarousel: React.FC<IProjectCarouselProps> = ({ images, name }) => {
 };
 
 const Projects: React.FC = () => {
-  const { projects, profile } = usePortfolio();
+  const { projects, profile, loading } = usePortfolio();
+
+  if (loading) return null;
+  if (!profile) return <NotFound />;
 
   return (
     <div className="mt-24">
