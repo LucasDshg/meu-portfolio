@@ -13,7 +13,8 @@ interface IProPlanCardProps {
   showAdminControls?: boolean;
 }
 
-const STRIPE_PAYMENT_URL = 'https://buy.stripe.com/14A5kE2yKcZbfHs5LD77O00';
+// const STRIPE_PAYMENT_URL = 'https://buy.stripe.com/14A5kE2yKcZbfHs5LD77O00';
+const STRIPE_PAYMENT_URL = 'https://buy.stripe.com/eVqfZi5KW3oBeDoa1T77O01';
 
 const PlanActivatedCard: React.FC<{ adFreeDate: Date }> = ({ adFreeDate }) => {
   return (
@@ -48,15 +49,29 @@ const PlanActiveCard: React.FC<{
     <div className="space-y-4">
       {planClick ? (
         <>
-          <Text>Já realizou o pagamento?</Text>
-          <Button
-            type="button"
-            variant="primary"
-            onClick={handleData}
-            disabled={isValidating}
-          >
-            {isValidating ? 'Validando...' : 'Validar Pagamento'}
-          </Button>
+          <Text className="text-teal-900 dark:text-teal-100 font-medium">
+            Pagamento realizado?
+          </Text>
+          <Text className="text-sm text-teal-700/80 dark:text-teal-400/80 mt-1">
+            Clique abaixo para atualizar seu perfil e ativar os benefícios Pro.
+          </Text>
+          <div className="flex flex-col gap-3">
+            <Button
+              type="button"
+              variant="primary"
+              onClick={handleData}
+              disabled={isValidating}
+            >
+              {isValidating ? 'Validando...' : 'Validar Pagamento'}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => setPlanClick(false)}
+            >
+              Voltar
+            </Button>
+          </div>
         </>
       ) : (
         <>
