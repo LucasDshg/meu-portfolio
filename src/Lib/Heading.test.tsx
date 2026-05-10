@@ -20,4 +20,11 @@ describe('Heading Component', () => {
     render(<Heading id="main-title">Título</Heading>);
     expect(screen.getByRole('heading')).toHaveAttribute('id', 'main-title');
   });
+
+  it('deve permitir alteração de cor via prop', () => {
+    const { container } = render(
+      <Heading color="text-red-500">Título de Teste</Heading>,
+    );
+    expect(container.firstChild).toHaveClass('text-red-500');
+  });
 });

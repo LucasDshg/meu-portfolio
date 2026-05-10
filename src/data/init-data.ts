@@ -8,6 +8,7 @@ export const INITIAL_PROFILE_DATA: IProfile = {
   phone: '',
   email: '',
   slug: '',
+  adFreeUntil: null,
   socials: [
     { id: 'github', name: 'GitHub', link: null, order: 1 },
     { id: 'linkedin', name: 'LinkedIn', link: null, order: 2 },

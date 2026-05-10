@@ -2,6 +2,7 @@ import { AnimatePresence } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { RiSaveLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
+import { ProPlanCard } from '../components/ProPlanCard';
 import { usePortfolio } from '../context/PortfolioContext';
 import { logAppError } from '../data/analytics.service';
 import { IProfile } from '../interface/portfolio.interface';
@@ -14,6 +15,7 @@ import { AboutPageSection } from './admin/components/AboutPageSection';
 import { ArticleListSection } from './admin/components/articles/ArticleListSection';
 import { ArticlePageSection } from './admin/components/articles/ArticlePageSection';
 import { CertificationListSection } from './admin/components/certification/CertificationListSection';
+import { DangerZoneSection } from './admin/components/DangerZoneSection';
 import { ExperienceListSection } from './admin/components/experiences/ExperienceListSection';
 import { ExperiencePageSection } from './admin/components/experiences/ExperiencePageSection';
 import { HomePageSection } from './admin/components/HomePageSection';
@@ -61,6 +63,9 @@ const Admin: React.FC = () => {
         email: (formData.get('email') as string) || profile?.email,
         imageUrl: (formData.get('imageUrl') as string) || profile?.imageUrl,
         cvLink: (formData.get('cvLink') as string) || profile?.cvLink,
+        adFreeUntil: formData.get('adFreeUntil')
+          ? new Date(formData.get('adFreeUntil') as string)
+          : profile?.adFreeUntil,
         socials: profile?.socials.map((s) => ({
           ...s,
           link: (formData.get(`social-${s.id}`) as string) || null,
@@ -134,9 +139,10 @@ const Admin: React.FC = () => {
       id: 'general',
       label: 'Geral',
       content: (
-        <div className="space-y-6">
+        <div className="space-y-6 p-4">
           <PersonalInfoSection profile={profile} />
           <SocialSection socials={profile?.socials} />
+          <ProPlanCard profile={profile} showAdminControls />
         </div>
       ),
     },
@@ -192,6 +198,11 @@ const Admin: React.FC = () => {
           <ArticleListSection articles={articles} />
         </div>
       ),
+    },
+    {
+      id: 'account',
+      label: 'Conta',
+      content: <DangerZoneSection />,
     },
   ];
 

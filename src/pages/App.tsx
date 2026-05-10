@@ -7,6 +7,7 @@ import Articles from './Articles';
 import Experience from './Experience';
 import Home from './Home';
 import Login from './Login';
+import PrivacyPolicy from './PrivacyPolicy';
 import Projects from './Projects';
 
 const Admin = lazy(() => import('./Admin'));
@@ -33,6 +34,7 @@ function App() {
             <Route path="articles/edit/:id" element={<ArticleEditor />} />
           </Route>
           <Route path="/login" element={<Login />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
         </Routes>
       </Suspense>
     </MainLayout>

@@ -33,6 +33,13 @@ const Footer: React.FC = () => {
                 );
               })}
               <TextLink
+                href="/privacy"
+                onClick={() => logInteraction('footer_privacy_click', 'link')}
+                color="text-zinc-600 dark:text-zinc-400 hover:text-teal-600"
+              >
+                Privacidade
+              </TextLink>
+              <TextLink
                 href={user ? '/admin' : '/login'}
                 onClick={() =>
                   logInteraction(

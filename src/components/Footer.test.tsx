@@ -54,6 +54,22 @@ describe('Footer', () => {
     expect(adminLink.closest('a')).toHaveAttribute('href', '/admin');
   });
 
+  it('deve exibir o link para a Política de Privacidade', () => {
+    (usePortfolio as Mock).mockReturnValue({
+      profile: { name: 'Lucas' },
+      user: null,
+    });
+    (useNavigationMenu as Mock).mockReturnValue({ menus: mockMenus });
+
+    render(
+      <MemoryRouter>
+        <Footer />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText('Privacidade')).toBeInTheDocument();
+  });
+
   it('deve mostrar "Criar meu portfólio" quando o usuário não estiver logado', () => {
     (usePortfolio as Mock).mockReturnValue({
       profile: { name: 'Lucas' },

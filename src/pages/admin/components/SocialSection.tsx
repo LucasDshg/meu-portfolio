@@ -5,7 +5,7 @@ import { Input } from '../../../Lib/Input';
 import { Subheading } from '../../../Lib/Subheading';
 
 export const SocialSection = ({ socials }: { socials?: ISocials[] }) => (
-  <div className="p-4 space-y-6">
+  <div className="space-y-6">
     <Card variant="outline" className="space-y-6">
       <Subheading className="flex items-center gap-3">
         <RiShareLine className="h-5 w-5 text-zinc-400" />
