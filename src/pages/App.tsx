@@ -1,8 +1,10 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { LoadingPage } from '../components/LoadingPage';
+import NotFound from '../components/NotFound';
 import MainLayout from '../layout/MainLayout';
 import About from './About';
+import ArticleDetail from './ArticleDetail';
 import Articles from './Articles';
 import Experience from './Experience';
 import Home from './Home';
@@ -20,12 +22,14 @@ function App() {
     <MainLayout>
       <Suspense fallback={<LoadingPage />}>
         <Routes>
+          <Route path="/" element={<NotFound />} />
           <Route path="/u/:slug">
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
             <Route path="experience" element={<Experience />} />
             <Route path="project" element={<Projects />} />
             <Route path="articles" element={<Articles />} />
+            <Route path="articles/:articleSlug" element={<ArticleDetail />} />
           </Route>
 
           <Route path="/admin">
@@ -35,6 +39,7 @@ function App() {
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </MainLayout>

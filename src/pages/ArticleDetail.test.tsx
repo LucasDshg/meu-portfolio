@@ -30,7 +30,10 @@ describe('Page: ArticleDetail', () => {
   ];
 
   it('deve renderizar o artigo corretamente baseado no slug da URL', () => {
-    (usePortfolio as any).mockReturnValue({ articles: mockArticles });
+    (usePortfolio as any).mockReturnValue({
+      articles: mockArticles,
+      loading: false,
+    });
 
     render(
       <MemoryRouter initialEntries={['/u/slug/articles/meu-artigo']}>
@@ -49,7 +52,7 @@ describe('Page: ArticleDetail', () => {
   });
 
   it('deve exibir mensagem de erro quando o artigo não for encontrado', () => {
-    (usePortfolio as any).mockReturnValue({ articles: [] });
+    (usePortfolio as any).mockReturnValue({ articles: [], loading: false });
 
     render(
       <MemoryRouter initialEntries={['/u/slug/articles/slug-inexistente']}>
@@ -62,11 +65,14 @@ describe('Page: ArticleDetail', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByText('Artigo não encontrado.')).toBeInTheDocument();
+    expect(screen.getByText('Página não encontrada')).toBeInTheDocument();
   });
 
   it('deve navegar para a página anterior ao clicar no botão Voltar', () => {
-    (usePortfolio as any).mockReturnValue({ articles: mockArticles });
+    (usePortfolio as any).mockReturnValue({
+      articles: mockArticles,
+      loading: false,
+    });
 
     render(
       <MemoryRouter initialEntries={['/u/slug/articles/meu-artigo']}>

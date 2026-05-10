@@ -5,11 +5,15 @@ import { Heading } from '../Lib/Heading';
 import { Subheading } from '../Lib/Subheading';
 import { Text } from '../Lib/Text';
 import { TextLink } from '../Lib/TextLink';
+import NotFound from '../components/NotFound';
 import { usePortfolio } from '../context/PortfolioContext';
 import { getSocialHref, getSocialIcon } from '../utils/navigation.utils';
 
 const About: React.FC = () => {
-  const { profile, certifications } = usePortfolio();
+  const { profile, certifications, loading } = usePortfolio();
+
+  if (loading) return null;
+  if (!profile) return <NotFound />;
 
   const activeSocials =
     profile?.socials
