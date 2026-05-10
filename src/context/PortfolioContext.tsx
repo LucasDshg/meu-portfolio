@@ -12,6 +12,7 @@ import { auth } from '../data/firebase';
 import {
   createInitialProfileDocument,
   deleteSubCollectionItem,
+  deleteUserPortfolioData,
   ECollection,
   getProfileAndUidBySlug,
   getProfileByUid,
@@ -35,6 +36,7 @@ interface IPortfolioContextType {
   articles: IArticle[];
   loading: boolean;
   fetchData: () => Promise<void>;
+  deleteAccount: () => Promise<void>;
   updateProfile: (updatedData: Partial<IProfile>) => Promise<void>;
   saveSubItem: <T>(collectionName: TCollection, data: T) => Promise<void>;
   deleteSubItem: (
@@ -214,6 +216,23 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [slug, user, fetchDataBySlug, fetchDataByUid]);
 
+  const deleteAccount = useCallback(async (): Promise<void> => {
+    if (!user) throw new Error('Usuário não autenticado.');
+
+    try {
+      await deleteUserPortfolioData(user.uid);
+      await user.delete();
+    } catch (error: any) {
+      logAppError('deleteAccount', error);
+      if (error.code === 'auth/requires-recent-login') {
+        throw new Error(
+          'Por segurança, saia e entre novamente antes de excluir sua conta.',
+        );
+      }
+      throw new Error('Erro ao excluir conta. Tente novamente mais tarde.');
+    }
+  }, [user]);
+
   return (
     <PortfolioContext.Provider
       value={{
@@ -228,6 +247,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
         saveSubItem,
         deleteSubItem,
         fetchData,
+        deleteAccount,
       }}
     >
       {children}

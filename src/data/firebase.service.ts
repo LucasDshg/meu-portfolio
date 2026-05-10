@@ -161,3 +161,21 @@ export async function deleteSubCollectionItem(
   const userDocRef = getUserDocRef(uid);
   await deleteDoc(doc(userDocRef, collectionName, String(id)));
 }
+
+/**
+ * Remove permanentemente o perfil do usuário e todas as suas subcoleções.
+ * @param uid O UID único do usuário.
+ */
+export async function deleteUserPortfolioData(uid: string): Promise<void> {
+  const userDocRef = getUserDocRef(uid);
+  const subCollections = Object.values(ECollection);
+
+  for (const collectionName of subCollections) {
+    const subColRef = collection(userDocRef, collectionName);
+    const snapshot = await getDocs(subColRef);
+    const deletePromises = snapshot.docs.map((doc) => deleteDoc(doc.ref));
+    await Promise.all(deletePromises);
+  }
+
+  await deleteDoc(userDocRef);
+}

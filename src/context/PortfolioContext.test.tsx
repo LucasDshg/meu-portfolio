@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -22,6 +22,7 @@ vi.mock('../data/firebase.service', () => ({
   updateProfileDocument: vi.fn(),
   saveSubCollectionItem: vi.fn(),
   deleteSubCollectionItem: vi.fn(),
+  deleteUserPortfolioData: vi.fn(),
   ECollection: {
     EXPERIENCES: 'experiences',
     PROJECTS: 'projects',
@@ -31,12 +32,15 @@ vi.mock('../data/firebase.service', () => ({
 }));
 
 const TestComponent = () => {
-  const { profile, loading, articles } = usePortfolio();
+  const { profile, loading, articles, deleteAccount } = usePortfolio();
   if (loading) return <div data-testid="loading">Carregando...</div>;
   return (
     <div>
       <div data-testid="profile-name">{profile?.name}</div>
       <div data-testid="articles-count">{articles.length}</div>
+      <button data-testid="delete-btn" onClick={() => deleteAccount()}>
+        Excluir
+      </button>
     </div>
   );
 };
@@ -124,6 +128,37 @@ describe('PortfolioContext', () => {
       expect(screen.getByTestId('profile-name')).toHaveTextContent(
         'Admin User',
       );
+    });
+  });
+
+  it('deve chamar os serviços de exclusão ao executar deleteAccount', async () => {
+    const mockUser = {
+      uid: 'auth123',
+      delete: vi.fn().mockResolvedValue(undefined),
+    };
+    (onAuthStateChanged as any).mockImplementationOnce(
+      (auth: any, callback: any) => {
+        callback(mockUser);
+        return () => {};
+      },
+    );
+    const deleteSpy = vi
+      .spyOn(firebaseService, 'deleteUserPortfolioData')
+      .mockResolvedValue(undefined);
+
+    render(
+      <MemoryRouter>
+        <PortfolioProvider>
+          <TestComponent />
+        </PortfolioProvider>
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => fireEvent.click(screen.getByTestId('delete-btn')));
+
+    await waitFor(() => {
+      expect(deleteSpy).toHaveBeenCalledWith('auth123');
+      expect(mockUser.delete).toHaveBeenCalled();
     });
   });
 

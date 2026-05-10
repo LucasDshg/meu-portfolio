@@ -15,6 +15,7 @@ import { AboutPageSection } from './admin/components/AboutPageSection';
 import { ArticleListSection } from './admin/components/articles/ArticleListSection';
 import { ArticlePageSection } from './admin/components/articles/ArticlePageSection';
 import { CertificationListSection } from './admin/components/certification/CertificationListSection';
+import { DangerZoneSection } from './admin/components/DangerZoneSection';
 import { ExperienceListSection } from './admin/components/experiences/ExperienceListSection';
 import { ExperiencePageSection } from './admin/components/experiences/ExperiencePageSection';
 import { HomePageSection } from './admin/components/HomePageSection';
@@ -197,6 +198,11 @@ const Admin: React.FC = () => {
           <ArticleListSection articles={articles} />
         </div>
       ),
+    },
+    {
+      id: 'account',
+      label: 'Conta',
+      content: <DangerZoneSection />,
     },
   ];
 
