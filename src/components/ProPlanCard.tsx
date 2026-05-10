@@ -13,8 +13,7 @@ interface IProPlanCardProps {
   showAdminControls?: boolean;
 }
 
-// const STRIPE_PAYMENT_URL = 'https://buy.stripe.com/14A5kE2yKcZbfHs5LD77O00';
-const STRIPE_PAYMENT_URL = 'https://buy.stripe.com/eVqfZi5KW3oBeDoa1T77O01';
+const STRIPE_PAYMENT_URL = 'https://buy.stripe.com/14A5kE2yKcZbfHs5LD77O00';
 
 const PlanActivatedCard: React.FC<{ adFreeDate: Date }> = ({ adFreeDate }) => {
   return (
