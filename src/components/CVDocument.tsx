@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
     fontWeight: 'medium',
   },
   leftColumn: {
-    width: '40%',
-    marginLeft: '-40%',
+    width: '42%',
+    marginLeft: '-42%',
     paddingHorizontal: 16,
     flexDirection: 'column',
   },
