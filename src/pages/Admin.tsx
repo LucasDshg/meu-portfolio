@@ -62,7 +62,6 @@ const Admin: React.FC = () => {
         phone: (formData.get('phone') as string) || profile?.phone,
         email: (formData.get('email') as string) || profile?.email,
         imageUrl: (formData.get('imageUrl') as string) || profile?.imageUrl,
-        cvLink: (formData.get('cvLink') as string) || profile?.cvLink,
         adFreeUntil: formData.get('adFreeUntil')
           ? new Date(formData.get('adFreeUntil') as string)
           : profile?.adFreeUntil,

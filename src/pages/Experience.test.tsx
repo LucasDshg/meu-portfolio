@@ -20,7 +20,6 @@ describe('Page: Experience', () => {
   const mockData = {
     profile: {
       email: 'teste@dev.com',
-      cvLink: 'link-cv.pdf',
       pages: {
         experience: {
           title: 'Trajetória',
@@ -57,7 +56,6 @@ describe('Page: Experience', () => {
     expect(screen.getByText('Dev Senior')).toBeInTheDocument();
     expect(screen.getByText('Tech Corp')).toBeInTheDocument();
     expect(screen.getByText('Baixar Currículo')).toBeInTheDocument();
-    expect(screen.getByText('Ou baixar versão manual')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /enviar email/i })).toHaveAttribute(
       'href',
       'mailto:teste@dev.com',

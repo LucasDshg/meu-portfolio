@@ -135,19 +135,6 @@ const Experience: React.FC = () => {
                 )}
               </PDFDownloadLink>
             )}
-
-            {profile?.cvLink && (
-              <Button
-                href={profile.cvLink}
-                variant="ghost"
-                className="mt-2 w-full text-xs"
-                onClick={() =>
-                  logInteraction('cv_manual_download_click', 'button')
-                }
-              >
-                Ou baixar versão manual
-              </Button>
-            )}
           </div>
         </aside>
       </div>
