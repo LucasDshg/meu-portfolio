@@ -164,7 +164,7 @@ export const CVDocument = ({
           <Text style={styles.sidebarItem}>{profile.email}</Text>
           <Text style={styles.sidebarItem}>{profile.phone}</Text>
           <Link
-            src={`https://meu-portfolio-lucasdshgs-projects.vercel.app/u/${profile.slug}`}
+            src={`https://meu-portfolio.app.br/u/${profile.slug}`}
             style={[styles.sidebarItem, { textDecoration: 'none' }]}
           >
             Meu Portfólio
