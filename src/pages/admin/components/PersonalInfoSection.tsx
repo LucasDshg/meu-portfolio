@@ -6,6 +6,7 @@ import { IProfile } from '../../../interface/portfolio.interface';
 import { Card } from '../../../Lib/Card';
 import { FileUpload } from '../../../Lib/FileUpload';
 import { Input } from '../../../Lib/Input';
+import { formatPhone } from '../../../utils/format-phone';
 
 interface IPersonalInfoSectionProps {
   profile: IProfile | null;
@@ -16,13 +17,22 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
 }) => {
   const { user } = usePortfolio();
   const [slug, setSlug] = useState(profile?.slug || '');
+  const [phone, setPhone] = useState(profile?.phone || '+55');
   const [prevProfileSlug, setPrevProfileSlug] = useState<string | undefined>(
+    undefined,
+  );
+  const [prevProfilePhone, setPrevProfilePhone] = useState<string | undefined>(
     undefined,
   );
 
   if (profile?.slug !== prevProfileSlug) {
     setPrevProfileSlug(profile?.slug);
     setSlug(profile?.slug || '');
+  }
+
+  if (profile?.phone !== prevProfilePhone) {
+    setPrevProfilePhone(profile?.phone);
+    setPhone(profile?.phone ? formatPhone(profile.phone) : '+55');
   }
 
   const slugify = (text: string) => {
@@ -87,24 +97,18 @@ export const PersonalInfoSection: React.FC<IPersonalInfoSectionProps> = ({
           <Input
             label="Telefone / WhatsApp"
             name="phone"
-            defaultValue={profile?.phone}
-            placeholder="ex: 5511999999999"
-          />
-          <FileUpload
-            label="Foto de Perfil"
-            name="imageUrl"
-            accept="image/*"
-            initialUrl={profile?.imageUrl}
-            onFileSelect={(file) => handleUpload(file, 'profile-image')}
-          />
-          <FileUpload
-            label="Currículo (PDF)"
-            name="cvLink"
-            accept=".pdf"
-            initialUrl={profile?.cvLink}
-            onFileSelect={(file) => handleUpload(file, 'cv')}
+            value={phone}
+            onChange={(e) => setPhone(formatPhone(e.target.value))}
+            placeholder="ex: +55 (11) 99999-9999"
           />
         </div>
+        <FileUpload
+          label="Foto de Perfil"
+          name="imageUrl"
+          accept="image/*"
+          initialUrl={profile?.imageUrl}
+          onFileSelect={(file) => handleUpload(file, 'profile-image')}
+        />
       </Card>
     </div>
   );

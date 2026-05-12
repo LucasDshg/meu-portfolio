@@ -27,7 +27,6 @@ describe('PersonalInfoSection', () => {
     email: 'lucas@test.com',
     phone: '5527999999999',
     imageUrl: 'http://image.jpg',
-    cvLink: 'http://cv.pdf',
   };
 
   beforeEach(() => {
@@ -66,11 +65,9 @@ describe('PersonalInfoSection', () => {
 
     render(<PersonalInfoSection profile={mockProfile as any} />);
 
-    const file = new File(['pdf content'], 'cv.pdf', {
-      type: 'application/pdf',
-    });
+    const file = new File(['hello'], 'profile.png', { type: 'image/png' });
 
-    const input = screen.getByLabelText(/Currículo \(PDF\)/i, {
+    const input = screen.getByLabelText(/Foto de Perfil/i, {
       selector: 'input[type="file"]',
     });
 
