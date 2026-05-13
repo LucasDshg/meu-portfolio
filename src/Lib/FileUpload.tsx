@@ -1,6 +1,7 @@
 import { AnimatePresence } from 'framer-motion';
 import React, { useRef, useState } from 'react';
 import {
+  RiDeleteBinLine,
   RiFileTextLine,
   RiImageLine,
   RiLoader4Line,
@@ -69,6 +70,13 @@ export const FileUpload: React.FC<IFileUploadProps> = ({
 
       setSelectedFile(file);
     }
+  };
+
+  const handleRemove = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setUrl(undefined);
+    setSelectedFile(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const handleUpload = async (e: React.MouseEvent) => {
@@ -141,6 +149,16 @@ export const FileUpload: React.FC<IFileUploadProps> = ({
                 className="bg-teal-500 hover:bg-teal-600 text-white text-[10px] font-bold uppercase px-2 py-1 rounded transition-colors cursor-pointer"
               >
                 Enviar
+              </button>
+            )}
+            {url && !selectedFile && !loading && (
+              <button
+                type="button"
+                onClick={handleRemove}
+                className="text-red-500 hover:text-red-600 p-1 transition-colors cursor-pointer"
+                title="Remover arquivo"
+              >
+                <RiDeleteBinLine className="size-4" />
               </button>
             )}
             <div className="flex-none bg-zinc-50 dark:bg-zinc-700 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider text-zinc-500">

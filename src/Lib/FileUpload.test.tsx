@@ -154,4 +154,26 @@ describe('FileUpload Component', () => {
     );
     expect(screen.queryByText(/Aguardando envio/i)).not.toBeInTheDocument();
   });
+
+  it('deve remover a URL e limpar o valor do input ao clicar no botão de lixeira', () => {
+    const { container } = render(
+      <FileUpload
+        label="Upload"
+        onFileSelect={mockOnFileSelect}
+        initialUrl="url-antiga.jpg"
+        name="profileImage"
+      />,
+    );
+
+    expect(screen.getByText('url-antiga.jpg')).toBeInTheDocument();
+
+    const removeButton = screen.getByTitle(/remover arquivo/i);
+    fireEvent.click(removeButton);
+
+    expect(screen.queryByText('url-antiga.jpg')).not.toBeInTheDocument();
+    const hiddenInput = container.querySelector(
+      'input[name="profileImage"]',
+    ) as HTMLInputElement;
+    expect(hiddenInput.value).toBe('');
+  });
 });
