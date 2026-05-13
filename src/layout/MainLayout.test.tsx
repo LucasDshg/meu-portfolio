@@ -17,6 +17,15 @@ vi.mock('../components/Footer', () => ({
 vi.mock('../components/LoadingPage', () => ({
   LoadingPage: () => <div data-testid="loading-page" />,
 }));
+vi.mock('./AdUnit', () => ({
+  AdUnit: ({ slot }: { slot: string }) => (
+    <div data-testid={`ad-unit-${slot}`} />
+  ),
+}));
+
+vi.mock('../data/analytics.service', () => ({
+  logPageView: vi.fn(),
+}));
 
 describe('MainLayout Component', () => {
   beforeEach(() => {
@@ -52,7 +61,7 @@ describe('MainLayout Component', () => {
     });
 
     render(
-      <MemoryRouter initialEntries={['/']}>
+      <MemoryRouter initialEntries={['/u/test-user']}>
         <MainLayout>
           <div>Main Content</div>
         </MainLayout>
@@ -95,5 +104,51 @@ describe('MainLayout Component', () => {
     );
 
     expect(document.documentElement.classList.contains('dark')).toBe(true);
+  });
+
+  it('deve renderizar anúncios quando o perfil não for ad-free', () => {
+    (usePortfolio as any).mockReturnValue({
+      loading: false,
+      profile: { name: 'Test User', adFreeUntil: null },
+    });
+
+    render(
+      <MemoryRouter initialEntries={['/u/slug']}>
+        <MainLayout>Content</MainLayout>
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByTestId('ad-unit-YOUR_DESKTOP_AD_SLOT'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('ad-unit-YOUR_MOBILE_AD_SLOT'),
+    ).toBeInTheDocument();
+  });
+
+  it('NÃO deve renderizar anúncios quando o perfil for ad-free', () => {
+    const futureDate = new Date();
+    futureDate.setFullYear(futureDate.getFullYear() + 1);
+
+    (usePortfolio as any).mockReturnValue({
+      loading: false,
+      profile: {
+        name: 'Test User',
+        adFreeUntil: { toDate: () => futureDate }, // Simula objeto Timestamp do Firebase
+      },
+    });
+
+    render(
+      <MemoryRouter initialEntries={['/u/slug']}>
+        <MainLayout>Content</MainLayout>
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.queryByTestId('ad-unit-YOUR_DESKTOP_AD_SLOT'),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('ad-unit-YOUR_MOBILE_AD_SLOT'),
+    ).not.toBeInTheDocument();
   });
 });
