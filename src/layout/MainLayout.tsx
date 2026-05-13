@@ -25,9 +25,11 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
   const now = new Date().getTime();
   const isAdFree = (() => {
     if (!profile?.adFreeUntil) return false;
-    const date = (profile.adFreeUntil as any).toDate()
-      ? (profile.adFreeUntil as any).toDate()
-      : new Date(profile.adFreeUntil);
+    const adFreeUntil = profile.adFreeUntil as any;
+    const date =
+      typeof adFreeUntil.toDate === 'function'
+        ? adFreeUntil.toDate()
+        : new Date(adFreeUntil);
     return date.getTime() > now;
   })();
 
@@ -47,11 +49,17 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
     }
   }, [pathname]);
 
+  const hideMenuAndFooter = ['/login', '/'];
+
+  const showMenuAndFooter = () => {
+    return !hideMenuAndFooter.includes(pathname);
+  };
+
   if (loading) return <LoadingPage />;
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-zinc-600 dark:text-zinc-400 font-sans transition-colors duration-500">
-      {pathname !== '/login' && profile && (
+      {showMenuAndFooter() && profile && (
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
       )}
 
@@ -60,7 +68,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
           <div className="mx-auto max-w-4xl lg:max-w-5xl flex-1 w-full">
             {children}
           </div>
-          {pathname !== '/login' && profile && <Footer />}
+          {showMenuAndFooter() && profile && <Footer />}
         </div>
 
         {!isAdFree && (
@@ -69,7 +77,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
           </div>
         )}
       </div>
-      {pathname !== '/login' && profile && !isAdFree && (
+      {showMenuAndFooter() && profile && !isAdFree && (
         <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-zinc-900 p-2 border-t border-zinc-100 dark:border-zinc-700/40">
           <AdUnit slot="YOUR_MOBILE_AD_SLOT" format="auto" responsive="true" />
         </div>

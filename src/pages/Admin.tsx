@@ -57,11 +57,11 @@ const Admin: React.FC = () => {
       const formData = new FormData(e.currentTarget);
 
       const updatedProfile: Partial<IProfile> = {
-        name: (formData.get('name') as string) || profile?.name,
-        slug: (formData.get('slug') as string) || profile?.slug,
-        phone: (formData.get('phone') as string) || profile?.phone,
-        email: (formData.get('email') as string) || profile?.email,
-        imageUrl: (formData.get('imageUrl') as string) || profile?.imageUrl,
+        name: (formData.get('name') as string) ?? profile?.name,
+        slug: (formData.get('slug') as string) ?? profile?.slug,
+        phone: (formData.get('phone') as string) ?? profile?.phone,
+        email: (formData.get('email') as string) ?? profile?.email,
+        imageUrl: (formData.get('imageUrl') as string) ?? profile?.imageUrl,
         adFreeUntil: formData.get('adFreeUntil')
           ? new Date(formData.get('adFreeUntil') as string)
           : profile?.adFreeUntil,
