@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { LoadingPage } from '../components/LoadingPage';
 import NotFound from '../components/NotFound';
 import MainLayout from '../layout/MainLayout';
@@ -22,7 +22,7 @@ function App() {
     <MainLayout>
       <Suspense fallback={<LoadingPage />}>
         <Routes>
-          <Route path="/" element={<NotFound />} />
+          <Route path="/" element={<Navigate to="/u/lucas-gomes" replace />} />
           <Route path="/u/:slug">
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
