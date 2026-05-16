@@ -118,12 +118,8 @@ describe('MainLayout Component', () => {
       </MemoryRouter>,
     );
 
-    expect(
-      screen.getByTestId('ad-unit-YOUR_DESKTOP_AD_SLOT'),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByTestId('ad-unit-YOUR_MOBILE_AD_SLOT'),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId('ad-unit-7924701015')).toBeInTheDocument();
+    expect(screen.getByTestId('ad-unit-7924701015')).toBeInTheDocument();
   });
 
   it('NÃO deve renderizar anúncios quando o perfil for ad-free', () => {
