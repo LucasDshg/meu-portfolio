@@ -3,7 +3,7 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/((?!assets/|favicon.ico|logo-CuGCXOrl.svg).*)",
+      "source": "/((?!assets/|ads.txt|favicon.ico|logo-CuGCXOrl.svg).*)",
       "destination": "/index.html"
     }
   ]
