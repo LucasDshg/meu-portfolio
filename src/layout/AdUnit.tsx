@@ -5,6 +5,8 @@ interface IAdUnitProps {
   format?: 'auto' | 'rectangle' | 'vertical' | 'horizontal';
   responsive?: 'true' | 'false';
   className?: string;
+  height?: string;
+  width?: string;
 }
 
 declare global {
@@ -19,6 +21,8 @@ export const AdUnit: React.FC<IAdUnitProps> = ({
   format = 'auto',
   responsive = 'false',
   className = '',
+  height = '100px',
+  width = '200px',
 }) => {
   useEffect(() => {
     try {
@@ -29,7 +33,10 @@ export const AdUnit: React.FC<IAdUnitProps> = ({
   }, [slot]);
 
   return (
-    <div className={`ad-container ${className}`}>
+    <div
+      className={`ad-container ${className}`}
+      style={{ height, width, overflow: 'hidden' }}
+    >
       <ins
         className="adsbygoogle"
         style={{ display: 'block' }}

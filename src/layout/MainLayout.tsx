@@ -72,14 +72,24 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
         </div>
 
         {!isAdFree && (
-          <div className="hidden xl:block absolute left-full top-16 ml-8 w-[300px]">
-            <AdUnit slot="YOUR_DESKTOP_AD_SLOT" format="vertical" />
-          </div>
+          <>
+            <div className="hidden xl:block fixed right-0 top-50 w-[200px]">
+              <AdUnit slot="9596875335" format="vertical" />
+            </div>
+            <div className="hidden xl:block fixed left-0 top-50 w-[200px]">
+              <AdUnit slot="9596875335" format="vertical" />
+            </div>
+          </>
         )}
       </div>
-      {showMenuAndFooter() && profile && !isAdFree && (
+      {!isAdFree && (
         <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-zinc-900 p-2 border-t border-zinc-100 dark:border-zinc-700/40">
-          <AdUnit slot="YOUR_MOBILE_AD_SLOT" format="auto" responsive="true" />
+          <AdUnit
+            slot="7924701015"
+            format="auto"
+            responsive="true"
+            width="100%"
+          />
         </div>
       )}
     </div>
