@@ -68,27 +68,39 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
           <div className="mx-auto max-w-4xl lg:max-w-5xl flex-1 w-full">
             {children}
           </div>
-          {showMenuAndFooter() && profile && <Footer />}
+          {showMenuAndFooter() && profile && (
+            <div className={`${!isAdFree && 'xl:mb-0 mb-24'}`}>
+              <Footer />
+            </div>
+          )}
         </div>
 
         {!isAdFree && (
           <>
-            <div className="hidden xl:block fixed right-0 top-50 w-[200px]">
-              <AdUnit slot="9596875335" format="vertical" />
+            <div className="pointer-events-none fixed right-0 top-50 -z-10 w-[200px] opacity-0 transition-opacity duration-200 xl:pointer-events-auto xl:z-40 xl:opacity-100">
+              <AdUnit
+                slot="9596875335"
+                format="vertical"
+                className="max-w-[200px]"
+              />
             </div>
-            <div className="hidden xl:block fixed left-0 top-50 w-[200px]">
-              <AdUnit slot="9596875335" format="vertical" />
+            <div className="pointer-events-none fixed left-0 top-50 -z-10 w-[200px] opacity-0 transition-opacity duration-200 xl:pointer-events-auto xl:z-40 xl:opacity-100">
+              <AdUnit
+                slot="9596875335"
+                format="vertical"
+                className="max-w-[200px]"
+              />
             </div>
           </>
         )}
       </div>
       {!isAdFree && (
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-zinc-900 p-2 border-t border-zinc-100 dark:border-zinc-700/40">
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-zinc-900 p-2 border-t border-zinc-100 transition-opacity duration-200 dark:border-zinc-700/40 xl:pointer-events-none xl:-z-10 xl:opacity-0">
           <AdUnit
             slot="7924701015"
-            format="auto"
+            format="horizontal"
             responsive="true"
-            width="100%"
+            className="w-[100%] h-[100px]"
           />
         </div>
       )}
