@@ -3,7 +3,15 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/((?!assets/|favicon.ico|logo-CuGCXOrl.svg).*)",
+      "source": "/",
+      "destination": "/u/lucas-gomes"
+    },
+    {
+      "source": "/_next/:path*|/assets/:path*|/static/:path*|/favicon.ico|/logo-CuGCXOrl.svg",
+      "destination": "/$0"
+    },
+    {
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
