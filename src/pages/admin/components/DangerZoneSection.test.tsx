@@ -1,13 +1,13 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { usePortfolio } from '../context/PortfolioContext';
-import { DangerZoneSection } from '../pages/admin/components/DangerZoneSection';
+import { usePortfolio } from '../../../context/PortfolioContext';
+import { DangerZoneSection } from './DangerZoneSection';
 
-vi.mock('../context/PortfolioContext', () => ({
+vi.mock('../../../context/PortfolioContext', () => ({
   usePortfolio: vi.fn(),
 }));
 
-vi.mock('../data/analytics.service', () => ({
+vi.mock('../../../data/analytics.service', () => ({
   logAppError: vi.fn(),
 }));
 
