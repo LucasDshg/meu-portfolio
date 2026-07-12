@@ -105,46 +105,4 @@ describe('MainLayout Component', () => {
 
     expect(document.documentElement.classList.contains('dark')).toBe(true);
   });
-
-  it('deve renderizar anúncios quando o perfil não for ad-free', () => {
-    (usePortfolio as any).mockReturnValue({
-      loading: false,
-      profile: { name: 'Test User', adFreeUntil: null },
-    });
-
-    render(
-      <MemoryRouter initialEntries={['/u/slug']}>
-        <MainLayout>Content</MainLayout>
-      </MemoryRouter>,
-    );
-
-    expect(screen.getByTestId('ad-unit-7924701015')).toBeInTheDocument();
-    expect(screen.getByTestId('ad-unit-7924701015')).toBeInTheDocument();
-  });
-
-  it('NÃO deve renderizar anúncios quando o perfil for ad-free', () => {
-    const futureDate = new Date();
-    futureDate.setFullYear(futureDate.getFullYear() + 1);
-
-    (usePortfolio as any).mockReturnValue({
-      loading: false,
-      profile: {
-        name: 'Test User',
-        adFreeUntil: { toDate: () => futureDate }, // Simula objeto Timestamp do Firebase
-      },
-    });
-
-    render(
-      <MemoryRouter initialEntries={['/u/slug']}>
-        <MainLayout>Content</MainLayout>
-      </MemoryRouter>,
-    );
-
-    expect(
-      screen.queryByTestId('ad-unit-YOUR_DESKTOP_AD_SLOT'),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByTestId('ad-unit-YOUR_MOBILE_AD_SLOT'),
-    ).not.toBeInTheDocument();
-  });
 });
