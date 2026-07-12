@@ -2,7 +2,6 @@ import { AnimatePresence } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { RiSaveLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
-import { ProPlanCard } from '../components/ProPlanCard';
 import { usePortfolio } from '../context/PortfolioContext';
 import { logAppError } from '../data/analytics.service';
 import { IProfile } from '../interface/portfolio.interface';
@@ -141,7 +140,7 @@ const Admin: React.FC = () => {
         <div className="space-y-6 p-4">
           <PersonalInfoSection profile={profile} />
           <SocialSection socials={profile?.socials} />
-          <ProPlanCard profile={profile} showAdminControls />
+          {/* <ProPlanCard profile={profile} showAdminControls /> */}
         </div>
       ),
     },

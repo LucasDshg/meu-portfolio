@@ -21,8 +21,6 @@ export const AdUnit: React.FC<IAdUnitProps> = ({
   format = 'auto',
   responsive = 'false',
   className = '',
-  height = '100px',
-  width = '200px',
 }) => {
   useEffect(() => {
     try {
@@ -33,10 +31,7 @@ export const AdUnit: React.FC<IAdUnitProps> = ({
   }, [slot]);
 
   return (
-    <div
-      className={`ad-container ${className}`}
-      style={{ height, width, overflow: 'hidden' }}
-    >
+    <div className={`ad-container ${className}`} style={{ overflow: 'hidden' }}>
       <ins
         className="adsbygoogle"
         style={{ display: 'block' }}

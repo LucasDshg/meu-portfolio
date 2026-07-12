@@ -5,7 +5,6 @@ import Header from '../components/Header';
 import { LoadingPage } from '../components/LoadingPage';
 import { usePortfolio } from '../context/PortfolioContext';
 import { logPageView } from '../data/analytics.service';
-import { AdUnit } from './AdUnit';
 
 interface IMainLayoutProps {
   children: React.ReactNode;
@@ -21,17 +20,6 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
       (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
     );
   });
-
-  const now = new Date().getTime();
-  const isAdFree = (() => {
-    if (!profile?.adFreeUntil) return false;
-    const adFreeUntil = profile.adFreeUntil as any;
-    const date =
-      typeof adFreeUntil.toDate === 'function'
-        ? adFreeUntil.toDate()
-        : new Date(adFreeUntil);
-    return date.getTime() > now;
-  })();
 
   useEffect(() => {
     if (darkMode) {
@@ -70,28 +58,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
           </div>
           {showMenuAndFooter() && profile && <Footer />}
         </div>
-
-        {!isAdFree && (
-          <>
-            <div className="hidden xl:block fixed right-0 top-50 w-[200px]">
-              <AdUnit slot="9596875335" format="vertical" />
-            </div>
-            <div className="hidden xl:block fixed left-0 top-50 w-[200px]">
-              <AdUnit slot="9596875335" format="vertical" />
-            </div>
-          </>
-        )}
       </div>
-      {!isAdFree && (
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-zinc-900 p-2 border-t border-zinc-100 dark:border-zinc-700/40">
-          <AdUnit
-            slot="7924701015"
-            format="auto"
-            responsive="true"
-            width="100%"
-          />
-        </div>
-      )}
     </div>
   );
 };
