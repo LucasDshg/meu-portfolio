@@ -12,7 +12,7 @@ import Login from './Login';
 import PrivacyPolicy from './PrivacyPolicy';
 import Projects from './Projects';
 
-const Admin = lazy(() => import('./Admin'));
+const Admin = lazy(() => import('../pages/Admin'));
 const ArticleEditor = lazy(
   () => import('./admin/components/articles/ArticleEditor'),
 );
