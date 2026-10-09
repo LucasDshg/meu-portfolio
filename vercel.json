@@ -3,11 +3,7 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/u/:slug/articles/:articleSlug",
-      "destination": "/api/article-preview?slug=:slug&articleSlug=:articleSlug"
-    },
-    {
-      "source": "/((?!api/|assets/|ads.txt|favicon.ico|logo.svg|logo-CuGCXOrl.svg).*)",
+      "source": "/((?!assets/|ads.txt|favicon.ico|logo.svg|logo-CuGCXOrl.svg).*)",
       "destination": "/index.html"
     }
   ]
