@@ -9,7 +9,7 @@ vi.mock('../../../context/PortfolioContext', () => ({
   }),
 }));
 
-const mockArticles = [
+const mockArticles: any = [
   {
     id: 1,
     title: 'Artigo 1',
@@ -18,6 +18,7 @@ const mockArticles = [
     slug: 'art-1',
     image: 'img.jpg',
     content: 'Conteúdo do artigo 1',
+    liked: 1,
   },
 ];
 

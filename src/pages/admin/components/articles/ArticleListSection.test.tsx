@@ -25,6 +25,7 @@ describe('ArticleListSection', () => {
       description: 'Desc',
       content: '<p>Conteúdo</p>',
       date: new Date(),
+      like: 1,
     },
     {
       id: '2',
@@ -34,6 +35,7 @@ describe('ArticleListSection', () => {
       description: 'Desc',
       content: '<p>Conteúdo</p>',
       date: new Date(),
+      like: 1,
     },
   ];
 

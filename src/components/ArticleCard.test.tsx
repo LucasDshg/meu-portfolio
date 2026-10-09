@@ -33,6 +33,7 @@ describe('ArticleCard', () => {
     date: new Date(),
     content: '<p>Conteúdo</p>',
     image: 'https://test.com/image.jpg',
+    like: 1,
   };
 
   it('deve renderizar o título e a descrição do artigo corretamente', () => {
