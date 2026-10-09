@@ -37,6 +37,7 @@ const ArticleEditor: React.FC = () => {
       date: new Date(),
       content: '',
       image: '',
+      like: 0,
     };
   });
 

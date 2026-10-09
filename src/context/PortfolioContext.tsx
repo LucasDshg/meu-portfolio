@@ -17,6 +17,7 @@ import {
   getProfileAndUidBySlug,
   getProfileByUid,
   getSubCollectionItems,
+  incrementArticleLike,
   saveSubCollectionItem,
   TCollection,
   updateProfileDocument,
@@ -39,6 +40,7 @@ interface IPortfolioContextType {
   deleteAccount: () => Promise<void>;
   updateProfile: (updatedData: Partial<IProfile>) => Promise<void>;
   saveSubItem: <T>(collectionName: TCollection, data: T) => Promise<void>;
+  likeArticle: (id: string | number) => Promise<void>;
   deleteSubItem: (
     collectionName: TCollection,
     id: string | number,
@@ -208,6 +210,22 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
     [user, profile, fetchDataByUid],
   );
 
+  const likeArticle = useCallback(
+    async (id: string | number): Promise<void> => {
+      if (!slug) throw new Error('Slug do portfólio não encontrado.');
+
+      try {
+        const result = await getProfileAndUidBySlug(slug);
+        if (!result) throw new Error('Portfólio não encontrado.');
+        await incrementArticleLike(result.uid, id);
+      } catch (error) {
+        logAppError('likeArticle', error);
+        throw new Error('Erro ao registrar gostei. Tente novamente.');
+      }
+    },
+    [slug],
+  );
+
   const fetchData = useCallback(async (): Promise<void> => {
     if (slug) {
       await fetchDataBySlug(slug);
@@ -245,6 +263,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
         loading,
         updateProfile,
         saveSubItem,
+        likeArticle,
         deleteSubItem,
         fetchData,
         deleteAccount,
