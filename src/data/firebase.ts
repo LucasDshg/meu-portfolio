@@ -19,6 +19,9 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const storage = getStorage(app);
 const googleProvider = new GoogleAuthProvider();
-const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;
+const analytics =
+  typeof window !== 'undefined' && import.meta.env.MODE !== 'test'
+    ? getAnalytics(app)
+    : null;
 
 export { analytics, app, auth, db, googleProvider, storage };
