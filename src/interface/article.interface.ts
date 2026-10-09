@@ -6,4 +6,5 @@ export interface IArticle {
   content: string;
   date: Date;
   slug: string;
+  like: number;
 }

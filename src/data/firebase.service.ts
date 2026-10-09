@@ -5,6 +5,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  increment,
   query,
   setDoc,
   Timestamp,
@@ -160,6 +161,21 @@ export async function deleteSubCollectionItem(
 ): Promise<void> {
   const userDocRef = getUserDocRef(uid);
   await deleteDoc(doc(userDocRef, collectionName, String(id)));
+}
+
+/**
+ * Incrementa atomicamente o número de curtidas de um artigo.
+ * @param uid O UID do proprietário do portfólio.
+ * @param id O ID do artigo.
+ */
+export async function incrementArticleLike(
+  uid: string,
+  id: string | number,
+): Promise<void> {
+  const userDocRef = getUserDocRef(uid);
+  await updateDoc(doc(userDocRef, ECollection.ARTICLES, String(id)), {
+    like: increment(1),
+  });
 }
 
 /**

@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react';
-import { RiShareLine } from 'react-icons/ri';
+import { RiHeart3Fill, RiHeart3Line, RiShareLine } from 'react-icons/ri';
 import { useNavigate, useParams } from 'react-router-dom';
 import NotFound from '../components/NotFound';
 import { usePortfolio } from '../context/PortfolioContext';
@@ -13,13 +13,15 @@ import { Subheading } from '../Lib/Subheading';
 import { Toast } from '../Lib/Toast';
 
 const ArticleDetail: React.FC = () => {
-  const { articleSlug } = useParams();
+  const { slug, articleSlug } = useParams();
   const navigate = useNavigate();
   const [toast, setToast] = useState<{
     message: string;
     type: 'success' | 'error';
   } | null>(null);
-  const { articles = [], loading } = usePortfolio();
+  const { articles = [], loading, likeArticle } = usePortfolio();
+  const [likedOptimistic, setLikedOptimistic] = useState(false);
+  const [isLiking, setIsLiking] = useState(false);
   const formatArticleDate = (date: Date | string | number): string => {
     if (date instanceof Date) {
       return date.toLocaleDateString('pt-BR');
@@ -34,9 +36,61 @@ const ArticleDetail: React.FC = () => {
   };
 
   const article = articles.find((a: IArticle) => a.slug === articleSlug);
+  const likeStorageKey =
+    slug && articleSlug ? `article-like:${slug}:${articleSlug}` : null;
   const formattedDate = article
     ? formatArticleDate(article.date as Date | string | number)
     : '';
+
+  // Derive liked state from localStorage and an optimistic flag to avoid
+  // calling setState synchronously inside effects.
+  const storedLiked = likeStorageKey
+    ? window.localStorage.getItem(likeStorageKey) === 'true'
+    : false;
+  const baseLikeCount = article?.like ?? 0;
+  const displayLikeCount =
+    baseLikeCount + (likedOptimistic && !storedLiked ? 1 : 0);
+  const hasLiked = storedLiked || likedOptimistic;
+
+  const handleLike = async () => {
+    if (!article || !likeStorageKey || hasLiked || isLiking) return;
+
+    setIsLiking(true);
+    try {
+      // Optimistically update UI to reflect the like immediately.
+      setLikedOptimistic(true);
+
+      await likeArticle(article.id);
+
+      // Persist in localStorage only after success to avoid hiding the optimistic
+      // increment when localStorage is read synchronously on the next render.
+      try {
+        if (likeStorageKey) window.localStorage.setItem(likeStorageKey, 'true');
+      } catch (storageError) {
+        console.error('Erro ao persistir gostei localmente:', storageError);
+      }
+
+      setToast({
+        message: 'Obrigado por gostar deste artigo!',
+        type: 'success',
+      });
+    } catch (error) {
+      console.error('Erro ao registrar gostei:', error);
+      // Rollback optimistic local state
+      try {
+        if (likeStorageKey) window.localStorage.removeItem(likeStorageKey);
+      } catch (storageError) {
+        console.error('Erro ao desfazer gosto salvo localmente:', storageError);
+      }
+      setLikedOptimistic(false);
+      setToast({
+        message: 'Não foi possível registrar seu gostei. Tente novamente.',
+        type: 'error',
+      });
+    } finally {
+      setIsLiking(false);
+    }
+  };
 
   const handleShare = async () => {
     if (!article) return;
@@ -112,6 +166,21 @@ const ArticleDetail: React.FC = () => {
             className="prose dark:prose-invert max-w-none text-zinc-600 dark:text-zinc-400 leading-relaxed text-lg text-justify"
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
+        </div>
+
+        <div className="mt-12 border-t border-zinc-200 pt-8 dark:border-zinc-700">
+          <Button
+            onClick={handleLike}
+            variant="outline"
+            disabled={hasLiked || isLiking}
+            aria-label={`Gostei, ${displayLikeCount} curtidas`}
+            aria-pressed={hasLiked}
+            className="gap-2"
+          >
+            {hasLiked ? <RiHeart3Fill size={20} /> : <RiHeart3Line size={20} />}
+            <span>{hasLiked ? 'Gostei!' : 'Gostei'}</span>
+            <span aria-hidden="true">{displayLikeCount}</span>
+          </Button>
         </div>
       </Card>
 

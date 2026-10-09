@@ -1,9 +1,17 @@
-import { doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import {
+  doc,
+  getDoc,
+  getDocs,
+  increment,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   createInitialProfileDocument,
   getProfileAndUidBySlug,
   getProfileByUid,
+  incrementArticleLike,
   saveSubCollectionItem,
 } from './firebase.service';
 
@@ -17,6 +25,7 @@ vi.mock('firebase/firestore', () => ({
   getDoc: vi.fn(),
   getDocs: vi.fn(),
   setDoc: vi.fn(),
+  increment: vi.fn(),
   updateDoc: vi.fn(),
   deleteDoc: vi.fn(),
 }));
@@ -98,5 +107,17 @@ describe('Firebase Service', () => {
         date: expect.any(Date),
       }),
     );
+  });
+
+  it('deve incrementar atomicamente as curtidas de um artigo', async () => {
+    const mockDocRef = { id: 'article-1' };
+    (doc as any).mockReturnValue(mockDocRef);
+    (increment as any).mockReturnValue('increment(1)');
+
+    await incrementArticleLike(mockUid, 'article-1');
+
+    expect(updateDoc).toHaveBeenCalledWith(mockDocRef, {
+      like: 'increment(1)',
+    });
   });
 });
